@@ -1,0 +1,32 @@
+{
+    "name": "reply-guy",
+    "private": true,
+    "version": "0.1.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite --host 127.0.0.1 --port 4173 --strictPort",
+        "dev:open": "vite --host 127.0.0.1 --port 4173 --strictPort --open",
+        "dev:backend": "node server/index.mjs",
+        "dev:all": "concurrently -k \"npm:dev:backend\" \"npm:dev:open\"",
+        "front:export": "node scripts/export-front-history.mjs",
+        "front:pipeline": "node scripts/run-front-pipeline.mjs",
+        "front:analyze": "node scripts/analyze-front-history.mjs",
+        "build": "tsc -b && vite build",
+        "start": "node server/index.mjs",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@frontapp/plugin-sdk": "^1.10.0",
+        "concurrently": "^9.2.1",
+        "express": "^5.2.1",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
+    },
+    "devDependencies": {
+        "@types/react": "^19.1.2",
+        "@types/react-dom": "^19.1.2",
+        "@vitejs/plugin-react": "^5.0.0",
+        "typescript": "^5.8.3",
+        "vite": "^7.0.0"
+    }
+}

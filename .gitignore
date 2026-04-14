@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.env.local
+data/front-exports/
+data/front-analysis/
+knowledge/approved/sops/video1139653390.mp4
+knowledge/approved/sops/Reseller_Program_Reserved_Stock.mov
+knowledge/approved/sops/Entering_Commercial_Turnkey_Orders.mp4
+knowledge/approved/sops/video1664546505.mp4

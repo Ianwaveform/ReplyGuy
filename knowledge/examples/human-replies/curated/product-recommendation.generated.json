@@ -1,0 +1,313 @@
+{
+  "intent": "product-recommendation",
+  "label": "Product Recommendation",
+  "generatedFromExport": "2026-04-01T00-19-07-299Z",
+  "examples": [
+    {
+      "conversationId": "cnv_1lvmxiqw",
+      "messageId": "msg_36aay9bc",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Cliff,\n\nThank you so much for reaching out,\n\nI'm Ruan from the Sales and Support team at Waveform, and I'd be more than happy to assist you in any way I can.\n\nI want to make sure that we recommend the best solution for your needs. Before we proceed with a recommendation, there are a few general questions that will help us move on to the next steps that I’ve listed below:\n\nWhat is the address where the setup will be done? (For reviewing cell tower maps.)\n\nWhat are your current data speeds, with and without the antenna?\n\nHow would you describe your internet usage? (e.g., streaming, working from home, gaming, etc.)\n\nRegarding upload speeds, it is very likely that you are connected to the n41 band. This frequency band uses time-sharing, which means that the tower spends most of its time sending data to you and less time receiving data from you, resulting in great download speeds but poor upload speeds. In that case, an antenna would only be able to boost your upload speeds to a certain threshold. \n\nAs for the antenna location, I would always recommend installing a QuadPro outside, as having it aimed at a wall would impact the performance to an extent.\n\nIf you have any questions or concerns, please let me know!\n\nHope you have a lovely day.\n\nBest,",
+      "features": {
+        "wordCount": 228,
+        "sentenceCount": 11,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 12,
+        "questionCount": 3
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 69,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 59,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 56,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 8d0a1010674b4143802e18b1637cd564.md",
+          "score": 56,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 56,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lv7efhk",
+      "messageId": "msg_3693c1k8",
+      "subject": "Re: Follow Up",
+      "cleanedReply": "Hi Lee,\n\nThank you so much for reaching out,\n\nI'm Ruan from the Sales and Support team at Waveform, and I'd be more than happy to assist you in any way I can.\n\nI want to make sure that we recommend the best solution for your needs. Before we proceed with a recommendation, there are a few general questions that will help us move on to the next steps that I’ve listed below:\n\nWhich carrier are you using?\n\nWhat is the address where the setup will be done? (For reviewing cell tower maps.)\n\nWhat are your current data speeds, with and without the antenna?\n\nHow would you describe your internet usage? (e.g., streaming, working from home, gaming, etc.)\n\nThere should be a couple of different mounting options; please have a look at the detailed guide for the GL-X2000 with step-by-step instructions and pictures for your convenience here.\n\nRegarding discount codes, there are no formal discount codes for these purchases just yet. You are welcome to use my personal discount code for 5% off your purchase (5OFFRDP). Additionally, we have the upcoming Spring Prime sale that starts 25 Mar!\n\nIf you have any questions or concerns, please let me know!\n\nHope you have a lovely day.\n\nBest,",
+      "features": {
+        "wordCount": 208,
+        "sentenceCount": 12,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 13,
+        "questionCount": 4
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 68,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Conversation Flows",
+          "relativePath": "knowledge\\approved\\sops\\Conversation Flows 1faa87f8713f4e1fa7027cc1ee5cbb57.md",
+          "score": 57,
+          "excerpt": "Conversation Flows\n\nMission \n\nTo ensure we speak with customers in a “unified voice” and that the conversations we have follow a logical flow, where we can get all the information we need the first time round and get them to a solution quickly, in a friendly and professional manner. \n\nGeneral \n\nThe below flow is not a script and certainly can’t cover every potential conversation, so use this as a guideline and adapt as needed\nOf course each of us have our own ways of communicating and we want to celebrate this, allow your own style to come through\n\nChat and call flow \n\nGreeting and introductio"
+        },
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 57,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        },
+        {
+          "title": "Reddit",
+          "relativePath": "knowledge\\approved\\sops\\Reddit c6f6ec70374447fa95b7981c82d03afe.md",
+          "score": 57,
+          "excerpt": "Reddit\n\nReddit is one of our less popular channels currently, but is an excellent marketing tool and really helps drive brand engagement! Furthermore, everyone on the team has different levels of knowledge and expertise so having varied input will really help improve our responses, the more the merrier!\n\nIf you'd like to become a moderator of the sub, just ask and we'll set that up!\nCanned responses google doc: \nIf you'd like to add a canned response to the doc and you don't have access, Ping Ian on slack and he'll add you as an editor\n\nWhen responding to threads / messages: \n\nBe extra detaile"
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 55,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lvmxiqw",
+      "messageId": "msg_36apoinc",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Cliff,\n\nThank you for providing me with this information.\n\nPlease find the map of the T-Mobile towers in your area; your location will be circled.\n\nYou can view this map here.\n\nLooks like you have a couple of high-frequency towers close to your location; it seems like you are connected to the tower with the blue dot. \n\nYou could aim to the towers to your north to avoid the n41 towers to your west. Please keep these directions in mind when installing an antenna system.\n\nIn your case, I would recommend the QuadPro, since the antenna is compatible with your gateway and is directional, meaning you could use it to pull signal from a different tower, which should help get those upload speeds up!\n\nSince your video calls stutter when cloud backups run, it might help to schedule those backups for off-hours or adjust their upload bandwidth limit. That way, they’re less likely to compete with real-time calls and cause interruptions.\n\nLet me know your thoughts on the recommendation.\n\nBest,",
+      "features": {
+        "wordCount": 172,
+        "sentenceCount": 10,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 10,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 52,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 46,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Library of Examples, FAQ's, Templates and Scripts (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Library of Examples, FAQ's, Templates and Scripts  f6e743bd51004c64a00978db670d7a1d.md",
+          "score": 44,
+          "excerpt": "Library of Examples, FAQ's, Templates and Scripts (Under construction)\n\nFAQ's \ncan I use my existing cabling\ndo I need any adapters\nhow do I penetrate the building with cables\nhow long are the included cables\nwhat tower am I connected to\nwhat tower should I aim at\nhow do I know where to aim my antenna\ndoes this booster need an internet connection\nwhere and how should I install the lightning surge protector\ndoes the booster need power\ndo the antennas need power\nwhere should I mount my outdoor antenna\nwhere should I mount my indoor antennas\nhow far apart should my antennas be\ndo I need separatio"
+        },
+        {
+          "title": "Reddit",
+          "relativePath": "knowledge\\approved\\sops\\Reddit c6f6ec70374447fa95b7981c82d03afe.md",
+          "score": 44,
+          "excerpt": "Reddit\n\nReddit is one of our less popular channels currently, but is an excellent marketing tool and really helps drive brand engagement! Furthermore, everyone on the team has different levels of knowledge and expertise so having varied input will really help improve our responses, the more the merrier!\n\nIf you'd like to become a moderator of the sub, just ask and we'll set that up!\nCanned responses google doc: \nIf you'd like to add a canned response to the doc and you don't have access, Ping Ian on slack and he'll add you as an editor\n\nWhen responding to threads / messages: \n\nBe extra detaile"
+        },
+        {
+          "title": "Drift chat",
+          "relativePath": "knowledge\\approved\\sops\\Drift chat 47cf65bd513c465593823edecce3ec33.md",
+          "score": 43,
+          "excerpt": "Drift chat\n\nLive chat with customers that are active on our website is a great opportunity to proactively engage customers while they're actively interested in our products, or in need of support. \n\nGeneral Best Practices\n\nThere's an art to engaging customers with a live chat, and by the time you're live at Waveform you'll have had plenty of guidance and practice, so you should be a pro. \n\nNonetheless, a couple notes: \n\nDocumentation, documentation, documentation! Leave thorough notes in PipeDrive and Locate as necessary, to make life easier for yourself and your team down the road.\nChat is in"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1i0ca0",
+      "messageId": "msg_36mswzag",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi John,\n\nThank you for your response.\n\nThe kit comes with two cables. Choosing one ten-foot cable means you will have one for each antenna, so no extra cables are needed.\n\nThe QuadPro is directional, not omni. With your setup, pairing a directional antenna with your current one is what's recommended, not using an omnidirectional.\n\nIf you decide on a full eight by eight, you will not be able to reduce the number of cables included. The kit always comes with two, so choosing one ten-foot cable still gives you two, one for each antenna. There's also no option to choose not to receive the second cable.\n\nYou could use your existing cable, but that would need extra adapters, and since the kit already includes a cable, it is simpler to use the one provided.\n\nIf its still unclear, can you please schedule a call with me here?\n\nzcal.co/abeds\n\nBest,",
+      "features": {
+        "wordCount": 152,
+        "sentenceCount": 10,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": false,
+        "paragraphCount": 9,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 40,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1bfcbeb1d73b8101b214c8e88054b752.md",
+          "score": 39,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1bfcbeb1d73b818ba601eca555942bc8.md",
+          "score": 39,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1bfcbeb1d73b81f6ac9cc3eb29f1832a.md",
+          "score": 39,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1c1cbeb1d73b81aea77ef54176c095a7.md",
+          "score": 39,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1i0ca0",
+      "messageId": "msg_36ln44yw",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi John,\n\nThank you for reaching out to us. I'd be happy to help.\n\nYou can use your existing antenna and simply get a second one to pair with it, aiming both at the same tower. You won’t need a full 8x8 setup, since an 8x8 is essentially two antennas, and you already have one. You can check the price here.\n\nUnfortunately, I wasn’t able to find an order under your details to see which antenna you have. Could you please let me know which antenna you are currently using?\n\nAnother option is to try our outdoor enclosure (price shown in the link). If you get the G5AR and test it outside, you might see improved speeds. You could then use the gateway inside the enclosure with a separate Wi-Fi router to cover your indoor space.\n\nBest,",
+      "features": {
+        "wordCount": 139,
+        "sentenceCount": 10,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 6,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 46,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Drift chat",
+          "relativePath": "knowledge\\approved\\sops\\Drift chat 47cf65bd513c465593823edecce3ec33.md",
+          "score": 41,
+          "excerpt": "Drift chat\n\nLive chat with customers that are active on our website is a great opportunity to proactively engage customers while they're actively interested in our products, or in need of support. \n\nGeneral Best Practices\n\nThere's an art to engaging customers with a live chat, and by the time you're live at Waveform you'll have had plenty of guidance and practice, so you should be a pro. \n\nNonetheless, a couple notes: \n\nDocumentation, documentation, documentation! Leave thorough notes in PipeDrive and Locate as necessary, to make life easier for yourself and your team down the road.\nChat is in"
+        },
+        {
+          "title": "Library of Examples, FAQ's, Templates and Scripts (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Library of Examples, FAQ's, Templates and Scripts  f6e743bd51004c64a00978db670d7a1d.md",
+          "score": 41,
+          "excerpt": "Library of Examples, FAQ's, Templates and Scripts (Under construction)\n\nFAQ's \ncan I use my existing cabling\ndo I need any adapters\nhow do I penetrate the building with cables\nhow long are the included cables\nwhat tower am I connected to\nwhat tower should I aim at\nhow do I know where to aim my antenna\ndoes this booster need an internet connection\nwhere and how should I install the lightning surge protector\ndoes the booster need power\ndo the antennas need power\nwhere should I mount my outdoor antenna\nwhere should I mount my indoor antennas\nhow far apart should my antennas be\ndo I need separatio"
+        },
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 41,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        },
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 40,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1i0ca0",
+      "messageId": "msg_36m1bdd4",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "John,\n\nThank you for your response. To answer your question, 1x 20 ft cable would be 2x for the 8x8. You can't connect them with just one 4x4 cable. They don't take into account anyone having a previous setup.\n\nIf you'd like to buy another 4x4 to create the 8x8 instead of a full 8x8 (to save you the money), I'd suggest going with this antenna:\n\n[url]\n\nIt's the improved version of the antenna you have. It has similar gains but more flexible cables. It also comes with a window entry cable to avoid drilling holes.\n\nJust place the new antennas close to the old antennas you have and aim them at the same tower.\n\nBest,",
+      "features": {
+        "wordCount": 121,
+        "sentenceCount": 8,
+        "startsWithGreeting": false,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": true,
+        "paragraphCount": 7,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Reddit",
+          "relativePath": "knowledge\\approved\\sops\\Reddit c6f6ec70374447fa95b7981c82d03afe.md",
+          "score": 38,
+          "excerpt": "Reddit\n\nReddit is one of our less popular channels currently, but is an excellent marketing tool and really helps drive brand engagement! Furthermore, everyone on the team has different levels of knowledge and expertise so having varied input will really help improve our responses, the more the merrier!\n\nIf you'd like to become a moderator of the sub, just ask and we'll set that up!\nCanned responses google doc: \nIf you'd like to add a canned response to the doc and you don't have access, Ping Ian on slack and he'll add you as an editor\n\nWhen responding to threads / messages: \n\nBe extra detaile"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 36,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Customer Service Etiquette",
+          "relativePath": "knowledge\\approved\\sops\\Customer Service Etiquette c14c3e60c0ae4308912dc99b48f05ff1.md",
+          "score": 33,
+          "excerpt": "Customer Service Etiquette\n\nDid you know?\n\n73% of consumers say friendly customer service reps can make them fall in love with a brand. Right Now\n42% of consumers switch brands because they are put off by rude or unhelpful staff New Voice\n\nThe Do's and Don'ts\n\nDo's: \n\nAlways answer the phone with your name and where you are calling from:\ni.e \"Hello! This is Ian from Waveform, thanks for reaching out! May I get your name?\"\nAlways keep a friendly, mellow, and professional tone.\nBegin and end every encounter on a positive note.\nUse the hold button if research will take a while but be sure to chec"
+        },
+        {
+          "title": "Library of Examples, FAQ's, Templates and Scripts (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Library of Examples, FAQ's, Templates and Scripts  f6e743bd51004c64a00978db670d7a1d.md",
+          "score": 33,
+          "excerpt": "Library of Examples, FAQ's, Templates and Scripts (Under construction)\n\nFAQ's \ncan I use my existing cabling\ndo I need any adapters\nhow do I penetrate the building with cables\nhow long are the included cables\nwhat tower am I connected to\nwhat tower should I aim at\nhow do I know where to aim my antenna\ndoes this booster need an internet connection\nwhere and how should I install the lightning surge protector\ndoes the booster need power\ndo the antennas need power\nwhere should I mount my outdoor antenna\nwhere should I mount my indoor antennas\nhow far apart should my antennas be\ndo I need separatio"
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 31,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        }
+      ]
+    }
+  ]
+}

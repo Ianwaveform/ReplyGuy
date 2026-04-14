@@ -1,0 +1,58 @@
+{
+  "intent": "general-support",
+  "label": "General Support",
+  "generatedFromExport": "2026-04-01T00-19-07-299Z",
+  "examples": [
+    {
+      "conversationId": "cnv_1m1i4zag",
+      "messageId": "msg_36llc5pk",
+      "subject": "Re: UserLoop | Customer Asked to be Contacted for Pre-Sale Help & Tech Support",
+      "cleanedReply": "Hello Patrick,\n\nThank you for your purchase and feedback! Please let me know if you have any questions or concerns. I'd be happy to assist.\n\nMoreover, If you'd kindly be interested, I'd be more than happy to speak with you over the phone to discuss this in more detail. Please use this link to schedule a call with me at your convenience. \n\nBest,",
+      "features": {
+        "wordCount": 63,
+        "sentenceCount": 5,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 4,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 30,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 29,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 8d0a1010674b4143802e18b1637cd564.md",
+          "score": 29,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Drift chat",
+          "relativePath": "knowledge\\approved\\sops\\Drift chat 47cf65bd513c465593823edecce3ec33.md",
+          "score": 27,
+          "excerpt": "Drift chat\n\nLive chat with customers that are active on our website is a great opportunity to proactively engage customers while they're actively interested in our products, or in need of support. \n\nGeneral Best Practices\n\nThere's an art to engaging customers with a live chat, and by the time you're live at Waveform you'll have had plenty of guidance and practice, so you should be a pro. \n\nNonetheless, a couple notes: \n\nDocumentation, documentation, documentation! Leave thorough notes in PipeDrive and Locate as necessary, to make life easier for yourself and your team down the road.\nChat is in"
+        },
+        {
+          "title": "E-Commerce Escalations",
+          "relativePath": "knowledge\\approved\\sops\\E-Commerce Escalations bfba8d6d1aba44c49fd3f696d02e8359.md",
+          "score": 27,
+          "excerpt": "E Commerce Escalations\n\nYour leaders are here to support you! Whenever you're unsure about a process, how to approach a situation, or need to run something by someone, we're here to help! \n\nWe will always try to reach the ideal solution for the customer, while also considering the impact and cost to the business. \n\nGeneral\n\nYou should always feel confident to escalate any issues you face with a customer. We're a team and your managers are here to help! The end goal is a happy customer, which will always be the focus of our escalated discussions.\n\nBefore you escalate: \n\nDouble check that you've"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+{
+  "intent": "commercial",
+  "label": "Commercial",
+  "generatedFromExport": "2026-04-01T00-19-07-299Z",
+  "examples": [
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_36lrc59k",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hi Tzvi, good morning!\n\nThanks for your patience as I worked on this. \n\nAfter taking a look at the plans, I believe on low frequency bands (like B13 for example) 1 antenna will be enough to cover each floor, but it is unlikely to be the case for higher frequency bands.\n\nThe G41 can boost 2 bands simultaneously, as long as they are available outside where the donor antenna is placed.\n\nLow frequency bands are great for phone calls and SMS messaging, but offer a reduced internet speed. Higher frequency bands cannot penetrate walls very well but offer higher inernet speed.\n\nPlease let me know if that makes sense or you have any questions!\n\nRegards,",
+      "features": {
+        "wordCount": 115,
+        "sentenceCount": 7,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 7,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 46,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Intake, Qualifying & Scoping",
+          "relativePath": "knowledge\\approved\\sops\\Intake, Qualifying & Scoping 1bfcbeb1d73b810ba831f41b8652f805.md",
+          "score": 45,
+          "excerpt": "Intake, Qualifying & Scoping\n\nOnce we've taken a commercial project in, we will always do extensive scoping before making recommendations or moving to design. There are a few reasons for this: \n\nTo ensure we fully understand the project \nTo allow us to guarantee a certain amount of performance \nTo protect our design resources \nTo build a strong relationship with the customer \n\nThis stage belongs entirely to the signal specialist, and notes must be made diligently in PipeDrive. Any uncertainties around the design requirements should be taken up with the design team before handing off for design"
+        },
+        {
+          "title": "Intake, Qualifying & Scoping",
+          "relativePath": "knowledge\\approved\\sops\\Intake, Qualifying & Scoping 1bfcbeb1d73b81148c7dc3ca36fbef50.md",
+          "score": 45,
+          "excerpt": "Intake, Qualifying & Scoping\n\nOnce we've taken a commercial project in, we will always do extensive scoping before making recommendations or moving to design. There are a few reasons for this: \n\nTo ensure we fully understand the project \nTo allow us to guarantee a certain amount of performance \nTo protect our design resources \nTo build a strong relationship with the customer \n\nThis stage belongs entirely to the signal specialist, and notes must be made diligently in PipeDrive. Any uncertainties around the design requirements should be taken up with the design team before handing off for design"
+        },
+        {
+          "title": "Intake, Qualifying & Scoping",
+          "relativePath": "knowledge\\approved\\sops\\Intake, Qualifying & Scoping 1bfcbeb1d73b8148850fdbe3178d1225.md",
+          "score": 45,
+          "excerpt": "Intake, Qualifying & Scoping\n\nOnce we've taken a commercial project in, we will always do extensive scoping before making recommendations or moving to design. There are a few reasons for this: \n\nTo ensure we fully understand the project \nTo allow us to guarantee a certain amount of performance \nTo protect our design resources \nTo build a strong relationship with the customer \n\nThis stage belongs entirely to the signal specialist, and notes must be made diligently in PipeDrive. Any uncertainties around the design requirements should be taken up with the design team before handing off for design"
+        },
+        {
+          "title": "Intake, Qualifying & Scoping",
+          "relativePath": "knowledge\\approved\\sops\\Intake, Qualifying & Scoping 1c1cbeb1d73b81d18d20e7999456b6cd.md",
+          "score": 45,
+          "excerpt": "Intake, Qualifying & Scoping\n\nOnce we've taken a commercial project in, we will always do extensive scoping before making recommendations or moving to design. There are a few reasons for this: \n\nTo ensure we fully understand the project \nTo allow us to guarantee a certain amount of performance \nTo protect our design resources \nTo build a strong relationship with the customer \n\nThis stage belongs entirely to the signal specialist, and notes must be made diligently in PipeDrive. Any uncertainties around the design requirements should be taken up with the design team before handing off for design"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_36f060mg",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hi Tzvi, good morning!\n\nSorry got your message after I left the office yesterday. I just looked at the reading and they look usable, however the signal strength is too low for a 65 or even a 75 dB booster. For those readings I think the best bet would be a 100 dB gain booster from Cel-Fi; either the all carrier G43 or the single carrier G41.\n\nFor reference; for a 75 dB gain booster we would be looking for a signal with RSRP better than around -85 dBm.\n\nPlease let me know if you have any questions or if you'd like to hop on a call any time today.\n\nBest regards,",
+      "features": {
+        "wordCount": 112,
+        "sentenceCount": 6,
+        "startsWithGreeting": true,
+        "hasThanks": false,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 5,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Vetting and Referring Installers for Commercial Projects",
+          "relativePath": "knowledge\\approved\\sops\\Vetting and Referring Installers for Commercial Pr 1bfcbeb1d73b81b8ae8bf11e272b9e00.md",
+          "score": 39,
+          "excerpt": "Vetting and Referring Installers for Commercial Projects\n\nI think these calls generally need to be more of a casual conversation, and will change with each project and each installer, but there are definitely some key points that need to be addressed. Worth keeping in mind too that we'll want to have a more detailed call with whatever installer we pick for each project, closer to the project beginning.\n\nThis call's purpose should be purely to gather info so we can pick our preferred installer from a shortlist. I imagine we'll do this with at least handful of installers for every project. At le"
+        },
+        {
+          "title": "Vetting and Referring Installers for Commercial Projects",
+          "relativePath": "knowledge\\approved\\sops\\Vetting and Referring Installers for Commercial Pr 57a169a83f624c4ab1d572521ad78a1e.md",
+          "score": 39,
+          "excerpt": "Vetting and Referring Installers for Commercial Projects\n\nI think these calls generally need to be more of a casual conversation, and will change with each project and each installer, but there are definitely some key points that need to be addressed. Worth keeping in mind too that we'll want to have a more detailed call with whatever installer we pick for each project, closer to the project beginning.\n\nThis call's purpose should be purely to gather info so we can pick our preferred installer from a shortlist. I imagine we'll do this with at least handful of installers for every project. At le"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b80fb8546fa5ee5c9fa65.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b81e596cbd8ccdda0fb8c.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) 1bfcbeb1d73b812492b1fc0931d49f5a.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sales team "
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_35i4w3xk",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hi Tzvi,\n\nThanks again for your time over the phone!\n\nHere's what we disussed for that ~5,000 sq ft office:\n\n(A) Cel-Fi G43: ~$7,000 for all hardware components\n\n(B) Verizon 4G LTE Network Extender 3 for Enterprise: ~$4,000 for all hardware components\n\n(C) Verizon 5G Network Extender 4 for Enterprise: ~7,500 for all hardware components\n\nWeBoost options: (low gain)\n\n(A) weBoost Office 200 - $1,699.99 (without add-ons)\n(B) weBoost Installed | Office 200 - $3,799.99\n(C) weBoost Installed | Office 300 - $3,799.99\n\nPlease let me know if you have any questions at all!\n\nBest regards,",
+      "features": {
+        "wordCount": 101,
+        "sentenceCount": 2,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 12,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bf24ef20ab64d56b90d39fb8291fbaf.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b81029472f33c2aa77135.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8118a0abc2e4371a03b0.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8194a593f68b2b88cb00.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1c1cbeb1d73b81eea845eca61b759eca.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms of cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_36e3vuso",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hey Tzvi,\n\nThanks again for your time today over the phone, and for your patience with the headset technical difficulties!\n\nAs discussed, here's a link to the Cel-Fi G41 single carrier 100 dB booster. Remember we can use two of those for two carriers.\n[url]\n\nPlease let me know if you have any questions or whenever you have some signal results for us to take a look at.\n\nBest regards,",
+      "features": {
+        "wordCount": 81,
+        "sentenceCount": 4,
+        "startsWithGreeting": false,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": true,
+        "paragraphCount": 6,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b81029472f33c2aa77135.md",
+          "score": 35,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8118a0abc2e4371a03b0.md",
+          "score": 35,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8194a593f68b2b88cb00.md",
+          "score": 35,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation a648a58080eb46a2bd36cb4b84767689.md",
+          "score": 35,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Vetting and Referring Installers for Commercial Projects",
+          "relativePath": "knowledge\\approved\\sops\\Vetting and Referring Installers for Commercial Pr 1bfcbeb1d73b81b8ae8bf11e272b9e00.md",
+          "score": 33,
+          "excerpt": "Vetting and Referring Installers for Commercial Projects\n\nI think these calls generally need to be more of a casual conversation, and will change with each project and each installer, but there are definitely some key points that need to be addressed. Worth keeping in mind too that we'll want to have a more detailed call with whatever installer we pick for each project, closer to the project beginning.\n\nThis call's purpose should be purely to gather info so we can pick our preferred installer from a shortlist. I imagine we'll do this with at least handful of installers for every project. At le"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_36aq5ve0",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Tzvi,\n\nThank you for your response! Nothing specific on our side, I remember you scheduled a meeting with me that was cancelled and we did not get a chance to meet since I sent you the estimate for the grocery store project If I recall correctly (reattached). I wanted to get your thoughts on that project, or possibly any other cellular opportunities that we can assist with.\n\nRegards,",
+      "features": {
+        "wordCount": 68,
+        "sentenceCount": 3,
+        "startsWithGreeting": false,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": false,
+        "paragraphCount": 3,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bf24ef20ab64d56b90d39fb8291fbaf.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b81029472f33c2aa77135.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8118a0abc2e4371a03b0.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8194a593f68b2b88cb00.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1c1cbeb1d73b81eea845eca61b759eca.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms of cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_36n3opk8",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hey Tzvi,\n\nHere are the two options, please keep those numbers are maximum estimates, we should stay below those;\n\nG41 + 3 ANT equipment cost: $2,900\nG41 + 6 ANT equipment cost: $3,700\n\nSame design cost applies as well:\n$1,000 upfront with a $500 discount towards your equipment purchase.\n\nPlease let me know if you have any questions at all!\n\nBest regards,",
+      "features": {
+        "wordCount": 63,
+        "sentenceCount": 2,
+        "startsWithGreeting": false,
+        "hasThanks": false,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 8,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b80fb8546fa5ee5c9fa65.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b81e596cbd8ccdda0fb8c.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) 1bfcbeb1d73b812492b1fc0931d49f5a.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sales team "
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) 8c60d7c493c74c949f7b9081e7191861.md",
+          "score": 36,
+          "excerpt": "Commercial Turnkey SOP (WIP)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sales team "
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b81029472f33c2aa77135.md",
+          "score": 33,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_35v210mg",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hi Tzvi,\n\nJust tried calling you again but hit your v.m. I will jump in a meeting in 10 mins, and will try you again after my meeting. Please let me know if there's a specific good time for a call back!\n\nOtherwise, please feel free to schedule some time right on my calendar linked in my signature.\n\nBest regards,",
+      "features": {
+        "wordCount": 61,
+        "sentenceCount": 4,
+        "startsWithGreeting": true,
+        "hasThanks": false,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 4,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b81029472f33c2aa77135.md",
+          "score": 29,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8118a0abc2e4371a03b0.md",
+          "score": 29,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation 1bfcbeb1d73b8194a593f68b2b88cb00.md",
+          "score": 29,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Estimation",
+          "relativePath": "knowledge\\approved\\sops\\Estimation a648a58080eb46a2bd36cb4b84767689.md",
+          "score": 29,
+          "excerpt": "Estimation\n\nWe will always provide a potential customer with a budgetary estimate document. The client can then take that to their stakeholders for approval while preventing any surprises for the customer in terms cost. Further the estimate document provides an explanation for the commercial process with a timeline and a quote for design. \n\nPreparation \n\n1. Login to PandaDocs at \nlogin details are shared in LastPass\n2. Access the Commercial cost estimate template\nIn the left hand navigation menu, navigate to Templates Waveform Commercial Cost Estimate and Design Booking [TEMPLATE]\nPlease do no"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b80fb8546fa5ee5c9fa65.md",
+          "score": 28,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lgvc9bc",
+      "messageId": "msg_36acf9ns",
+      "subject": "Re: sn of g43",
+      "cleanedReply": "Hi Tzvi, I hope this email finds you well!\n\nJust wanted to touch base with you to see if you'll have a chance for us to meet soon. Please feel free to use my calendar to schedule, or let me know if you have any preferred times.\n\nLooking forward to working again with you.\n\nBest regards,",
+      "features": {
+        "wordCount": 56,
+        "sentenceCount": 4,
+        "startsWithGreeting": true,
+        "hasThanks": false,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 4,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Vetting and Referring Installers for Commercial Projects",
+          "relativePath": "knowledge\\approved\\sops\\Vetting and Referring Installers for Commercial Pr 1bfcbeb1d73b81b8ae8bf11e272b9e00.md",
+          "score": 28,
+          "excerpt": "Vetting and Referring Installers for Commercial Projects\n\nI think these calls generally need to be more of a casual conversation, and will change with each project and each installer, but there are definitely some key points that need to be addressed. Worth keeping in mind too that we'll want to have a more detailed call with whatever installer we pick for each project, closer to the project beginning.\n\nThis call's purpose should be purely to gather info so we can pick our preferred installer from a shortlist. I imagine we'll do this with at least handful of installers for every project. At le"
+        },
+        {
+          "title": "Vetting and Referring Installers for Commercial Projects",
+          "relativePath": "knowledge\\approved\\sops\\Vetting and Referring Installers for Commercial Pr 57a169a83f624c4ab1d572521ad78a1e.md",
+          "score": 28,
+          "excerpt": "Vetting and Referring Installers for Commercial Projects\n\nI think these calls generally need to be more of a casual conversation, and will change with each project and each installer, but there are definitely some key points that need to be addressed. Worth keeping in mind too that we'll want to have a more detailed call with whatever installer we pick for each project, closer to the project beginning.\n\nThis call's purpose should be purely to gather info so we can pick our preferred installer from a shortlist. I imagine we'll do this with at least handful of installers for every project. At le"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b80fb8546fa5ee5c9fa65.md",
+          "score": 26,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP) (Copy)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) (Copy) 1bfcbeb1d73b81e596cbd8ccdda0fb8c.md",
+          "score": 26,
+          "excerpt": "Commercial Turnkey SOP (WIP) (Copy)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sale"
+        },
+        {
+          "title": "Commercial Turnkey SOP (WIP)",
+          "relativePath": "knowledge\\approved\\sops\\Commercial Turnkey SOP (WIP) 1bfcbeb1d73b812492b1fc0931d49f5a.md",
+          "score": 26,
+          "excerpt": "Commercial Turnkey SOP (WIP)\n\nMajor Project stages\n\nGiven the complexity of many of our commercial projects, we go through a number of stages during a project's life cycle. Within each stage there are clear steps, owners and some key best practices. These will be outlined in the documents below: \n\n1. Lead in Leads typically come intro front as contact form submissions, recommendations from preferred partners, and also via Drift, phones, and from the consumer and enterprise teams.\n2. Intake call within 1 hour, scoping and qualifying Once the lead has been successfully qualified, the sales team "
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+{
+  "intent": "returns",
+  "label": "Returns",
+  "generatedFromExport": "2026-04-01T00-19-07-299Z",
+  "examples": [
+    {
+      "conversationId": "cnv_1k7hmep4",
+      "messageId": "msg_337wv9yg",
+      "subject": "Re: Cel-Fi GO X not boosting form Amplifier",
+      "cleanedReply": "Hello Raiyan,\n\nThank you for reaching out to us. I'd be happy to help.\n\nCould you please clarify—does the outdoor antenna not receive any signal at all, or is it receiving a signal but you’re just not seeing any boost?\n\nIf it’s not receiving a stable and usable signal, you could try moving the outdoor antenna to a different spot. I'd suggest also checking if the signal is stable because if it's fluctuating (changing every minute/second) then the booster's performance will also fluctuate. If it's not stable or the signal is borderline, it's best to move it to another spot and see where you can get a more stable and good signal to allow the booster to operate. \n\nYou can check the signal levels from the metrics. In the Wave App under the Activity Tab there's a section labeled \"Superchannels\", showing which frequency band is being boosted on Radio A and B. If you tap on one of them you'll see a detailed list of performance metrics appear. The main values we're concerned with would be the \"Donor RSRP\" which indicates signal strength and \"Donor SINR\" which indicates signal quality.\n\nFirstly we want to ensure that the Donor RSRP is close to -115 dBm and above (with closer to zero being better) as the GO X is capable of boosting signals as weak as -120 dBm. We add the buffer to ensure that even if signal fluctuations occur, the donor RSRP wouldn't drop below -120 dBm.\n\nSecondly we want to ensure that we have at least a positive value for the Donor SINR, but we recommend values of +3 to +6 dB and stable.\n\nAs you relocate/rotate the antenna you'll be able to see how these values change in real time in order to find the best direction. Now if you're able to find a direction yielding the previously mentioned results for one of Radio A or Radio B, that should be a good starting point for the location of the antenna outdoors. \n\nIf it is receiving a good and stable signal, but your phones aren’t getting the boost, try standing next to the indoor antenna to force your phones to use the signal coming from the booster. This just means your phones were using signals from the towers, so standing by the indoor antenna helps them switch to the booster’s signal. After that, you should notice a difference. Make sure to restart your phones while next to the indoor antenna, not just standing nearby.\n\nBest,",
+      "features": {
+        "wordCount": 423,
+        "sentenceCount": 19,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 10,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 69,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "UPS Claims",
+          "relativePath": "knowledge\\approved\\sops\\UPS Claims 9c44113fbf024f84909c3e867fa87ee2.md",
+          "score": 64,
+          "excerpt": "UPS Claims\n\nWhen it comes to package delivery, we can safely say that packages will successfully be delivered to the customer directly at least 95% of the time. For the other 5%, the customer will reach out to us to let us know that they did not receive their order after they were notified that it was delivered, or that the order is delayed or being held at a specific point.\n\nFor cases like these, we can follow these steps to assist the customer as much as we can, by making sure that we actively follow up with UPS so they can track down the package if the tracking information is invalid, or if"
+        },
+        {
+          "title": "Welcome to Front!",
+          "relativePath": "knowledge\\approved\\sops\\Welcome to Front! d6912d1a09084e859959cd4fa73a0efd.md",
+          "score": 63,
+          "excerpt": "Welcome to Front!\n\nWe know new tools can be scary, especially when you've mastered the existing ones, or are busy mastering them, but fear not!\n\nWe want to make sure that everyone at our company can work happier with less stress and overwhelm. This is where Front comes into play. Instead of constantly jumping between nine different programs, you'll be able to manage your entire combined inbox in a single place, collaborate easily with your team, and bring in backup whenever you need it.\n\nWhat we're saying (not very subtly) is that Front rocks!! \n\nYou should've already had at least a brief intr"
+        },
+        {
+          "title": "Customer Service Etiquette",
+          "relativePath": "knowledge\\approved\\sops\\Customer Service Etiquette c14c3e60c0ae4308912dc99b48f05ff1.md",
+          "score": 62,
+          "excerpt": "Customer Service Etiquette\n\nDid you know?\n\n73% of consumers say friendly customer service reps can make them fall in love with a brand. Right Now\n42% of consumers switch brands because they are put off by rude or unhelpful staff New Voice\n\nThe Do's and Don'ts\n\nDo's: \n\nAlways answer the phone with your name and where you are calling from:\ni.e \"Hello! This is Ian from Waveform, thanks for reaching out! May I get your name?\"\nAlways keep a friendly, mellow, and professional tone.\nBegin and end every encounter on a positive note.\nUse the hold button if research will take a while but be sure to chec"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 62,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1k7hmep4",
+      "messageId": "msg_33l3k294",
+      "subject": "Re: Cel-Fi GO X not boosting form Amplifier",
+      "cleanedReply": "Hi Raiyan,\n\nThank you for your response. I checked the signal levels and logs on the Cel-Fi GO X, and it's using bands 2 and 4, so it's not boosting band 13. You can select band 13 from the app if you wish. However, you may need to find a better location where the outdoor antenna receives that band specifically.\n\nFrom the logs from yesterday, the only bands that were being boosted on the app were bands 2 and 4:\n\nIf the application you're using the boosters for can only work for band 13, then please share your location address, and I can send you the tower map to help you find a better location to specifically receive band 13. \n\nJust to clarify, the Cel-Fi GO X provides up to 100 dB of gain, while the Amazboost offers up to 72 dB. This difference is due to FCC regulations: single-carrier boosters are allowed up to 100 dB of gain, whereas multi-carrier boosters are limited to a maximum of 72 dB. \n\nBelow are the specs for the Cel-Fi GO X:\n[url]\n\nBelow are the specs for the Amazboost:\n\n[url]\n\nRegarding the app, we strongly suggest Signal Stream since it shows the indoor SINR and all the other metrics, so it gives a better idea of the signal the phone is receiving. \n\nBest,",
+      "features": {
+        "wordCount": 238,
+        "sentenceCount": 8,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": true,
+        "paragraphCount": 11,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Cel-Fi GO X Warranty Process (PSU Only)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi GO X Warranty Process (PSU Only) 35ac6ce4f1de42499026277c04caf687.md",
+          "score": 45,
+          "excerpt": "Cel Fi GO X Warranty Process (PSU Only)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nWhen Nextivity's hardware fails due to defective material or workmanship within 2 years, we will always replace the part as painlessly for the customer as possible. \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped "
+        },
+        {
+          "title": "Cel-Fi Go X Repairs Process (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi Go X Repairs Process (Under construction) 7b0b1ee040f249f7a3bb70fc8b0f5e62.md",
+          "score": 43,
+          "excerpt": "Cel Fi Go X Repairs Process (Under construction)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped from Nextivity’s factory.\nNextivity warrants that it's products will be free from material defects in workmanship and materials and will conform in all materi"
+        },
+        {
+          "title": "Return Shipping Labels",
+          "relativePath": "knowledge\\approved\\sops\\Return Shipping Labels 43ec7eca7a99469081792dd6cfea9efa.md",
+          "score": 43,
+          "excerpt": "Return Shipping Labels\n\nWaveform offers customers a 90 day money back guarantee and part of this great policy involves giving customers the best level of flexibility when it comes to shipping packages back to us.\n\nReturns\n\nFor standard returns where we are only expecting a package back from the customer in exchange for a refund, we typically make sure that the returns are executed and processed through our returns portal, Returnly.\n\nThis will ensure greater control over the RMA, and it’s a quick and easy way for the customer to receive a return label that they can use to send the package back "
+        },
+        {
+          "title": "Exchanges in WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\Exchanges in WeSupply f66c1d4ba675484081c19dd7656a85ea.md",
+          "score": 42,
+          "excerpt": "Exchanges in WeSupply\n\nExchange Process SOP \n\nObjective \n\nTo facilitate seamless product exchanges for customers within the WeSupply platform. At the current stage, exchanges will be limited to a small range of our product collections.\n\nEligible products\n\nWaveform QuadMini: Low Profile Omni 4x4 MIMO Antenna \nWaveform QuadPro: High Gain Directional 4x4 MIMO Panel Antenna \n~~MIMO 4x4 Panel External Antenna Kit for 4G LTE/5G Hotspots & Routers~~ \n~~MIMO 4x4 Log Periodic Antenna Kit for 4G/5G Hotspots & Routers~~ \n\nExchange Policy:\n\nExchange options for the customer:\n\nUpgrade from QuadMini Kit to "
+        },
+        {
+          "title": "Documentation Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\Documentation Best Practices 915675aa2f7e4d3b8c5a0fb3fab70376.md",
+          "score": 41,
+          "excerpt": "Documentation Best Practices\n\nAs our team continues to grow and customers speak with more of us about any given deal, it's crucial that we leave great notes in PipeDrive and DEAR to make picking up where someone else left off as easy as possible. \n\nMission\n\nLeaving great notes makes it easier for you, your team mates and other departments to understand what's going on and how best to assist a customer quickly. Leaving poor notes or no notes at all has the exact opposite effect.\n\nGood notes streamline our team work within and across departments.\nGood notes allow us to better serve customers and"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m01g5ig",
+      "messageId": "msg_36iaeeso",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Clayton,\n\nThank you for reaching out to us. I'd be happy to help.\n\nRegarding the discount, I'd like to check with my manager, and get back to you. In the meantime, I'd suggest trying the antennas first since you do have the gateways. For the return date we can extend it to 120 days instead of 90, it wouldn't be an issue.\n\nJust a couple of quick notes on the gateways:\n\nFor the G5AR, it requires two QuadPros, not just one, since it has 8 internal ports. You would also need to open it up and connect the antennas from the inside, as shown here:\n\n[url]\n\nFor the G4AR, it can work with just one QuadPro because it only has 4 ports. You would need to switch it to external mode, as shown here:\n\n[url]\n\nIf you can share your location address, I can share the towers in your area to help you aim the antenna. Another side note: higher isn’t always better, often, lower locations can actually perform better, as they’re more shielded from interfering towers by the walls of the house. Thus, It’s worth testing different positions/heights before doing any permanent installation.\n\nBest,",
+      "features": {
+        "wordCount": 216,
+        "sentenceCount": 10,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": true,
+        "paragraphCount": 10,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 54,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        },
+        {
+          "title": "Exchanges in WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\Exchanges in WeSupply f66c1d4ba675484081c19dd7656a85ea.md",
+          "score": 52,
+          "excerpt": "Exchanges in WeSupply\n\nExchange Process SOP \n\nObjective \n\nTo facilitate seamless product exchanges for customers within the WeSupply platform. At the current stage, exchanges will be limited to a small range of our product collections.\n\nEligible products\n\nWaveform QuadMini: Low Profile Omni 4x4 MIMO Antenna \nWaveform QuadPro: High Gain Directional 4x4 MIMO Panel Antenna \n~~MIMO 4x4 Panel External Antenna Kit for 4G LTE/5G Hotspots & Routers~~ \n~~MIMO 4x4 Log Periodic Antenna Kit for 4G/5G Hotspots & Routers~~ \n\nExchange Policy:\n\nExchange options for the customer:\n\nUpgrade from QuadMini Kit to "
+        },
+        {
+          "title": "FAQ & Best Practices for WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\FAQ & Best Practices for WeSupply 5056f4385db64d71aea3f5b2ff33f011.md",
+          "score": 52,
+          "excerpt": "FAQ & Best Practices for WeSupply\n\nFrequently Asked Questions\n\nQ: Can I generate a return label for the customers? \n\nYes! There is no need for back and forth communication with the customer, with a simple click of a button you can generate a return label and notify the customer automatically.\n\nQ: Can the customer generate themselves a return label? \n\nYes! The customer is not required to reach out to your customer service team. They can simply select the products they want to return and generate a return label.\n\nQ: Can we set products as non returnable? \n\nYes! You can simply set all products wi"
+        },
+        {
+          "title": "Return Shipping Labels",
+          "relativePath": "knowledge\\approved\\sops\\Return Shipping Labels 43ec7eca7a99469081792dd6cfea9efa.md",
+          "score": 50,
+          "excerpt": "Return Shipping Labels\n\nWaveform offers customers a 90 day money back guarantee and part of this great policy involves giving customers the best level of flexibility when it comes to shipping packages back to us.\n\nReturns\n\nFor standard returns where we are only expecting a package back from the customer in exchange for a refund, we typically make sure that the returns are executed and processed through our returns portal, Returnly.\n\nThis will ensure greater control over the RMA, and it’s a quick and easy way for the customer to receive a return label that they can use to send the package back "
+        },
+        {
+          "title": "Returnly for E-Commerce",
+          "relativePath": "knowledge\\approved\\sops\\Returnly for E-Commerce 9653bd5033914c1d8b1ecf712e792b2e.md",
+          "score": 50,
+          "excerpt": "Returnly for E Commerce\n\nThe Customer Experience \n\n1. To start a return the customer would have to navigate to \n2. On this page they’d need to input their order number and the ZIP corresponding to their shipping address. They can also log in using their Google account.\n\n[](https://lh6.googleusercontent.com/SKGv4lQ0Tf6wKMfHXhy VOcO0kmkvE4bnbTOti9tuaCwMwbeCh94PZEdOjVcUl1GnXu8wqZ0sWIjA9mvIyLe6SyiKaOp5AuAT eyrCam4fRZSBLgdLk4KVGgScLxm6bArXOdjtZk=s0)\n\n1. On the following page the customer will be presented with the products included in their order, with each product displayed on its own card. \n\nNote"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lhutfqg",
+      "messageId": "msg_35qt2y20",
+      "subject": "Re: Processing your return",
+      "cleanedReply": "Hi Craig,\n\nThanks for taking the time to do the tests! Really appreciate it.\n\nInterestingly enough the signal levels appear very similar, perhaps because it's on the B12 band, which is low frequency so the signal drop-off on inside versus outside may not be as impacted as the higher frequencies.\n\nNow, I will mention upfront that in order to change the gateway from internal to external antenna setting, the gateway needs to be picking up a decent 5G signal. As I did not see any 5G data you might get some trouble to do it at the location, otherwise you'd get this error:\n\nWhat you can do is take the gateway itself to a location with 5G and make the switch there and even after unplugging it remembers the setting and then you can connect the external antenna at the intended location.\n\nAs for the type of antenna, something directional would be more suitable, this would be our QuadPro antenna and I'd recommend only using 20-ft of cable to minimize the signal losses.\n[url]\n\nBest,",
+      "features": {
+        "wordCount": 182,
+        "sentenceCount": 6,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": true,
+        "paragraphCount": 8,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Exchanges in WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\Exchanges in WeSupply f66c1d4ba675484081c19dd7656a85ea.md",
+          "score": 53,
+          "excerpt": "Exchanges in WeSupply\n\nExchange Process SOP \n\nObjective \n\nTo facilitate seamless product exchanges for customers within the WeSupply platform. At the current stage, exchanges will be limited to a small range of our product collections.\n\nEligible products\n\nWaveform QuadMini: Low Profile Omni 4x4 MIMO Antenna \nWaveform QuadPro: High Gain Directional 4x4 MIMO Panel Antenna \n~~MIMO 4x4 Panel External Antenna Kit for 4G LTE/5G Hotspots & Routers~~ \n~~MIMO 4x4 Log Periodic Antenna Kit for 4G/5G Hotspots & Routers~~ \n\nExchange Policy:\n\nExchange options for the customer:\n\nUpgrade from QuadMini Kit to "
+        },
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 51,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        },
+        {
+          "title": "Cel-Fi GO X Warranty Process (PSU Only)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi GO X Warranty Process (PSU Only) 35ac6ce4f1de42499026277c04caf687.md",
+          "score": 50,
+          "excerpt": "Cel Fi GO X Warranty Process (PSU Only)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nWhen Nextivity's hardware fails due to defective material or workmanship within 2 years, we will always replace the part as painlessly for the customer as possible. \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped "
+        },
+        {
+          "title": "FAQ & Best Practices for WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\FAQ & Best Practices for WeSupply 5056f4385db64d71aea3f5b2ff33f011.md",
+          "score": 48,
+          "excerpt": "FAQ & Best Practices for WeSupply\n\nFrequently Asked Questions\n\nQ: Can I generate a return label for the customers? \n\nYes! There is no need for back and forth communication with the customer, with a simple click of a button you can generate a return label and notify the customer automatically.\n\nQ: Can the customer generate themselves a return label? \n\nYes! The customer is not required to reach out to your customer service team. They can simply select the products they want to return and generate a return label.\n\nQ: Can we set products as non returnable? \n\nYes! You can simply set all products wi"
+        },
+        {
+          "title": "FAQ's and Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\FAQ's and Best Practices 9eb82d880a4c4e16a3d0b8c5bffd113f.md",
+          "score": 48,
+          "excerpt": "FAQ's and Best Practices\n\nFrequently asked questions \n\nThe customer is outside the 90 day return window but we still need to process it, what do I do? \n\nYou can still click on either the product image, or the “This item is outside the 90 day return period: box\n\nHow does the customer's google account integrate with Returnly? \nThe customer would had to have used their Google account when they purchased. \n\nIs the shipping cost deducted from the customer's refund if they don't use the shipping label? \n\nThe shipping cost will only be deducted from the customer's refund if the shipping label was use"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lhutfqg",
+      "messageId": "msg_36i503oo",
+      "subject": "Re: Processing your return",
+      "cleanedReply": "Hi Craig,\n\nAbed standing in for Anthony as he recently left the company. \n\nThank you for your response and for all your efforts. \n\nI can see you're connected to low frequency bands like band 12 and 71 which offer low speeds by default. \n\nI've attached the T-Mobile 5G towers in your area. G4AR prioritizes 5G. If you haven't tried it already, I'd say you can try the northeastern and northwestern towers from the east and west sides, respectively.\n\nIf you've tried those towers already, one final thing we can try is to swap the middle ports on the G4AR. To illustrate, if you're connected to ports 1234, try 1324. This can sometimes help boost the uploads.\n\nLet me know how it goes. I'd be happy to help!\n\nBest,",
+      "features": {
+        "wordCount": 128,
+        "sentenceCount": 11,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 8,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 34,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 8d0a1010674b4143802e18b1637cd564.md",
+          "score": 34,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Exchanges in WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\Exchanges in WeSupply f66c1d4ba675484081c19dd7656a85ea.md",
+          "score": 34,
+          "excerpt": "Exchanges in WeSupply\n\nExchange Process SOP \n\nObjective \n\nTo facilitate seamless product exchanges for customers within the WeSupply platform. At the current stage, exchanges will be limited to a small range of our product collections.\n\nEligible products\n\nWaveform QuadMini: Low Profile Omni 4x4 MIMO Antenna \nWaveform QuadPro: High Gain Directional 4x4 MIMO Panel Antenna \n~~MIMO 4x4 Panel External Antenna Kit for 4G LTE/5G Hotspots & Routers~~ \n~~MIMO 4x4 Log Periodic Antenna Kit for 4G/5G Hotspots & Routers~~ \n\nExchange Policy:\n\nExchange options for the customer:\n\nUpgrade from QuadMini Kit to "
+        },
+        {
+          "title": "FAQ & Best Practices for WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\FAQ & Best Practices for WeSupply 5056f4385db64d71aea3f5b2ff33f011.md",
+          "score": 33,
+          "excerpt": "FAQ & Best Practices for WeSupply\n\nFrequently Asked Questions\n\nQ: Can I generate a return label for the customers? \n\nYes! There is no need for back and forth communication with the customer, with a simple click of a button you can generate a return label and notify the customer automatically.\n\nQ: Can the customer generate themselves a return label? \n\nYes! The customer is not required to reach out to your customer service team. They can simply select the products they want to return and generate a return label.\n\nQ: Can we set products as non returnable? \n\nYes! You can simply set all products wi"
+        },
+        {
+          "title": "FAQ's and Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\FAQ's and Best Practices 9eb82d880a4c4e16a3d0b8c5bffd113f.md",
+          "score": 33,
+          "excerpt": "FAQ's and Best Practices\n\nFrequently asked questions \n\nThe customer is outside the 90 day return window but we still need to process it, what do I do? \n\nYou can still click on either the product image, or the “This item is outside the 90 day return period: box\n\nHow does the customer's google account integrate with Returnly? \nThe customer would had to have used their Google account when they purchased. \n\nIs the shipping cost deducted from the customer's refund if they don't use the shipping label? \n\nThe shipping cost will only be deducted from the customer's refund if the shipping label was use"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1k7hmep4",
+      "messageId": "msg_33jbymqw",
+      "subject": "Re: Cel-Fi GO X not boosting form Amplifier",
+      "cleanedReply": "Hi Raiyan,\n\nIt was purchased back on March 11, which is well past the 90-day return window now. The deadline for the return was June 9th. \n\nCan you please provide comparative measurements using the Signal Stream app to compare the Cel-Fi gain vs the Amazboost gain? To clarify, the Wave app is used to monitor the Cel-Fi GOX; it doesn't show you your phone's received signal. \n\nTo check your phone's received signal, you can use Signal Stream from an Android phone. \n\nPlease use this link to access a detailed guide for Field Test Mode: \n\n[url]\n\nPlease run the field tests inside next to the indoor antennas of the Cel-Fi and the Amazboost to compare and check.\n\nBest,",
+      "features": {
+        "wordCount": 124,
+        "sentenceCount": 6,
+        "startsWithGreeting": true,
+        "hasThanks": false,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": true,
+        "paragraphCount": 8,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Cel-Fi GO X Warranty Process (PSU Only)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi GO X Warranty Process (PSU Only) 35ac6ce4f1de42499026277c04caf687.md",
+          "score": 38,
+          "excerpt": "Cel Fi GO X Warranty Process (PSU Only)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nWhen Nextivity's hardware fails due to defective material or workmanship within 2 years, we will always replace the part as painlessly for the customer as possible. \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped "
+        },
+        {
+          "title": "FAQ's and Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\FAQ's and Best Practices 9eb82d880a4c4e16a3d0b8c5bffd113f.md",
+          "score": 34,
+          "excerpt": "FAQ's and Best Practices\n\nFrequently asked questions \n\nThe customer is outside the 90 day return window but we still need to process it, what do I do? \n\nYou can still click on either the product image, or the “This item is outside the 90 day return period: box\n\nHow does the customer's google account integrate with Returnly? \nThe customer would had to have used their Google account when they purchased. \n\nIs the shipping cost deducted from the customer's refund if they don't use the shipping label? \n\nThe shipping cost will only be deducted from the customer's refund if the shipping label was use"
+        },
+        {
+          "title": "Cel-Fi Go X Repairs Process (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi Go X Repairs Process (Under construction) 7b0b1ee040f249f7a3bb70fc8b0f5e62.md",
+          "score": 33,
+          "excerpt": "Cel Fi Go X Repairs Process (Under construction)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped from Nextivity’s factory.\nNextivity warrants that it's products will be free from material defects in workmanship and materials and will conform in all materi"
+        },
+        {
+          "title": "Exchanges in WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\Exchanges in WeSupply f66c1d4ba675484081c19dd7656a85ea.md",
+          "score": 33,
+          "excerpt": "Exchanges in WeSupply\n\nExchange Process SOP \n\nObjective \n\nTo facilitate seamless product exchanges for customers within the WeSupply platform. At the current stage, exchanges will be limited to a small range of our product collections.\n\nEligible products\n\nWaveform QuadMini: Low Profile Omni 4x4 MIMO Antenna \nWaveform QuadPro: High Gain Directional 4x4 MIMO Panel Antenna \n~~MIMO 4x4 Panel External Antenna Kit for 4G LTE/5G Hotspots & Routers~~ \n~~MIMO 4x4 Log Periodic Antenna Kit for 4G/5G Hotspots & Routers~~ \n\nExchange Policy:\n\nExchange options for the customer:\n\nUpgrade from QuadMini Kit to "
+        },
+        {
+          "title": "Documentation Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\Documentation Best Practices 915675aa2f7e4d3b8c5a0fb3fab70376.md",
+          "score": 32,
+          "excerpt": "Documentation Best Practices\n\nAs our team continues to grow and customers speak with more of us about any given deal, it's crucial that we leave great notes in PipeDrive and DEAR to make picking up where someone else left off as easy as possible. \n\nMission\n\nLeaving great notes makes it easier for you, your team mates and other departments to understand what's going on and how best to assist a customer quickly. Leaving poor notes or no notes at all has the exact opposite effect.\n\nGood notes streamline our team work within and across departments.\nGood notes allow us to better serve customers and"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lhutfqg",
+      "messageId": "msg_35kghlew",
+      "subject": "Re: Processing your return",
+      "cleanedReply": "Hi Craig,\n\nThanks so much for reaching out.\n\nI'd like to get some further information to help make an appropriate recommendation for you. Can you tell me the address where you would install the antenna, I'd like to review cell maps in the area.\n\nAlso, I’d like for you to use the HINT Control app to take some signal measurements. I've attached a PDF guide to help you get started.\n\nThis app will give us a clearer picture of what’s going on and provide some extra details that we can’t get from the T-Mobile app, plus you can capture them in one screen shot! \n\nPlease let me know if you have any questions or need assistance with the app.\n\nBest,",
+      "features": {
+        "wordCount": 123,
+        "sentenceCount": 7,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 7,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 48,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1bfcbeb1d73b8101b214c8e88054b752.md",
+          "score": 47,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1bfcbeb1d73b818ba601eca555942bc8.md",
+          "score": 47,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1bfcbeb1d73b81f6ac9cc3eb29f1832a.md",
+          "score": 47,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        },
+        {
+          "title": "Info Gathering for Design",
+          "relativePath": "knowledge\\approved\\sops\\Info Gathering for Design 1c1cbeb1d73b81aea77ef54176c095a7.md",
+          "score": 47,
+          "excerpt": "Info Gathering for Design\n\nOnce the project is qualified, we've built a strong rapport with the customer and we've got signal readings, we're almost ready to begin with the design. The next step is intensive info gathering, to ensure our design team has everything they need to draw up a good design for you. \n\nHere's how we go about info gathering \n\n1. Schedule a call with the customer to discuss the finer details that will be relevant to our design. \nZoom works well, and 30 minutes is usually a good time estimate.\nProvide them with a brief summary of the type of info you'll be asking them abou"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m0qqd0o",
+      "messageId": "msg_36jsn0q0",
+      "subject": "Re: Chat follow-up for Jeff Underwood",
+      "cleanedReply": "Hi Jeff,\n\nThank you for reaching out to us. I'd be happy to help.\n\nFor the G5AR, we recommend using two antennas so you can connect to all eight ports, as shown in the guide below:\n\n[url]\n\nWhile we do not recommend using just one antenna, you can try it by connecting to ports 0, 1, 5, and 7. Another option is to swap it for the G4AR from tmobile and connect it as shown here:\n\n[url]\n\nBest,",
+      "features": {
+        "wordCount": 94,
+        "sentenceCount": 3,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": true,
+        "paragraphCount": 7,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Cel-Fi GO X Warranty Process (PSU Only)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi GO X Warranty Process (PSU Only) 35ac6ce4f1de42499026277c04caf687.md",
+          "score": 35,
+          "excerpt": "Cel Fi GO X Warranty Process (PSU Only)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nWhen Nextivity's hardware fails due to defective material or workmanship within 2 years, we will always replace the part as painlessly for the customer as possible. \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped "
+        },
+        {
+          "title": "Exchanges in WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\Exchanges in WeSupply f66c1d4ba675484081c19dd7656a85ea.md",
+          "score": 35,
+          "excerpt": "Exchanges in WeSupply\n\nExchange Process SOP \n\nObjective \n\nTo facilitate seamless product exchanges for customers within the WeSupply platform. At the current stage, exchanges will be limited to a small range of our product collections.\n\nEligible products\n\nWaveform QuadMini: Low Profile Omni 4x4 MIMO Antenna \nWaveform QuadPro: High Gain Directional 4x4 MIMO Panel Antenna \n~~MIMO 4x4 Panel External Antenna Kit for 4G LTE/5G Hotspots & Routers~~ \n~~MIMO 4x4 Log Periodic Antenna Kit for 4G/5G Hotspots & Routers~~ \n\nExchange Policy:\n\nExchange options for the customer:\n\nUpgrade from QuadMini Kit to "
+        },
+        {
+          "title": "Cel-Fi Go X Repairs Process (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Cel-Fi Go X Repairs Process (Under construction) 7b0b1ee040f249f7a3bb70fc8b0f5e62.md",
+          "score": 32,
+          "excerpt": "Cel Fi Go X Repairs Process (Under construction)\n\nAll Nextivity hardware is subject to a 2 year limited warranty, as outlined in the warranty statement linked below. \n\nUnlike with other vendors' hardware, we play an integral role in the GO X warranty experience for our customers \n\nSummary of Cel Fi's Warranty for the GO X\n\nNextivity warrants its products sold through Waveform for twenty six months (26) after the Product was first shipped from Nextivity’s factory.\nNextivity warrants that it's products will be free from material defects in workmanship and materials and will conform in all materi"
+        },
+        {
+          "title": "FAQ & Best Practices for WeSupply",
+          "relativePath": "knowledge\\approved\\sops\\FAQ & Best Practices for WeSupply 5056f4385db64d71aea3f5b2ff33f011.md",
+          "score": 32,
+          "excerpt": "FAQ & Best Practices for WeSupply\n\nFrequently Asked Questions\n\nQ: Can I generate a return label for the customers? \n\nYes! There is no need for back and forth communication with the customer, with a simple click of a button you can generate a return label and notify the customer automatically.\n\nQ: Can the customer generate themselves a return label? \n\nYes! The customer is not required to reach out to your customer service team. They can simply select the products they want to return and generate a return label.\n\nQ: Can we set products as non returnable? \n\nYes! You can simply set all products wi"
+        },
+        {
+          "title": "FAQ's and Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\FAQ's and Best Practices 9eb82d880a4c4e16a3d0b8c5bffd113f.md",
+          "score": 32,
+          "excerpt": "FAQ's and Best Practices\n\nFrequently asked questions \n\nThe customer is outside the 90 day return window but we still need to process it, what do I do? \n\nYou can still click on either the product image, or the “This item is outside the 90 day return period: box\n\nHow does the customer's google account integrate with Returnly? \nThe customer would had to have used their Google account when they purchased. \n\nIs the shipping cost deducted from the customer's refund if they don't use the shipping label? \n\nThe shipping cost will only be deducted from the customer's refund if the shipping label was use"
+        }
+      ]
+    }
+  ]
+}

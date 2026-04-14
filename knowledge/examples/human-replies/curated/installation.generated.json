@@ -1,0 +1,109 @@
+{
+  "intent": "installation",
+  "label": "Installation",
+  "generatedFromExport": "2026-04-01T00-19-07-299Z",
+  "examples": [
+    {
+      "conversationId": "cnv_1lw2hhwo",
+      "messageId": "msg_36mutrhk",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Brad,\n\nIt’s quite possible that the upload speeds you’re seeing are influenced by limitations on the tower side or local congestion, which an external antenna can’t directly fix even though it improves your gateway’s signal reception.\n\nHere are some steps that might help boost your upload performance:\n\nExperiment with different outdoor mounting locations and heights, sometimes lowering the antenna just below the eave can yield better results. Running speed tests at each spot will help you identify the best position. Shifting the antenna to another side of the building might also connect you to a less congested tower.\n\nFine-tune the antenna’s angle both horizontally and vertically, testing after each adjustment. Even slight tilts can impact signal strength and quality. Positioning the antenna so that the building blocks its rear side may reduce interference.\n\nIf your signal quality indicators like SINR are low, considering a higher-gain directional antenna could be beneficial. Keep in mind these require precise aiming and a clear line of sight to perform well.\n\nKeep coax cable runs as short as possible and check that cables and connectors are in good shape, long or degraded cables can negatively affect upload speeds.\n\nTry swapping antenna ports or cables on your gateway, powering it down between changes so it can rescan and register fresh signals.\n\nApps such as SignalStream or HINT Control can record key metrics like RSRP, SINR, RSRQ, and connected bands while you test different locations. Comparing these readings across various spots helps distinguish if low speeds stem from congestion or weak signals.\n\nIf you’d like, capturing labeled screenshots of these metrics during your tests will make it easier for us to provide tailored recommendations on antennas or placement.\n\nI hope these suggestions help you maximize your setup’s performance. Please feel free to reach out with any further questions!\n\nBest,",
+      "features": {
+        "wordCount": 310,
+        "sentenceCount": 16,
+        "startsWithGreeting": true,
+        "hasThanks": false,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 12,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 65,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Sales and Support Cycle",
+          "relativePath": "knowledge\\approved\\sops\\Sales and Support Cycle 8b0c0a6f72f34034ad7a88e50954c46f.md",
+          "score": 59,
+          "excerpt": "Sales and Support Cycle\n\nThis SOP will shed some guidance on the eCommerce team sales and support cycle and how we handle customer deals and cases from when they are led in, up until after they make a purchase.\n\nThis process will look different for each customer depending on what stage of their purchasing or installation journey they are. We need to make sure we meet the customer at their level of understanding and get the known facts straight before proceeding.\n\nSales Cycle:\n\nThe beginning of the lead in process is important because it helps to set the tone for how the rest of the conversatio"
+        },
+        {
+          "title": "Information Gathering and Sales Decision Tree",
+          "relativePath": "knowledge\\approved\\sops\\Information Gathering and Sales Decision Tree 6f1ec420991747a284f8121da76d4e9a.md",
+          "score": 55,
+          "excerpt": "Information Gathering and Sales Decision Tree\n\n<aside \n👉 Redrafted by @Conold Chisinahama, @José Martinez, @Juanca and @Cecil Teran. \n\n</aside \n\nMission: \n\nTo provide a basis for the e commerce team to make recommendations in a wide array of situations and to supply a decision structure to help guide them toward the most suitable product(s) for the customer’s needs in a consistent manner for each matching set of customer specifications. \n\nInformation Gathering\n\nThe basic information gathering structure for boosters and MIMO antennas draws from two sources: The customer and a field test. You c"
+        },
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 55,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        },
+        {
+          "title": "@February 28, 2025 - Space Needle Admin Building",
+          "relativePath": "knowledge\\approved\\sops\\@February 28, 2025 - Space Needle Admin Building 1a8cbeb1d73b805f9489ddfb2c996261.md",
+          "score": 53,
+          "excerpt": "@February 28, 2025 Space Needle Admin Building\n\nhttps://easyretro.io/publicboard/duo3dVvsFQWbjXJfTdVL6oegMps1/0d913b62 aefb 4806 aeb1 e51f6d53b0bf?sort=votes\n\n<aside \n⚠️\n\nThe EasyRetro link above is likely to break at some point, as we are on a free plan. So the detail is copied below\n\n</aside \n\nParticipants: @Jonathan Boucher @John Farag @Ian Forsyth @Jay Makemson @Josh Segelson @Izak Oosthuizen @Sam Westwood @Sina Khanifar \n\nWent Well\n\nVery quick turnaround on re design and shipping of additional equipment\n\nidentified an issue with install path early\nJonathan Boucher 5 votes\nConsistent commu"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m29v9rc",
+      "messageId": "msg_36n45h7s",
+      "subject": "Re: Chat follow-up for Andrew",
+      "cleanedReply": "Hi Andrew,\n\nThank you for reaching out to us. I'd be happy to help.\n\nThe QuadMini would be the only option if you need to use it indoors. Here is the guide on how to connect the G4AR:\n\n[url]\n\nBest,",
+      "features": {
+        "wordCount": 48,
+        "sentenceCount": 3,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": false,
+        "hasClosing": true,
+        "hasLinks": true,
+        "paragraphCount": 5,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "How to perform a Walk Test",
+          "relativePath": "knowledge\\approved\\sops\\How to perform a Walk Test 0753850f65f143d48add7ef404ea3a77.md",
+          "score": 23,
+          "excerpt": "How to perform a Walk Test\n\nWe require the installers we work with to perform a walk test using our Walk Test app. This allows us to assess the success of the installation as well as troubleshoot more effectively. By performing the walk test with the system on and off we can create a report showing the signal improvement achieved with the new system. \n\n1. Select Add New building\n2. Enter Project name and Address\n3. Upload the provided floor plan from the project Gdrive\n4. Orientate floor plan over site if CSV coded co ordinates are required for the project \n5. Select Start Walking \n6. In Devic"
+        },
+        {
+          "title": "How to perform a Walk Test",
+          "relativePath": "knowledge\\approved\\sops\\How to perform a Walk Test 1bfcbeb1d73b8162965bf132d2a92c50.md",
+          "score": 23,
+          "excerpt": "How to perform a Walk Test\n\nWe require the installers we work with to perform a walk test using our Walk Test app. This allows us to assess the success of the installation as well as troubleshoot more effectively. By performing the walk test with the system on and off we can create a report showing the signal improvement achieved with the new system. \n\n1. Select Add New building\n2. Enter Project name and Address\n3. Upload the provided floor plan from the project Gdrive\n4. Orientate floor plan over site if CSV coded co ordinates are required for the project \n5. Select Start Walking \n6. In Devic"
+        },
+        {
+          "title": "How to perform a Walk Test",
+          "relativePath": "knowledge\\approved\\sops\\How to perform a Walk Test 1bfcbeb1d73b8176961be1e87c76fdb7.md",
+          "score": 23,
+          "excerpt": "How to perform a Walk Test\n\nWe require the installers we work with to perform a walk test using our Walk Test app. This allows us to assess the success of the installation as well as troubleshoot more effectively. By performing the walk test with the system on and off we can create a report showing the signal improvement achieved with the new system. \n\n1. Select Add New building\n2. Enter Project name and Address\n3. Upload the provided floor plan from the project Gdrive\n4. Orientate floor plan over site if CSV coded co ordinates are required for the project \n5. Select Start Walking \n6. In Devic"
+        },
+        {
+          "title": "How to perform a Walk Test",
+          "relativePath": "knowledge\\approved\\sops\\How to perform a Walk Test 1bfcbeb1d73b81d484d8d7fbf582480e.md",
+          "score": 23,
+          "excerpt": "How to perform a Walk Test\n\nWe require the installers we work with to perform a walk test using our Walk Test app. This allows us to assess the success of the installation as well as troubleshoot more effectively. By performing the walk test with the system on and off we can create a report showing the signal improvement achieved with the new system. \n\n1. Select Add New building\n2. Enter Project name and Address\n3. Upload the provided floor plan from the project Gdrive\n4. Orientate floor plan over site if CSV coded co ordinates are required for the project \n5. Select Start Walking \n6. In Devic"
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 22,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        }
+      ]
+    }
+  ]
+}

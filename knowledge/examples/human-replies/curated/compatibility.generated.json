@@ -1,0 +1,415 @@
+{
+  "intent": "compatibility",
+  "label": "Compatibility",
+  "generatedFromExport": "2026-04-01T00-19-07-299Z",
+  "examples": [
+    {
+      "conversationId": "cnv_1lz4vxd4",
+      "messageId": "msg_36jgav6w",
+      "subject": "Re: UserLoop | Customer Asked to be Contacted for Pre-Sale Help & Tech Support",
+      "cleanedReply": "Joey,\n\nThank you for your response. I've attached the T-Mobile towers in your area to this email. You do have a few towers in your area around you which can lead to interference.\n\nI'd suggest trying the east, west, and south sides of the house at lower locations to have the walls of the house block the other towers (if you haven't tried those towers in the map). \n\nAs you relocate/reaim the antenna, I'd suggest checking the signal metrics. To view your signal metrics, including SINR, RSRP, RSRQ and the band, please download the HINT App. You can check them as soon as you connect the app to the gateway. You may need to use the gateway's admin password to login. That information is typically found on the unit's sticker or the password for your Wifi network. I've also attached a guide on how to use the HINT app to assist.\n\nBelow are the 2 links to download the app:\n\nAndroid\n\n[url]\n\niPhone\n\n[url]\n\nGenerally, in a cellular connection, the signal quality, measured by the SINR, plays a crucial role in determining data speeds. Therefore, it's vital to aim for a high and positive SINR value to achieve optimal results, ideally above 3 dB and stable. On the other hand, the signal strength, indicated by RSRP, has a relatively lesser impact on connection speeds, but it's still essential to ensure that the value is more positive than -110dBm, closer to zero for optimal performance. \n\nRSRQ has to be lower than -12 dBm (i.e. closer to zero like -10 dBm). If its above -12 , i.e. -13 or -14 dBm, then you would have tower congestion which, sadly, isn't controlled by the antenna, you can try aiming for another tower if that's the case. \n\nOne final step you can try is swapping the middle ports, so if you're connected to ports 1234, try 1324.\n\nLet me know how it goes. I'd be happy to help!\n\nBest,",
+      "features": {
+        "wordCount": 350,
+        "sentenceCount": 20,
+        "startsWithGreeting": false,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": true,
+        "paragraphCount": 14,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 72,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 61,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Information Gathering and Sales Decision Tree",
+          "relativePath": "knowledge\\approved\\sops\\Information Gathering and Sales Decision Tree 6f1ec420991747a284f8121da76d4e9a.md",
+          "score": 60,
+          "excerpt": "Information Gathering and Sales Decision Tree\n\n<aside \n👉 Redrafted by @Conold Chisinahama, @José Martinez, @Juanca and @Cecil Teran. \n\n</aside \n\nMission: \n\nTo provide a basis for the e commerce team to make recommendations in a wide array of situations and to supply a decision structure to help guide them toward the most suitable product(s) for the customer’s needs in a consistent manner for each matching set of customer specifications. \n\nInformation Gathering\n\nThe basic information gathering structure for boosters and MIMO antennas draws from two sources: The customer and a field test. You c"
+        },
+        {
+          "title": "VNE 2 & 3 Registration",
+          "relativePath": "knowledge\\approved\\sops\\VNE 2 & 3 Registration 1bfcbeb1d73b81b882d1d5ec77d96ec0.md",
+          "score": 58,
+          "excerpt": "VNE 2 & 3 Registration\n\nHow to change registration\n\nTo change the registration of a device as part of a work order, you need to call Verizon Network Repair Bureau (NRB). \n\n<aside \n💡 Make sure you use register/unregister language to help prevent Verizon from deactivating the account. Never say “Disconnect or Deactivate.” \n\n</aside \n\n1. Call 800 757 0699 , enter the phone number 657 640 7145 ( 949 343 0886 has been deactivated) and then choose Option 5 for tech support, and press # for No PIN.\nYou need to pretend to be Sina in order to get them to do this. \nYou must have access to the company’s"
+        },
+        {
+          "title": "VNE 2 & 3 Registration",
+          "relativePath": "knowledge\\approved\\sops\\VNE 2 & 3 Registration efcc6bb41209490ca5bc22d7ecd86546.md",
+          "score": 58,
+          "excerpt": "VNE 2 & 3 Registration\n\nHow to change registration\n\nTo change the registration of a device as part of a work order, you need to call Verizon Network Repair Bureau (NRB). \n\n<aside \n💡 Make sure you use register/unregister language to help prevent Verizon from deactivating the account. Never say “Disconnect or Deactivate.” \n\n</aside \n\n1. Call 800 757 0699 , enter the phone number 657 640 7145 ( 949 343 0886 has been deactivated) and then choose Option 5 for tech support, and press # for No PIN.\nYou need to pretend to be Sina in order to get them to do this. \nYou must have access to the company’s"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lz4vxd4",
+      "messageId": "msg_36lmcwbs",
+      "subject": "Re: UserLoop | Customer Asked to be Contacted for Pre-Sale Help & Tech Support",
+      "cleanedReply": "Hi Joey,\n\nThank you for sharing all the details and for walking through your plan so thoroughly. I completely understand the challenge, and it sounds like you’ve put a lot of thought into making this work.\n\nRegarding your questions:\n\n(1) Putting the modem in a weatherproof box is something some people do when the best signal is far from the house. It can work, but keep in mind that proper ventilation and temperature control are important to avoid overheating. Make sure the box is rated for outdoor use and has some airflow. Running conduit with power and ethernet is also a common approach in setups like this.\n\n(2) As for the signal, the SINR numbers you’re seeing give a good idea of stability. If the signal isn’t stable, the performance won’t be stable either, even from a “perfect” spot. Often, placing the antenna a little lower on your property, rather than at the very back fence, can actually help the antenna achieve a more consistent connection. It’s all about finding a balance between line of sight and stability.\n\nUltimately, if you can achieve a stable connection in that spot or slightly lower, your plan could work. If the SINR and signal strength fluctuate too much, it might not give the reliable performance you’re hoping for.\n\nI hope this helps!\n\nBest,",
+      "features": {
+        "wordCount": 226,
+        "sentenceCount": 13,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": false,
+        "paragraphCount": 8,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 62,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 56,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Support Knowledgebase",
+          "relativePath": "knowledge\\approved\\sops\\Support Knowledgebase 12a98c5afe244c45a3af1eccaaf0e7c8.md",
+          "score": 56,
+          "excerpt": "Support Knowledgebase\n\nTable of Contents\n\n1. \n2. \n3. \n1. \n2. \n4. \n\nMission\n\nIt's critical for us to provide competent and structured technical support, that requires minimal time and effort from the customer. Doing this effectively should result in a swift support process that gets customers back up and running quickly and easily. The basis of all good technical support is great troubleshooting. \n\nTroubleshooting Etiquette \n\nThere are some golden rules in any kind of support or troubleshooting which we always need to adhere to. Each of us has our own voice and style in troubleshooting as we do"
+        },
+        {
+          "title": "Reddit",
+          "relativePath": "knowledge\\approved\\sops\\Reddit c6f6ec70374447fa95b7981c82d03afe.md",
+          "score": 55,
+          "excerpt": "Reddit\n\nReddit is one of our less popular channels currently, but is an excellent marketing tool and really helps drive brand engagement! Furthermore, everyone on the team has different levels of knowledge and expertise so having varied input will really help improve our responses, the more the merrier!\n\nIf you'd like to become a moderator of the sub, just ask and we'll set that up!\nCanned responses google doc: \nIf you'd like to add a canned response to the doc and you don't have access, Ping Ian on slack and he'll add you as an editor\n\nWhen responding to threads / messages: \n\nBe extra detaile"
+        },
+        {
+          "title": "Documentation Best Practices",
+          "relativePath": "knowledge\\approved\\sops\\Documentation Best Practices 915675aa2f7e4d3b8c5a0fb3fab70376.md",
+          "score": 53,
+          "excerpt": "Documentation Best Practices\n\nAs our team continues to grow and customers speak with more of us about any given deal, it's crucial that we leave great notes in PipeDrive and DEAR to make picking up where someone else left off as easy as possible. \n\nMission\n\nLeaving great notes makes it easier for you, your team mates and other departments to understand what's going on and how best to assist a customer quickly. Leaving poor notes or no notes at all has the exact opposite effect.\n\nGood notes streamline our team work within and across departments.\nGood notes allow us to better serve customers and"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1lz4vxd4",
+      "messageId": "msg_36jexrl4",
+      "subject": "Re: UserLoop | Customer Asked to be Contacted for Pre-Sale Help & Tech Support",
+      "cleanedReply": "Hi Joey,\n\nThanks for all the details, I really appreciate it.\n\nThe fluctuations in your download and upload speeds are caused by interference from nearby towers, buildings, and other signals. Your current directional antenna is actually the best choice for your setup. Switching to a non-directional antenna would likely make the fluctuations worse because it picks up signals from all directions, including more interference.\n\nPlacing the antenna higher is not necessarily better either. In your environment, going up exposes it to more interference, which can make performance less stable rather than improving it.\n\nGiven the challenges with line of sight and aesthetics, the best approach is to keep your antenna in a spot where it has the clearest path to the strongest tower while staying practical. If the front corner is too visible, you could try slightly lower positions or side locations that are less obstructed but still give a reasonable signal. Small adjustments in height and orientation can sometimes make a big difference without needing a roof installation.\n\nIf you can help me with your location address, I can check the towers and possibly check some other towers to try. Also, can you please tell me which gateway you're using?\n\nBest,",
+      "features": {
+        "wordCount": 202,
+        "sentenceCount": 11,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": false,
+        "paragraphCount": 7,
+        "questionCount": 1
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 56,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 47,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "YotPo Reviews & Questions Management",
+          "relativePath": "knowledge\\approved\\sops\\YotPo Reviews & Questions Management 8fd9a6b8840d44ae8fc17c351ba2c118.md",
+          "score": 47,
+          "excerpt": "YotPo Reviews & Questions Management\n\nWhat is YotPo and what does it do? 🤔\n\nThis is our review tool and what we use to manage product and page reviews, as well as questions asked on our website. Customers are able to rate our products from terrible to great and expand on their review.\n\nWhen a customer makes a purchase, they get an email to make a review and get a 5% discount coupon once this is done. This is a great way to bring traffic to our website and build trust with our customers.\n\nCustomers can also ask questions, and we get notified of these too. \n\nHow does it work?\n\n1. In YotPo, on t"
+        },
+        {
+          "title": "Support Knowledgebase",
+          "relativePath": "knowledge\\approved\\sops\\Support Knowledgebase 12a98c5afe244c45a3af1eccaaf0e7c8.md",
+          "score": 44,
+          "excerpt": "Support Knowledgebase\n\nTable of Contents\n\n1. \n2. \n3. \n1. \n2. \n4. \n\nMission\n\nIt's critical for us to provide competent and structured technical support, that requires minimal time and effort from the customer. Doing this effectively should result in a swift support process that gets customers back up and running quickly and easily. The basis of all good technical support is great troubleshooting. \n\nTroubleshooting Etiquette \n\nThere are some golden rules in any kind of support or troubleshooting which we always need to adhere to. Each of us has our own voice and style in troubleshooting as we do"
+        },
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 43,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1rl7mw",
+      "messageId": "msg_36mrx5pk",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Tom,\n\nThanks for sharing all that detail, that really helps paint the full picture.\n\nHonestly, with the numbers you’re already seeing, you’re in a pretty solid spot. That RSRP, SINR and those speeds are quite good, especially given the distance and the tree obstruction.\n\nWhen it comes to moving from 2x2 to 4x4 MIMO, it’s one of those upgrades where the only real way to know if it’ll give you a meaningful improvement is to try it in your exact environment. On paper, it should help with squeezing out a bit more performance, but in the real world it depends heavily on actual testing.\n\nGiven that you’re already getting strong throughput, I wouldn’t expect a dramatic jump in raw speeds. Generally speaking, if your goal is to improve ping, latency and jitter, an external antenna might not make a significant difference since those factors are mainly influenced by the router hardware and the distance to the tower. The antennas are primarily used to enhance speeds.\n\nSo it really comes down to whether you’re comfortable testing it. \n\nBest,",
+      "features": {
+        "wordCount": 185,
+        "sentenceCount": 9,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": false,
+        "hasClosing": false,
+        "hasLinks": false,
+        "paragraphCount": 7,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 57,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Information Gathering and Sales Decision Tree",
+          "relativePath": "knowledge\\approved\\sops\\Information Gathering and Sales Decision Tree 6f1ec420991747a284f8121da76d4e9a.md",
+          "score": 45,
+          "excerpt": "Information Gathering and Sales Decision Tree\n\n<aside \n👉 Redrafted by @Conold Chisinahama, @José Martinez, @Juanca and @Cecil Teran. \n\n</aside \n\nMission: \n\nTo provide a basis for the e commerce team to make recommendations in a wide array of situations and to supply a decision structure to help guide them toward the most suitable product(s) for the customer’s needs in a consistent manner for each matching set of customer specifications. \n\nInformation Gathering\n\nThe basic information gathering structure for boosters and MIMO antennas draws from two sources: The customer and a field test. You c"
+        },
+        {
+          "title": "Reddit",
+          "relativePath": "knowledge\\approved\\sops\\Reddit c6f6ec70374447fa95b7981c82d03afe.md",
+          "score": 42,
+          "excerpt": "Reddit\n\nReddit is one of our less popular channels currently, but is an excellent marketing tool and really helps drive brand engagement! Furthermore, everyone on the team has different levels of knowledge and expertise so having varied input will really help improve our responses, the more the merrier!\n\nIf you'd like to become a moderator of the sub, just ask and we'll set that up!\nCanned responses google doc: \nIf you'd like to add a canned response to the doc and you don't have access, Ping Ian on slack and he'll add you as an editor\n\nWhen responding to threads / messages: \n\nBe extra detaile"
+        },
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 41,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 40,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1jo6nc",
+      "messageId": "msg_36lygxns",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Richard, \n\nThanks so much for reaching out! \n\nConsidering you are with Verizon, I would say just ask them for a data plan with a SIM that you can use with your own device. As far as I know, they will generally still provide this for clients. \n\nFrom there I can recommend one of the below 3rd party devices. \n\nGL-iNet 5G Spitz AX (GL-X3000NR)\n\nInvisaGig 5G Wireless Modem\n\nSo the reasoning here is simple, these will be compatible with your 4x4 antenna directly, they will have a great deal of options for fine tuning the connection and will have more robust network options for improving wifi speeds. \n\nLet me know if you have any questions!",
+      "features": {
+        "wordCount": 115,
+        "sentenceCount": 6,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 8,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 43,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 42,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        },
+        {
+          "title": "Library of Examples, FAQ's, Templates and Scripts (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Library of Examples, FAQ's, Templates and Scripts  f6e743bd51004c64a00978db670d7a1d.md",
+          "score": 40,
+          "excerpt": "Library of Examples, FAQ's, Templates and Scripts (Under construction)\n\nFAQ's \ncan I use my existing cabling\ndo I need any adapters\nhow do I penetrate the building with cables\nhow long are the included cables\nwhat tower am I connected to\nwhat tower should I aim at\nhow do I know where to aim my antenna\ndoes this booster need an internet connection\nwhere and how should I install the lightning surge protector\ndoes the booster need power\ndo the antennas need power\nwhere should I mount my outdoor antenna\nwhere should I mount my indoor antennas\nhow far apart should my antennas be\ndo I need separatio"
+        },
+        {
+          "title": "Reddit",
+          "relativePath": "knowledge\\approved\\sops\\Reddit c6f6ec70374447fa95b7981c82d03afe.md",
+          "score": 40,
+          "excerpt": "Reddit\n\nReddit is one of our less popular channels currently, but is an excellent marketing tool and really helps drive brand engagement! Furthermore, everyone on the team has different levels of knowledge and expertise so having varied input will really help improve our responses, the more the merrier!\n\nIf you'd like to become a moderator of the sub, just ask and we'll set that up!\nCanned responses google doc: \nIf you'd like to add a canned response to the doc and you don't have access, Ping Ian on slack and he'll add you as an editor\n\nWhen responding to threads / messages: \n\nBe extra detaile"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 39,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1rc4dk",
+      "messageId": "msg_36mw4jfs",
+      "subject": "Re: Chat follow-up for Shawn Mercier",
+      "cleanedReply": "Hi Shawn, \n\nThanks so much for your patience! \n\nI'll be happy to assist with a recommendation for you. Could you provide me with the info below:\n\nWhich carrier and modem/gateway/router are you using?\n\nWhat is the address where the setup will be done? (This helps us review cell tower maps for your area.)\n\nWhat are your current data speeds?\n\nHow would you describe your internet usage? (e.g., streaming, working from home, gaming, etc.)\n\nIf you have any questions for me, please let me know.",
+      "features": {
+        "wordCount": 87,
+        "sentenceCount": 7,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 8,
+        "questionCount": 4
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 38,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 36,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 33,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        },
+        {
+          "title": "Information Gathering and Sales Decision Tree",
+          "relativePath": "knowledge\\approved\\sops\\Information Gathering and Sales Decision Tree 6f1ec420991747a284f8121da76d4e9a.md",
+          "score": 32,
+          "excerpt": "Information Gathering and Sales Decision Tree\n\n<aside \n👉 Redrafted by @Conold Chisinahama, @José Martinez, @Juanca and @Cecil Teran. \n\n</aside \n\nMission: \n\nTo provide a basis for the e commerce team to make recommendations in a wide array of situations and to supply a decision structure to help guide them toward the most suitable product(s) for the customer’s needs in a consistent manner for each matching set of customer specifications. \n\nInformation Gathering\n\nThe basic information gathering structure for boosters and MIMO antennas draws from two sources: The customer and a field test. You c"
+        },
+        {
+          "title": "Library of Examples, FAQ's, Templates and Scripts (Under construction)",
+          "relativePath": "knowledge\\approved\\sops\\Library of Examples, FAQ's, Templates and Scripts  f6e743bd51004c64a00978db670d7a1d.md",
+          "score": 32,
+          "excerpt": "Library of Examples, FAQ's, Templates and Scripts (Under construction)\n\nFAQ's \ncan I use my existing cabling\ndo I need any adapters\nhow do I penetrate the building with cables\nhow long are the included cables\nwhat tower am I connected to\nwhat tower should I aim at\nhow do I know where to aim my antenna\ndoes this booster need an internet connection\nwhere and how should I install the lightning surge protector\ndoes the booster need power\ndo the antennas need power\nwhere should I mount my outdoor antenna\nwhere should I mount my indoor antennas\nhow far apart should my antennas be\ndo I need separatio"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1rl7mw",
+      "messageId": "msg_36n92f1k",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Tom,\n\nThank you for your response.\n\nIn general, a directional antenna will have higher gain than an omnidirectional one, so switching to an omni in your case would likely result in a drop in performance. That is why the directional option is the better fit here. \n\nYou can use this QuadPro:\n\n[url]\n\nWe do have a 90 day return policy, so you are welcome to give it a try and see how it performs in your setup.\n\nBest,",
+      "features": {
+        "wordCount": 84,
+        "sentenceCount": 4,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": false,
+        "hasClarifyingQuestion": false,
+        "hasNextStep": true,
+        "hasClosing": false,
+        "hasLinks": true,
+        "paragraphCount": 7,
+        "questionCount": 0
+      },
+      "sopMatches": [
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 37,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 34,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        },
+        {
+          "title": "Loan Antennas (Deprecated)",
+          "relativePath": "knowledge\\approved\\sops\\Loan Antennas (Deprecated) 0626ad41faa94a2eb63f202177d31434.md",
+          "score": 33,
+          "excerpt": "Loan Antennas (Deprecated)\n\n💡 Purpose: This SOP will highlight the generally acceptable guidelines around loan antenna issuance and similar customer concessions.\n\nWHAT: In some instances, a customer may reach out to request to try a different type of antenna to see if this might work better for their installation. This includes cases with both MIMO external antennas and antennas for cellphone signal boosters.\n\nWHEN: One good example of this is a customer who purchases a 2x2 MIMO Log Periodic External Antenna Kit and then reaches out after doing some testing and troubleshooting/optimization wi"
+        },
+        {
+          "title": "‘Accidental PO’ orders",
+          "relativePath": "knowledge\\approved\\sops\\‘Accidental PO’ orders 33a8f45e2caf4f408dee9b5177c5f187.md",
+          "score": 33,
+          "excerpt": "‘Accidental PO’ orders\n\nThis SOP covers how to take care of requests from the finance department relating to customers who have placed orders directly on our website where they intended to pay for them using their credit card but ended up selecting the ‘Purchase Order’ option by accident.\n\nIn these cases, the transaction is not charged to the customer since the PO option is typically used in commercial and enterprise applications where the clients intend to use Net30 terms or a check to settle the order balance.\n\nYou can view the SOP for more information.\n\nOn the Shopify order page, there are "
+        },
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 32,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        }
+      ]
+    },
+    {
+      "conversationId": "cnv_1m1rl7mw",
+      "messageId": "msg_36lze02w",
+      "subject": "Re: Contact Form",
+      "cleanedReply": "Hi Thomas,\n\nThank you for reaching out to us. I'd be happy to help.\n\nYour SINR and RSRQ look excellent. Could you let me know what your RSRP is? RSSI is not the most reliable measure of signal, so it sounds like you may already be getting a good signal overall.\n\nAlso, which gateway are you currently using? How much speeds are you getting?\n\nBest,",
+      "features": {
+        "wordCount": 65,
+        "sentenceCount": 7,
+        "startsWithGreeting": true,
+        "hasThanks": true,
+        "hasEmpathy": true,
+        "hasClarifyingQuestion": true,
+        "hasNextStep": true,
+        "hasClosing": true,
+        "hasLinks": false,
+        "paragraphCount": 5,
+        "questionCount": 3
+      },
+      "sopMatches": [
+        {
+          "title": "Intake Scripts",
+          "relativePath": "knowledge\\approved\\sops\\Intake Scripts 5c27dfa2c48c4d859c2a946f335369ec.md",
+          "score": 34,
+          "excerpt": "Intake Scripts\n\nWhen doing intake with a lead or customer that will eventually be handed off or routed to another team or team member, it's important to have a brief but valuable discussion about the most relevant topics. The following scripts follow our general conversation flows and should be seen purely as a guide, every conversation is different, but be sure to capture the relevant points each time. \n\n💡 Use the following scripts to loosely guide your intake conversations and keep them focused. \n\nSales Intake\n\nFor consumer leads (<15k Sq ft) \n\nWhen doing intake for consumer leads, it’s imp"
+        },
+        {
+          "title": "Data connections, MIMO & LTE Routers Knowledge Base",
+          "relativePath": "knowledge\\approved\\sops\\Data connections, MIMO & LTE Routers Knowledge Bas 25b478fed7ef43ea8ef4e17e0daf5dbe.md",
+          "score": 30,
+          "excerpt": "Data connections, MIMO & LTE Routers Knowledge Base\n\nNOTE: We'll be creating a webpage soon with a lot of resources around advanced setup of the MIMO kits, as well as information about the most common LTE routers we see \n\nLTE Router Knowledgebase\n\nBelow is a list of common LTE routers with the most vital information on each. If anything appears to be missing or incorrect, please notify Marcus\n\nNotes on data connections \n\nSignal Strength \nIn data connections, increases in RSRP are only typically beneficial up to around 90 dBm. Increases beyond this point offer very little improvement in data ra"
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 1bfcbeb1d73b8137883edc1dbdca7b4d.md",
+          "score": 29,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Case study requests",
+          "relativePath": "knowledge\\approved\\sops\\Case study requests 8d0a1010674b4143802e18b1637cd564.md",
+          "score": 29,
+          "excerpt": "Case study requests\n\nCase studies are invaluable resources that we use to reach new markets, prove our expertise, and showcase our excellent work.\n\nGetting the info we need from clients can sometimes be daunting, so here's how to go about that.\n\nIf you need assistance or have any questions, feel free to reach out to Marcus.\n\nRequesting a case study:\n\nIt's important to be open and upfront, and prioritize the value it holds for them and other people like them. \n\nBest practices: \n\nTry to do make your initial request on a call, so that you have their full attention. Once they agree, follow up via "
+        },
+        {
+          "title": "Product Feedback Outreach for eCommerce",
+          "relativePath": "knowledge\\approved\\sops\\Product Feedback Outreach for eCommerce 6dc6f712ddd74310ba353bb4d5625c03.md",
+          "score": 29,
+          "excerpt": "Product Feedback Outreach for eCommerce\n\n💡 The purpose of this SOP is to offer guidance for the eCommerce team on how our Product Feedback program will be carried out so we can gather as much constructive feedback from as many customers as we can possibly speak to!\n\nWe only contact customers who purchase Waveform 2x2 and 4x4 MIMO Panel and Log Periodic Directional Antenna Kits.\n\nFor more detailed information from the product team, you can refer to this SOP:\n\nOur process:\n\nFor longer format feedback calls where we have allocated time to have feedback conversations with our customers, use these"
+        }
+      ]
+    }
+  ]
+}
