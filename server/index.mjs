@@ -2,6 +2,13 @@ import express from "express";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
+import {
+  appendGenerationLog,
+  buildKnowledgeGraph,
+  persistKnowledgeGraph,
+  readRecentGenerationLogs,
+  retrieveGraphContext,
+} from "./knowledge-graph.mjs";
 
 const app = express();
 const port = Number(process.env.PORT || 3001);
@@ -16,6 +23,8 @@ const REVIEW_DATA_ROOT = path.join(process.cwd(), "data", "reviews");
 const REVIEW_STORE_PATH = path.join(REVIEW_DATA_ROOT, "reply-approvals.json");
 const TRAINING_DATA_ROOT = path.join(process.cwd(), "data", "training");
 const TRAINING_STORE_PATH = path.join(TRAINING_DATA_ROOT, "reply-training.json");
+const KNOWLEDGE_GRAPH_ROOT = path.join(process.cwd(), "data", "knowledge-graph");
+const GENERATION_LOG_ROOT = path.join(process.cwd(), "data", "generation-logs");
 const DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1";
 const DEFAULT_OPENAI_REPLY_MODEL = "gpt-5.4";
 
@@ -32,6 +41,35 @@ app.get("/api/support-lab/overview", async (_request, response) => {
   } catch (error) {
     response.status(500).json({
       error: "Failed to load the support lab overview.",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+app.get("/api/support-lab/knowledge-graph", async (_request, response) => {
+  try {
+    const graph = await getReplyKnowledgeGraph();
+    response.json(graph);
+  } catch (error) {
+    response.status(500).json({
+      error: "Failed to build the ReplyGuy knowledge graph.",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+app.get("/api/support-lab/generation-logs", async (request, response) => {
+  try {
+    const limitValue = Number(request.query.limit || 40);
+    const limit = Number.isFinite(limitValue) ? Math.max(1, Math.min(200, limitValue)) : 40;
+    const items = await readRecentGenerationLogs({ rootDir: GENERATION_LOG_ROOT, limit });
+    response.json({
+      fetchedAt: new Date().toISOString(),
+      items,
+    });
+  } catch (error) {
+    response.status(500).json({
+      error: "Failed to load generation logs.",
       detail: error instanceof Error ? error.message : String(error),
     });
   }
@@ -405,13 +443,6 @@ async function getUnrepliedEmailPreview({ inbox, limit }) {
 }
 
 async function generateDraftFromSubmission({ subject, message, topic }) {
-  const [coachingDoc, customerReplyGuidelinesDoc, latestAnalysis, trainingExamples] = await Promise.all([
-    getQaCoachingDoc(),
-    getCustomerReplyGuidelinesDoc(),
-    getLatestAnalysisCandidates(),
-    readTrainingStore(),
-  ]);
-
   const cleanedMessage = cleanDraftingText(message);
   const intent = topic
     ? normalizeTopicOverride(topic)
@@ -420,15 +451,21 @@ async function generateDraftFromSubmission({ subject, message, topic }) {
     body: cleanedMessage,
     tags: [],
   });
-  const trainingMatches = findTrainingExamples({
+
+  const { graph } = await getReplyKnowledgeGraph();
+  const graphContext = retrieveGraphContext({
+    graph,
     subject,
-    body: cleanedMessage,
+    message: cleanedMessage,
     intent,
-    trainingExamples,
-    coachingDoc,
-    customerReplyGuidelinesDoc,
   });
-  const example = pickHistoricalExample(intent.intent, latestAnalysis.candidates, trainingExamples);
+  const trainingMatches = formatGraphMatches(graphContext);
+  const example = graphContext.historicalExamples[0]
+    ? {
+      cleanedReplyRedacted: graphContext.historicalExamples[0].excerpt,
+      subject: graphContext.historicalExamples[0].title,
+    }
+    : null;
   const fallbackDraft = buildUnrepliedDraft({
     conversation: {
       recipient: { name: "", handle: "" },
@@ -444,10 +481,8 @@ async function generateDraftFromSubmission({ subject, message, topic }) {
       subject,
       message: cleanedMessage,
       intent,
+      graphContext,
       trainingMatches,
-      trainingExamples,
-      coachingDoc,
-      customerReplyGuidelinesDoc,
       example,
       fallbackDraft,
     });
@@ -463,6 +498,37 @@ async function generateDraftFromSubmission({ subject, message, topic }) {
       provider: "ReplyGuy",
       mode: "fallback",
     };
+  }
+
+  try {
+    await appendGenerationLog({
+      rootDir: GENERATION_LOG_ROOT,
+      event: {
+        id: `evt_${Math.random().toString(36).slice(2, 10)}`,
+        generatedAt: new Date().toISOString(),
+        subject: subject || "Manual submission",
+        intent: intent.intent,
+        intentLabel: intent.label,
+        model: draft.model,
+        provider: draft.provider,
+        mode: draft.mode,
+        retrieval: {
+          topic: graphContext.topic,
+          guidanceDocIds: graphContext.guidanceDocs.map((item) => item.id),
+          trainingExampleIds: graphContext.trainingExamples.map((item) => item.id),
+          historicalExampleIds: graphContext.historicalExamples.map((item) => item.id),
+        },
+        promptStats: {
+          subjectChars: subject.length,
+          messageChars: cleanedMessage.length,
+          guidanceDocCount: graphContext.guidanceDocs.length,
+          trainingExampleCount: graphContext.trainingExamples.length,
+          historicalExampleCount: graphContext.historicalExamples.length,
+        },
+      },
+    });
+  } catch (error) {
+    console.warn("ReplyGuy generation log write failed:", error);
   }
 
   return {
@@ -486,10 +552,8 @@ async function generateOpenAiReplyDraft({
   subject,
   message,
   intent,
+  graphContext,
   trainingMatches,
-  trainingExamples,
-  coachingDoc,
-  customerReplyGuidelinesDoc,
   example,
   fallbackDraft,
 }) {
@@ -498,23 +562,15 @@ async function generateOpenAiReplyDraft({
     throw new Error("Missing OPENAI_API_KEY. Add it to .env.local to enable live reply generation.");
   }
 
-  const promptTrainingExamples = selectTrainingExamplesForPrompt({
-    trainingExamples,
-    topic: intent.intent,
-    subject,
-    message,
-  });
   const systemPrompt = buildCustomerReplySystemPrompt({
     intentLabel: intent.label,
-    customerReplyGuidelinesDoc,
-    coachingDoc,
-    trainingExamples: promptTrainingExamples,
+    graphContext,
   });
   const userPrompt = buildCustomerReplyUserPrompt({
     subject,
     message,
     intentLabel: intent.label,
-    exampleReply: example?.cleanedReplyRedacted || "",
+    exampleReply: graphContext.historicalExamples[0]?.text || example?.cleanedReplyRedacted || "",
     fallbackReply: fallbackDraft.reply,
   });
 
@@ -571,12 +627,12 @@ async function generateOpenAiReplyDraft({
     reply: outputText,
     notes: [
       `Generated with ${payload?.model || config.model} via OpenAI Responses API.`,
-      promptTrainingExamples.length
-        ? `Grounded in ${promptTrainingExamples.length} saved training ${promptTrainingExamples.length === 1 ? "example" : "examples"} for this topic.`
-        : "No direct training example matched, so the draft leaned on customer reply guidelines and curated coaching.",
-      trainingMatches.length
-        ? `Matched ${trainingMatches.length} hidden guidance source${trainingMatches.length === 1 ? "" : "s"} for tone and structure.`
-        : "No extra citations were needed for the first pass.",
+      graphContext.trainingExamples.length
+        ? `Grounded in ${graphContext.trainingExamples.length} team-saved training ${graphContext.trainingExamples.length === 1 ? "example" : "examples"} for this topic.`
+        : "No direct training example matched, so the draft leaned on compact guidance nodes.",
+      graphContext.guidanceDocs.length
+        ? `Used ${graphContext.guidanceDocs.length} guidance node${graphContext.guidanceDocs.length === 1 ? "" : "s"} for tone and structure.`
+        : "No guidance nodes were needed for the first pass.",
     ],
     model: payload?.model || config.model,
     provider: "OpenAI",
@@ -592,25 +648,38 @@ function getOpenAiConfig() {
   };
 }
 
-function selectTrainingExamplesForPrompt({ trainingExamples, topic, subject, message }) {
-  const topicMatches = trainingExamples.filter((item) => item.intent === topic);
-  if (topicMatches.length) {
-    return topicMatches.slice(0, 3);
-  }
+async function getReplyKnowledgeGraph() {
+  const [coachingDoc, customerReplyGuidelinesDoc, latestAnalysis, trainingExamples] = await Promise.all([
+    getQaCoachingDoc(),
+    getCustomerReplyGuidelinesDoc(),
+    getLatestAnalysisCandidates(),
+    readTrainingStore(),
+  ]);
 
-  const haystack = tokenizeForDrafting(`${subject}\n${message}\n${topic}`);
-  return trainingExamples
-    .map((item) => ({
-      item,
-      score: overlapScore(haystack, item.keywords),
-    }))
-    .filter((entry) => entry.score > 0)
-    .sort((left, right) => right.score - left.score)
-    .slice(0, 3)
-    .map((entry) => entry.item);
+  const graph = await buildKnowledgeGraph({
+    trainingExamples,
+    historicalCandidates: latestAnalysis.candidates,
+    guidanceDocs: [customerReplyGuidelinesDoc, coachingDoc],
+  });
+
+  await persistKnowledgeGraph({
+    graph,
+    rootDir: KNOWLEDGE_GRAPH_ROOT,
+  });
+
+  return graph;
 }
 
-function buildCustomerReplySystemPrompt({ intentLabel, customerReplyGuidelinesDoc, coachingDoc, trainingExamples }) {
+function formatGraphMatches(graphContext) {
+  return [...graphContext.trainingExamples, ...graphContext.guidanceDocs].map((item) => ({
+    title: item.title,
+    relativePath: item.relativePath,
+    score: item.score,
+    excerpt: item.excerpt,
+  }));
+}
+
+function buildCustomerReplySystemPrompt({ intentLabel, graphContext }) {
   const sections = [
     "You write customer-facing email replies for Waveform.",
     "Return only the finished reply body that should be sent to the customer.",
@@ -620,16 +689,16 @@ function buildCustomerReplySystemPrompt({ intentLabel, customerReplyGuidelinesDo
     `Primary topic: ${intentLabel || "General Support"}.`,
   ];
 
-  if (customerReplyGuidelinesDoc?.cleaned) {
-    sections.push(`Customer reply guidelines:\n${customerReplyGuidelinesDoc.cleaned.slice(0, 3000)}`);
+  if (graphContext.guidanceDocs.length) {
+    sections.push(
+      `Compact guidance nodes:\n${graphContext.guidanceDocs.map(formatGuidanceNodeForPrompt).join("\n\n")}`,
+    );
   }
 
-  if (coachingDoc?.cleaned) {
-    sections.push(`Curated coaching guidance for tone and ownership:\n${coachingDoc.cleaned.slice(0, 2000)}`);
-  }
-
-  if (trainingExamples.length) {
-    sections.push(`Team-approved examples to imitate for tone and structure:\n${trainingExamples.map(formatTrainingExampleForPrompt).join("\n\n")}`);
+  if (graphContext.trainingExamples.length) {
+    sections.push(
+      `Team-approved examples to imitate for tone and structure:\n${graphContext.trainingExamples.map(formatTrainingNodeForPrompt).join("\n\n")}`,
+    );
   }
 
   sections.push(
@@ -663,12 +732,19 @@ function buildCustomerReplyUserPrompt({ subject, message, intentLabel, exampleRe
   return sections.join("\n\n");
 }
 
-function formatTrainingExampleForPrompt(item, index) {
+function formatTrainingNodeForPrompt(item, index) {
   return [
-    `Example ${index + 1}: ${item.subject || item.intentLabel || "Customer reply"}`,
-    `Customer:\n${item.customerMessage.slice(0, 1200)}`,
-    `Ideal reply:\n${item.idealReply.slice(0, 1200)}`,
-    item.notes ? `Notes:\n${item.notes.slice(0, 500)}` : "",
+    `Example ${index + 1}: ${item.title || "Customer reply"}`,
+    item.text ? `Context:\n${item.text.slice(0, 900)}` : "",
+    item.excerpt ? `Ideal reply:\n${item.excerpt.slice(0, 900)}` : "",
+    item.reviewer ? `Reviewer: ${item.reviewer}` : "",
+  ].filter(Boolean).join("\n");
+}
+
+function formatGuidanceNodeForPrompt(item, index) {
+  return [
+    `Guidance ${index + 1}: ${item.title || "Guidance"}`,
+    item.text ? item.text.slice(0, 900) : item.excerpt.slice(0, 900),
   ].filter(Boolean).join("\n");
 }
 
