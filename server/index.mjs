@@ -1287,6 +1287,13 @@ function extractMarkdownTitle(raw) {
 
 function stripSupportMarkdown(value) {
   return String(value)
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n\n")
+    .replace(/<\/div>/gi, "\n")
+    .replace(/<[^>]+>/g, " ")
     .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
     .replace(/\[[^\]]+\]\([^)]+\)/g, " ")
     .replace(/`{1,3}[^`]+`{1,3}/g, " ")

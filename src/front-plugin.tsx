@@ -85,13 +85,14 @@ function FrontPluginApp() {
   const latestInbound = React.useMemo(
     () =>
       messages.find(
-        (message) => message.status === "inbound" && typeof message.content?.body === "string" && message.content.body.trim(),
+        (message) => message.status === "inbound" && extractMessageText(message).trim(),
       ) ?? null,
     [messages],
   );
+  const latestInboundText = React.useMemo(() => extractMessageText(latestInbound), [latestInbound]);
 
   async function generateDraft() {
-    if (!latestInbound?.content?.body) {
+    if (!latestInboundText) {
       setDraftError("ReplyGuy couldn't find an inbound customer message to draft from.");
       return;
     }
@@ -108,14 +109,15 @@ function FrontPluginApp() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subject: context?.conversation.subject || latestInbound.subject || "",
-          message: latestInbound.content.body,
+          subject: context?.conversation.subject || latestInbound?.subject || "",
+          message: latestInboundText,
         }),
       });
-      const payload = await response.json();
+      const raw = await response.text();
+      const payload = safeParseJson(raw);
 
       if (!response.ok || !payload?.draftReply) {
-        throw new Error(payload?.error || payload?.detail || "Failed to generate ReplyGuy draft.");
+        throw new Error(payload?.error || payload?.detail || "ReplyGuy couldn't generate a draft for this thread.");
       }
 
       setDraft(payload);
@@ -180,7 +182,7 @@ function FrontPluginApp() {
   }
 
   async function saveTrainingNotes() {
-    if (!draft?.draftReply || !latestInbound?.content?.body) {
+    if (!draft?.draftReply || !latestInboundText) {
       setDraftError("Generate a draft first so ReplyGuy has something to save as training.");
       return;
     }
@@ -196,15 +198,16 @@ function FrontPluginApp() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subject: context?.conversation.subject || latestInbound.subject || "Front plugin training example",
+          subject: context?.conversation.subject || latestInbound?.subject || "Front plugin training example",
           topic: draft.intentLabel || draft.intent || "",
-          customerMessage: latestInbound.content.body,
+          customerMessage: latestInboundText,
           idealReply: draft.draftReply,
           notes: trainingNotes,
           reviewer: "Front Plugin",
         }),
       });
-      const payload = await response.json();
+      const raw = await response.text();
+      const payload = safeParseJson(raw);
       if (!response.ok || !payload?.item) {
         throw new Error(payload?.error || payload?.detail || "Failed to save training notes.");
       }
@@ -221,13 +224,11 @@ function FrontPluginApp() {
   return (
     <div className="front-plugin-shell">
       <header className="front-plugin-header">
-        <div>
+        <div className="plugin-title-group">
           <p className="plugin-eyebrow">ReplyGuy</p>
-          <h1>Front Sidebar Plugin</h1>
+          <h1>{draft?.intentLabel || "Loading topic..."}</h1>
+          <p className="plugin-subtitle">{context?.conversation.subject || "Open a Front thread to draft a reply."}</p>
         </div>
-        <button className="plugin-button secondary" type="button" onClick={() => context && void loadMessages(context)} disabled={!context || messagesLoading}>
-          {messagesLoading ? "Refreshing..." : "Refresh conversation"}
-        </button>
       </header>
 
       {contextError ? <div className="plugin-notice error">{contextError}</div> : null}
@@ -236,77 +237,68 @@ function FrontPluginApp() {
       {applySuccess ? <div className="plugin-notice success">{applySuccess}</div> : null}
 
       <section className="plugin-panel">
-        <div className="plugin-meta-grid">
-          <article className="plugin-meta-card">
-            <span>Subject</span>
-            <strong>{context?.conversation.subject || "No subject"}</strong>
-          </article>
-          <article className="plugin-meta-card">
-            <span>Recipient</span>
-            <strong>{context?.conversation.recipient?.handle || context?.conversation.recipient?.name || "Unknown"}</strong>
-          </article>
-          <article className="plugin-meta-card">
-            <span>Topic</span>
-            <strong>{draft?.intentLabel || "Pending"}</strong>
-          </article>
+        <div className="plugin-summary-row">
+          <div className="plugin-topic-pill">{draft?.intentLabel || "Topic pending"}</div>
+          <button className="plugin-button secondary" type="button" onClick={() => context && void loadMessages(context)} disabled={!context || messagesLoading}>
+            {messagesLoading ? "Refreshing..." : "Refresh"}
+          </button>
+        </div>
+
+        <div className="plugin-section">
+          <div className="plugin-section-header">
+            <div>
+              <p className="plugin-eyebrow">Reply</p>
+              <h2>Generated reply</h2>
+            </div>
+            <small>{draft ? `${draft.provider || "OpenAI"} ${draft.model || ""}`.trim() : "No draft yet"}</small>
+          </div>
+          <pre className="plugin-message-block assistant">
+            {draft?.draftReply || "Generate a draft to preview the reply here."}
+          </pre>
+          <div className="plugin-actions">
+            <button className="plugin-button primary" type="button" onClick={() => void generateDraft()} disabled={draftLoading || !latestInbound}>
+              {draftLoading ? "Generating..." : "Generate reply"}
+            </button>
+            <button className="plugin-button secondary" type="button" onClick={() => void applyDraftToFront()} disabled={!draft?.draftReply || applyState === "applying"}>
+              {applyState === "applying" ? "Adding..." : "Add to Front composer"}
+            </button>
+            <button className="plugin-button secondary" type="button" onClick={() => void copyDraft()} disabled={!draft?.draftReply}>
+              Copy
+            </button>
+          </div>
         </div>
 
         <div className="plugin-section">
           <div className="plugin-section-header">
             <div>
               <p className="plugin-eyebrow">Customer</p>
-              <h2>Selected thread</h2>
+              <h2>Latest ask</h2>
             </div>
           </div>
-          <pre className="plugin-message-block">
-            {latestInbound?.content?.body || "No inbound customer message found yet."}
-          </pre>
-        </div>
-
-        <div className="plugin-actions">
-          <button className="plugin-button primary" type="button" onClick={() => void generateDraft()} disabled={draftLoading || !latestInbound}>
-            {draftLoading ? "Generating..." : "Generate ReplyGuy draft"}
-          </button>
-          <button className="plugin-button secondary" type="button" onClick={() => void copyDraft()} disabled={!draft?.draftReply}>
-            Copy draft
-          </button>
-          <button className="plugin-button secondary" type="button" onClick={() => void applyDraftToFront()} disabled={!draft?.draftReply || applyState === "applying"}>
-            {applyState === "applying" ? "Applying..." : "Insert into Front"}
-          </button>
+          <div className="plugin-customer-brief">
+            {latestInboundText || "No clean inbound customer message found yet."}
+          </div>
         </div>
 
         <div className="plugin-section">
           <div className="plugin-section-header">
             <div>
-              <p className="plugin-eyebrow">ReplyGuy</p>
-              <h2>Generated reply</h2>
-            </div>
-            <small>{draft ? `${draft.provider || "OpenAI"} ${draft.model || ""}`.trim() : "No draft yet"}</small>
-          </div>
-          <pre className="plugin-message-block assistant">
-            {draft?.draftReply || "Generate a draft to preview the customer-facing reply here."}
-          </pre>
-        </div>
-
-        <div className="plugin-section">
-          <div className="plugin-section-header">
-            <div>
-              <p className="plugin-eyebrow">Coaching</p>
-              <h2>Training notes</h2>
+              <p className="plugin-eyebrow">Training</p>
+              <h2>Feedback</h2>
             </div>
           </div>
           <label className="plugin-field">
-            <span>What should ReplyGuy learn from this draft?</span>
+            <span>What should ReplyGuy learn from this reply?</span>
             <textarea
               className="plugin-textarea"
               value={trainingNotes}
               onChange={(event) => setTrainingNotes(event.target.value)}
-              placeholder="Example: Strong answer, direct recommendation, good brevity. Avoid trailing open-ended close next time."
+              placeholder="Example: Good direct recommendation. Shorten the opening. Be more confident about next steps. Avoid mentioning internal reasoning."
             />
           </label>
           <div className="plugin-actions">
             <button className="plugin-button secondary" type="button" onClick={() => void saveTrainingNotes()} disabled={!draft?.draftReply || trainingState === "saving"}>
-              {trainingState === "saving" ? "Saving..." : "Save training note"}
+              {trainingState === "saving" ? "Saving..." : "Save feedback"}
             </button>
           </div>
         </div>
@@ -326,4 +318,61 @@ function isSingleConversationContext(value: unknown): value is SingleConversatio
     && value !== null
     && "type" in value
     && value.type === "singleConversation";
+}
+
+function extractMessageText(message: ApplicationMessage | null | undefined) {
+  const raw = String(message?.content?.body || "");
+  if (!raw.trim()) {
+    return "";
+  }
+
+  const htmlWithoutStyles = raw
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+
+  const document = new DOMParser().parseFromString(htmlWithoutStyles, "text/html");
+  const text = normalizeCustomerText(document.body?.textContent || raw);
+  return trimQuotedHistory(text);
+}
+
+function normalizeCustomerText(value: string) {
+  return String(value || "")
+    .replace(/\u00a0/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .replace(/\r/g, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n[ \t]+/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function trimQuotedHistory(value: string) {
+  const patterns = [
+    /\nFrom:\s.+$/is,
+    /\nOn .+ wrote:\s*$/is,
+    /\n-{2,}\s*Original Message\s*-{2,}[\s\S]*$/i,
+    /\nTo unsubscribe from this group[\s\S]*$/i,
+  ];
+
+  let result = value;
+  for (const pattern of patterns) {
+    result = result.replace(pattern, "").trim();
+  }
+
+  return result;
+}
+
+function safeParseJson(raw: string) {
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return {
+      error: "ReplyGuy received an unexpected server response. Refresh the plugin and try again.",
+      detail: raw.slice(0, 200),
+    };
+  }
 }
