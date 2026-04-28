@@ -116,6 +116,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
   const subject = typeof request.body?.subject === "string" ? request.body.subject.trim() : "";
   const message = typeof request.body?.message === "string" ? request.body.message.trim() : "";
   const topic = typeof request.body?.topic === "string" ? request.body.topic.trim() : "";
+  const allowFallback = request.body?.allowFallback !== false;
 
   if (!message) {
     response.status(400).json({ error: "message is required." });
@@ -123,12 +124,14 @@ app.post("/api/support-lab/draft", async (request, response) => {
   }
 
   try {
-    const draft = await generateDraftFromSubmission({ subject, message, topic });
+    const draft = await generateDraftFromSubmission({ subject, message, topic, allowFallback });
     response.json(draft);
   } catch (error) {
-    response.status(500).json({
+    const detail = error instanceof Error ? error.message : String(error);
+    const status = /live draft generation failed/i.test(detail) ? 502 : 500;
+    response.status(status).json({
       error: "Failed to generate draft from submission.",
-      detail: error instanceof Error ? error.message : String(error),
+      detail,
     });
   }
 });
@@ -442,7 +445,7 @@ async function getUnrepliedEmailPreview({ inbox, limit }) {
   };
 }
 
-async function generateDraftFromSubmission({ subject, message, topic }) {
+async function generateDraftFromSubmission({ subject, message, topic, allowFallback = true }) {
   const cleanedMessage = cleanDraftingText(message);
   const intent = topic
     ? normalizeTopicOverride(topic)
@@ -488,6 +491,9 @@ async function generateDraftFromSubmission({ subject, message, topic }) {
     });
   } catch (error) {
     const detail = error instanceof Error ? error.message : String(error);
+    if (!allowFallback) {
+      throw new Error(`Live draft generation failed: ${detail}`);
+    }
     draft = {
       reply: fallbackDraft.reply,
       notes: [

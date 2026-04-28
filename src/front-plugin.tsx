@@ -111,6 +111,7 @@ function FrontPluginApp() {
         body: JSON.stringify({
           subject: context?.conversation.subject || latestInbound?.subject || "",
           message: latestInboundText,
+          allowFallback: false,
         }),
       });
       const raw = await response.text();
@@ -123,7 +124,11 @@ function FrontPluginApp() {
       setDraft(payload);
     } catch (error) {
       setDraft(null);
-      setDraftError(error instanceof Error ? error.message : "Failed to generate ReplyGuy draft.");
+      setDraftError(
+        error instanceof Error
+          ? error.message
+          : "ReplyGuy couldn't generate a live draft for this thread.",
+      );
     } finally {
       setDraftLoading(false);
     }
