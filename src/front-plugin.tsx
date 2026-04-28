@@ -17,6 +17,14 @@ type DraftResponse = {
   generationMode?: string;
 };
 
+type ThreadMemory = {
+  latestCustomerAsk: string;
+  recentCustomerContext: string[];
+  recentTeamReplies: string[];
+  openQuestion: string;
+  constraints: string[];
+};
+
 function FrontPluginApp() {
   const [context, setContext] = React.useState<SingleConversationContext | null>(null);
   const [contextError, setContextError] = React.useState("");
@@ -90,6 +98,7 @@ function FrontPluginApp() {
     [messages],
   );
   const latestInboundText = React.useMemo(() => extractMessageText(latestInbound), [latestInbound]);
+  const threadMemory = React.useMemo(() => buildThreadMemory(messages, latestInbound), [messages, latestInbound]);
 
   async function generateDraft() {
     if (!latestInboundText) {
@@ -111,6 +120,7 @@ function FrontPluginApp() {
         body: JSON.stringify({
           subject: context?.conversation.subject || latestInbound?.subject || "",
           message: latestInboundText,
+          threadMemory,
           allowFallback: false,
         }),
       });
@@ -380,4 +390,69 @@ function safeParseJson(raw: string) {
       detail: raw.slice(0, 200),
     };
   }
+}
+
+function buildThreadMemory(messages: ApplicationMessage[], latestInbound: ApplicationMessage | null): ThreadMemory {
+  const latestDate = latestInbound ? new Date(latestInbound.date).getTime() : Number.POSITIVE_INFINITY;
+  const olderMessages = messages
+    .filter((message) => new Date(message.date).getTime() < latestDate)
+    .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime());
+
+  const recentCustomerContext = olderMessages
+    .filter((message) => message.status === "inbound")
+    .map((message) => extractMessageText(message))
+    .filter(Boolean)
+    .slice(0, 2);
+
+  const recentTeamReplies = olderMessages
+    .filter((message) => message.status !== "inbound")
+    .map((message) => extractMessageText(message))
+    .filter(Boolean)
+    .slice(0, 2);
+
+  const constraints = extractConstraints([latestInbound ? extractMessageText(latestInbound) : "", ...recentCustomerContext]);
+
+  return {
+    latestCustomerAsk: latestInbound ? extractMessageText(latestInbound) : "",
+    recentCustomerContext,
+    recentTeamReplies,
+    openQuestion: inferOpenQuestion(latestInbound ? extractMessageText(latestInbound) : ""),
+    constraints,
+  };
+}
+
+function inferOpenQuestion(text: string) {
+  const cleaned = String(text || "").trim();
+  if (!cleaned) {
+    return "";
+  }
+
+  const questionSentences = cleaned
+    .split(/(?<=[?.!])\s+/)
+    .filter((sentence) => sentence.includes("?"));
+
+  return questionSentences[0] || cleaned.split(/\n+/)[0] || "";
+}
+
+function extractConstraints(inputs: string[]) {
+  const constraints = new Set<string>();
+  const joined = inputs.join("\n");
+
+  if (/\b(asap|urgent|today|tomorrow|overnight|deadline)\b/i.test(joined)) {
+    constraints.add("There is a timing or urgency constraint.");
+  }
+
+  if (/\b(price|payment|invoice|quote|budget|cost)\b/i.test(joined)) {
+    constraints.add("Commercial details may affect the reply.");
+  }
+
+  if (/\binstall|installer|roof|schedule|access|noise|onsite|coordina/i.test(joined)) {
+    constraints.add("Installation or scheduling logistics matter here.");
+  }
+
+  if (/\bwarranty|replace|replacement|return|refund\b/i.test(joined)) {
+    constraints.add("Warranty, replacement, or return handling may be relevant.");
+  }
+
+  return Array.from(constraints);
 }

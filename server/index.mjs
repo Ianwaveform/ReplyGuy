@@ -117,6 +117,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
   const message = typeof request.body?.message === "string" ? request.body.message.trim() : "";
   const topic = typeof request.body?.topic === "string" ? request.body.topic.trim() : "";
   const allowFallback = request.body?.allowFallback !== false;
+  const threadMemory = normalizeThreadMemory(request.body?.threadMemory);
 
   if (!message) {
     response.status(400).json({ error: "message is required." });
@@ -124,7 +125,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
   }
 
   try {
-    const draft = await generateDraftFromSubmission({ subject, message, topic, allowFallback });
+    const draft = await generateDraftFromSubmission({ subject, message, topic, allowFallback, threadMemory });
     response.json(draft);
   } catch (error) {
     const detail = error instanceof Error ? error.message : String(error);
@@ -445,13 +446,14 @@ async function getUnrepliedEmailPreview({ inbox, limit }) {
   };
 }
 
-async function generateDraftFromSubmission({ subject, message, topic, allowFallback = true }) {
+async function generateDraftFromSubmission({ subject, message, topic, allowFallback = true, threadMemory = null }) {
   const cleanedMessage = cleanDraftingText(message);
+  const memoryText = flattenThreadMemory(threadMemory);
   const intent = topic
     ? normalizeTopicOverride(topic)
     : classifyUnrepliedIntent({
     subject,
-    body: cleanedMessage,
+    body: `${cleanedMessage}\n${memoryText}`,
     tags: [],
   });
 
@@ -459,7 +461,7 @@ async function generateDraftFromSubmission({ subject, message, topic, allowFallb
   const graphContext = retrieveGraphContext({
     graph,
     subject,
-    message: cleanedMessage,
+    message: `${cleanedMessage}\n${memoryText}`,
     intent,
   });
   const trainingMatches = formatGraphMatches(graphContext);
@@ -483,6 +485,7 @@ async function generateDraftFromSubmission({ subject, message, topic, allowFallb
     draft = await generateOpenAiReplyDraft({
       subject,
       message: cleanedMessage,
+      threadMemory,
       intent,
       graphContext,
       trainingMatches,
@@ -557,6 +560,7 @@ async function generateDraftFromSubmission({ subject, message, topic, allowFallb
 async function generateOpenAiReplyDraft({
   subject,
   message,
+  threadMemory,
   intent,
   graphContext,
   trainingMatches,
@@ -575,6 +579,7 @@ async function generateOpenAiReplyDraft({
   const userPrompt = buildCustomerReplyUserPrompt({
     subject,
     message,
+    threadMemory,
     intentLabel: intent.label,
     exampleReply: graphContext.historicalExamples[0]?.text || example?.cleanedReplyRedacted || "",
     fallbackReply: fallbackDraft.reply,
@@ -719,12 +724,16 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext }) {
   return sections.join("\n\n");
 }
 
-function buildCustomerReplyUserPrompt({ subject, message, intentLabel, exampleReply, fallbackReply }) {
+function buildCustomerReplyUserPrompt({ subject, message, threadMemory, intentLabel, exampleReply, fallbackReply }) {
   const sections = [
     `Topic: ${intentLabel || "General Support"}`,
     `Subject: ${subject || "(none provided)"}`,
     `Customer message:\n${message}`,
   ];
+
+  if (threadMemory && flattenThreadMemory(threadMemory)) {
+    sections.push(`Thread memory:\n${formatThreadMemoryForPrompt(threadMemory)}`);
+  }
 
   if (exampleReply) {
     sections.push(`Useful reference example for structure only:\n${exampleReply.slice(0, 1800)}`);
@@ -736,6 +745,53 @@ function buildCustomerReplyUserPrompt({ subject, message, intentLabel, exampleRe
 
   sections.push("Write the best customer-facing reply now.");
   return sections.join("\n\n");
+}
+
+function normalizeThreadMemory(value) {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  return {
+    latestCustomerAsk: cleanDraftingText(value.latestCustomerAsk || ""),
+    recentCustomerContext: Array.isArray(value.recentCustomerContext)
+      ? value.recentCustomerContext.map((item) => cleanDraftingText(item)).filter(Boolean).slice(0, 3)
+      : [],
+    recentTeamReplies: Array.isArray(value.recentTeamReplies)
+      ? value.recentTeamReplies.map((item) => cleanDraftingText(item)).filter(Boolean).slice(0, 3)
+      : [],
+    openQuestion: cleanDraftingText(value.openQuestion || ""),
+    constraints: Array.isArray(value.constraints)
+      ? value.constraints.map((item) => cleanDraftingText(item)).filter(Boolean).slice(0, 4)
+      : [],
+  };
+}
+
+function flattenThreadMemory(threadMemory) {
+  if (!threadMemory) {
+    return "";
+  }
+
+  return [
+    threadMemory.latestCustomerAsk || "",
+    ...(threadMemory.recentCustomerContext || []),
+    ...(threadMemory.recentTeamReplies || []),
+    threadMemory.openQuestion || "",
+    ...(threadMemory.constraints || []),
+  ].filter(Boolean).join("\n");
+}
+
+function formatThreadMemoryForPrompt(threadMemory) {
+  return [
+    threadMemory.openQuestion ? `Open question: ${threadMemory.openQuestion}` : "",
+    threadMemory.constraints?.length ? `Constraints: ${threadMemory.constraints.join(" | ")}` : "",
+    threadMemory.recentCustomerContext?.length
+      ? `Recent customer context:\n${threadMemory.recentCustomerContext.map((item, index) => `- ${index + 1}. ${item.slice(0, 500)}`).join("\n")}`
+      : "",
+    threadMemory.recentTeamReplies?.length
+      ? `Recent team replies:\n${threadMemory.recentTeamReplies.map((item, index) => `- ${index + 1}. ${item.slice(0, 500)}`).join("\n")}`
+      : "",
+  ].filter(Boolean).join("\n\n");
 }
 
 function formatTrainingNodeForPrompt(item, index) {
