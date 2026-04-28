@@ -1196,7 +1196,7 @@ function firstNameFromConversation(conversation) {
 }
 
 function cleanDraftingText(value) {
-  return collapseSupportWhitespace(
+  return stripContactFormScaffolding(collapseSupportWhitespace(
     stripSupportMarkdown(
       String(value || "")
         .replace(/\[Deprecated\][^\n]+/gi, " ")
@@ -1204,7 +1204,7 @@ function cleanDraftingText(value) {
         .replace(/\n>[\s\S]*$/m, " ")
         .replace(/\nOn .+ wrote:[\s\S]*$/im, " "),
     ),
-  );
+  ));
 }
 
 function tokenizeForDrafting(value) {
@@ -1368,6 +1368,24 @@ function collapseSupportWhitespace(value) {
     .replace(/\r/g, "")
     .replace(/[ \t]+/g, " ")
     .replace(/\n[ \t]+/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function stripContactFormScaffolding(value) {
+  let result = String(value || "");
+
+  result = result
+    .replace(/\[Deprecated\]\s*URL from Referer header:\s*[\s\S]*?(?=(?:\n[A-Z][A-Za-z ]{1,24}:)|$)/gi, " ")
+    .replace(/\burl:\s*https?:\/\/\S+/gi, " ")
+    .replace(/\bhttps?:\/\/www\.waveform\.com\/pages\/contact-us\b/gi, " ");
+
+  const messageFieldMatch = result.match(/(?:^|\n)Message:\s*([\s\S]*)/i);
+  if (messageFieldMatch?.[1]?.trim()) {
+    result = messageFieldMatch[1].trim();
+  }
+
+  return result
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }

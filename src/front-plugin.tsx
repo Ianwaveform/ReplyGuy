@@ -91,10 +91,7 @@ function FrontPluginApp() {
   }
 
   const latestInbound = React.useMemo(
-    () =>
-      messages.find(
-        (message) => message.status === "inbound" && extractMessageText(message).trim(),
-      ) ?? null,
+    () => pickBestInboundMessage(messages),
     [messages],
   );
   const latestInboundText = React.useMemo(() => extractMessageText(latestInbound), [latestInbound]);
@@ -128,7 +125,7 @@ function FrontPluginApp() {
       const payload = safeParseJson(raw);
 
       if (!response.ok || !payload?.draftReply) {
-        throw new Error(payload?.error || payload?.detail || "ReplyGuy couldn't generate a draft for this thread.");
+        throw new Error(payload?.detail || payload?.error || "ReplyGuy couldn't generate a draft for this thread.");
       }
 
       setDraft(payload);
@@ -224,7 +221,7 @@ function FrontPluginApp() {
       const raw = await response.text();
       const payload = safeParseJson(raw);
       if (!response.ok || !payload?.item) {
-        throw new Error(payload?.error || payload?.detail || "Failed to save training notes.");
+        throw new Error(payload?.detail || payload?.error || "Failed to save training notes.");
       }
 
       setTrainingState("");
@@ -352,7 +349,8 @@ function extractMessageText(message: ApplicationMessage | null | undefined) {
 }
 
 function normalizeCustomerText(value: string) {
-  return String(value || "")
+  return stripContactFormScaffolding(
+    String(value || "")
     .replace(/\u00a0/g, " ")
     .replace(/&nbsp;/gi, " ")
     .replace(/&amp;/gi, "&")
@@ -362,7 +360,8 @@ function normalizeCustomerText(value: string) {
     .replace(/[ \t]+/g, " ")
     .replace(/\n[ \t]+/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
-    .trim();
+    .trim(),
+  );
 }
 
 function trimQuotedHistory(value: string) {
@@ -390,6 +389,66 @@ function safeParseJson(raw: string) {
       detail: raw.slice(0, 200),
     };
   }
+}
+
+function pickBestInboundMessage(messages: ApplicationMessage[]) {
+  const inboundMessages = messages
+    .filter((message) => message.status === "inbound")
+    .map((message) => ({
+      message,
+      text: extractMessageText(message),
+      score: scoreInboundText(extractMessageText(message)),
+    }))
+    .filter((entry) => entry.text.trim())
+    .sort((left, right) => {
+      if (right.score !== left.score) {
+        return right.score - left.score;
+      }
+      return new Date(right.message.date).getTime() - new Date(left.message.date).getTime();
+    });
+
+  return inboundMessages[0]?.message ?? null;
+}
+
+function scoreInboundText(text: string) {
+  const normalized = String(text || "").trim();
+  if (!normalized) {
+    return -100;
+  }
+
+  let score = Math.min(normalized.length, 800);
+  if (/\b(i have|i need|can you|let me know|looking for|issue|problem|question|current)\b/i.test(normalized)) {
+    score += 120;
+  }
+  if (/\b\[deprecated\]\b/i.test(normalized)) {
+    score -= 300;
+  }
+  if (/url from referer header/i.test(normalized)) {
+    score -= 300;
+  }
+  if (/^https?:\/\/\S+$/im.test(normalized)) {
+    score -= 120;
+  }
+
+  return score;
+}
+
+function stripContactFormScaffolding(value: string) {
+  let result = String(value || "");
+
+  result = result
+    .replace(/\[Deprecated\]\s*URL from Referer header:\s*[\s\S]*?(?=(?:\n[A-Z][A-Za-z ]{1,24}:)|$)/gi, " ")
+    .replace(/\burl:\s*https?:\/\/\S+/gi, " ")
+    .replace(/\bhttps?:\/\/www\.waveform\.com\/pages\/contact-us\b/gi, " ");
+
+  const messageFieldMatch = result.match(/(?:^|\n)Message:\s*([\s\S]*)/i);
+  if (messageFieldMatch?.[1]?.trim()) {
+    result = messageFieldMatch[1].trim();
+  }
+
+  return result
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
 }
 
 function buildThreadMemory(messages: ApplicationMessage[], latestInbound: ApplicationMessage | null): ThreadMemory {
