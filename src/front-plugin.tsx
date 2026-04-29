@@ -98,6 +98,22 @@ function FrontPluginApp() {
   const threadMemory = React.useMemo(() => buildThreadMemory(messages, latestInbound), [messages, latestInbound]);
 
   async function generateDraft() {
+    await requestDraft();
+  }
+
+  async function regenerateFromFeedback() {
+    if (!trainingNotes.trim()) {
+      setDraftError("Add feedback first, then regenerate the reply.");
+      return;
+    }
+
+    await requestDraft({
+      revisionFeedback: trainingNotes,
+      currentDraft: draft?.draftReply || "",
+    });
+  }
+
+  async function requestDraft(options?: { revisionFeedback?: string; currentDraft?: string }) {
     if (!latestInboundText) {
       setDraftError("ReplyGuy couldn't find an inbound customer message to draft from.");
       return;
@@ -118,6 +134,8 @@ function FrontPluginApp() {
           subject: context?.conversation.subject || latestInbound?.subject || "",
           message: latestInboundText,
           threadMemory,
+          revisionFeedback: options?.revisionFeedback || "",
+          currentDraft: options?.currentDraft || "",
           allowFallback: false,
         }),
       });
@@ -311,6 +329,14 @@ function FrontPluginApp() {
           <div className="plugin-actions">
             <button className="plugin-button secondary" type="button" onClick={() => void saveTrainingNotes()} disabled={!draft?.draftReply || trainingState === "saving"}>
               {trainingState === "saving" ? "Saving..." : "Save feedback"}
+            </button>
+            <button
+              className="plugin-button secondary"
+              type="button"
+              onClick={() => void regenerateFromFeedback()}
+              disabled={!draft?.draftReply || !trainingNotes.trim() || draftLoading}
+            >
+              {draftLoading ? "Regenerating..." : "Re-generate reply"}
             </button>
           </div>
         </div>

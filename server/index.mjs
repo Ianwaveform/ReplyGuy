@@ -118,6 +118,8 @@ app.post("/api/support-lab/draft", async (request, response) => {
   const topic = typeof request.body?.topic === "string" ? request.body.topic.trim() : "";
   const allowFallback = request.body?.allowFallback !== false;
   const threadMemory = normalizeThreadMemory(request.body?.threadMemory);
+  const revisionFeedback = typeof request.body?.revisionFeedback === "string" ? request.body.revisionFeedback.trim() : "";
+  const currentDraft = typeof request.body?.currentDraft === "string" ? request.body.currentDraft.trim() : "";
 
   if (!message) {
     response.status(400).json({ error: "message is required." });
@@ -125,7 +127,15 @@ app.post("/api/support-lab/draft", async (request, response) => {
   }
 
   try {
-    const draft = await generateDraftFromSubmission({ subject, message, topic, allowFallback, threadMemory });
+    const draft = await generateDraftFromSubmission({
+      subject,
+      message,
+      topic,
+      allowFallback,
+      threadMemory,
+      revisionFeedback,
+      currentDraft,
+    });
     response.json(draft);
   } catch (error) {
     const detail = error instanceof Error ? error.message : String(error);
@@ -446,7 +456,15 @@ async function getUnrepliedEmailPreview({ inbox, limit }) {
   };
 }
 
-async function generateDraftFromSubmission({ subject, message, topic, allowFallback = true, threadMemory = null }) {
+async function generateDraftFromSubmission({
+  subject,
+  message,
+  topic,
+  allowFallback = true,
+  threadMemory = null,
+  revisionFeedback = "",
+  currentDraft = "",
+}) {
   const cleanedMessage = cleanDraftingText(message);
   const memoryText = flattenThreadMemory(threadMemory);
   const intent = topic
@@ -486,6 +504,8 @@ async function generateDraftFromSubmission({ subject, message, topic, allowFallb
       subject,
       message: cleanedMessage,
       threadMemory,
+      revisionFeedback,
+      currentDraft,
       intent,
       graphContext,
       trainingMatches,
@@ -561,6 +581,8 @@ async function generateOpenAiReplyDraft({
   subject,
   message,
   threadMemory,
+  revisionFeedback,
+  currentDraft,
   intent,
   graphContext,
   trainingMatches,
@@ -580,6 +602,8 @@ async function generateOpenAiReplyDraft({
     subject,
     message,
     threadMemory,
+    revisionFeedback,
+    currentDraft,
     intentLabel: intent.label,
     exampleReply: graphContext.historicalExamples[0]?.text || example?.cleanedReplyRedacted || "",
     fallbackReply: fallbackDraft.reply,
@@ -724,7 +748,16 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext }) {
   return sections.join("\n\n");
 }
 
-function buildCustomerReplyUserPrompt({ subject, message, threadMemory, intentLabel, exampleReply, fallbackReply }) {
+function buildCustomerReplyUserPrompt({
+  subject,
+  message,
+  threadMemory,
+  revisionFeedback,
+  currentDraft,
+  intentLabel,
+  exampleReply,
+  fallbackReply,
+}) {
   const sections = [
     `Topic: ${intentLabel || "General Support"}`,
     `Subject: ${subject || "(none provided)"}`,
@@ -739,11 +772,23 @@ function buildCustomerReplyUserPrompt({ subject, message, threadMemory, intentLa
     sections.push(`Useful reference example for structure only:\n${exampleReply.slice(0, 1800)}`);
   }
 
+  if (currentDraft) {
+    sections.push(`Current draft to improve:\n${currentDraft.slice(0, 1800)}`);
+  }
+
+  if (revisionFeedback) {
+    sections.push(`Revision feedback from teammate:\n${revisionFeedback.slice(0, 1200)}`);
+  }
+
   if (fallbackReply) {
     sections.push(`Drafting starter that may be partially useful, but should be improved if needed:\n${fallbackReply.slice(0, 1200)}`);
   }
 
-  sections.push("Write the best customer-facing reply now.");
+  sections.push(
+    revisionFeedback
+      ? "Rewrite the draft to address the teammate feedback while keeping the reply customer-facing and concise."
+      : "Write the best customer-facing reply now.",
+  );
   return sections.join("\n\n");
 }
 
