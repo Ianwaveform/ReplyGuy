@@ -91,7 +91,7 @@ function FrontPluginApp() {
   }
 
   const latestInbound = React.useMemo(
-    () => pickBestInboundMessage(messages),
+    () => pickLatestUsefulInboundMessage(messages),
     [messages],
   );
   const latestInboundText = React.useMemo(() => extractMessageText(latestInbound), [latestInbound]);
@@ -417,21 +417,22 @@ function safeParseJson(raw: string) {
   }
 }
 
-function pickBestInboundMessage(messages: ApplicationMessage[]) {
+function pickLatestUsefulInboundMessage(messages: ApplicationMessage[]) {
   const inboundMessages = messages
     .filter((message) => message.status === "inbound")
     .map((message) => ({
       message,
       text: extractMessageText(message),
       score: scoreInboundText(extractMessageText(message)),
+      time: new Date(message.date).getTime(),
     }))
     .filter((entry) => entry.text.trim())
-    .sort((left, right) => {
-      if (right.score !== left.score) {
-        return right.score - left.score;
-      }
-      return new Date(right.message.date).getTime() - new Date(left.message.date).getTime();
-    });
+    .sort((left, right) => right.time - left.time);
+
+  const latestValid = inboundMessages.find((entry) => entry.score > -50);
+  if (latestValid) {
+    return latestValid.message;
+  }
 
   return inboundMessages[0]?.message ?? null;
 }
