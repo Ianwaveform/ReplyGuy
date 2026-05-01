@@ -37,6 +37,7 @@ function FrontPluginApp() {
   const [applyState, setApplyState] = React.useState("");
   const [applySuccess, setApplySuccess] = React.useState("");
   const [trainingNotes, setTrainingNotes] = React.useState("");
+  const [savedFeedbackNotes, setSavedFeedbackNotes] = React.useState("");
   const [trainingState, setTrainingState] = React.useState("");
   const [feedbackSaved, setFeedbackSaved] = React.useState(false);
 
@@ -109,7 +110,7 @@ function FrontPluginApp() {
     }
 
     await requestDraft({
-      revisionFeedback: trainingNotes,
+      revisionFeedback: savedFeedbackNotes,
       currentDraft: draft?.draftReply || "",
     });
   }
@@ -125,6 +126,7 @@ function FrontPluginApp() {
     setApplySuccess("");
     setTrainingState("");
     setFeedbackSaved(false);
+    setSavedFeedbackNotes("");
 
     try {
       const response = await fetch("/api/support-lab/draft", {
@@ -150,6 +152,7 @@ function FrontPluginApp() {
 
       setDraft(payload);
       setFeedbackSaved(false);
+      setSavedFeedbackNotes("");
     } catch (error) {
       setDraft(null);
       setDraftError(
@@ -251,6 +254,8 @@ function FrontPluginApp() {
           ? `Feedback saved to ${payload.storePath}.`
           : "Feedback saved with the current draft.",
       );
+      setSavedFeedbackNotes(trainingNotes);
+      setTrainingNotes("");
       setFeedbackSaved(true);
     } catch (error) {
       setTrainingState("");
@@ -332,6 +337,7 @@ function FrontPluginApp() {
               onChange={(event) => {
                 setTrainingNotes(event.target.value);
                 setFeedbackSaved(false);
+                setSavedFeedbackNotes("");
               }}
               placeholder={
                 feedbackSaved
@@ -345,7 +351,12 @@ function FrontPluginApp() {
               className="plugin-button secondary"
               type="button"
               onClick={() => void (feedbackSaved ? regenerateFromFeedback() : saveTrainingNotes())}
-              disabled={!draft?.draftReply || !trainingNotes.trim() || draftLoading || trainingState === "saving"}
+              disabled={
+                !draft?.draftReply
+                || (!(feedbackSaved ? savedFeedbackNotes.trim() : trainingNotes.trim()))
+                || draftLoading
+                || trainingState === "saving"
+              }
             >
               {trainingState === "saving"
                 ? "Saving..."
