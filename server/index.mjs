@@ -192,6 +192,7 @@ app.post("/api/support-lab/training", async (request, response) => {
     response.json({
       ok: true,
       item,
+      storePath: path.relative(process.cwd(), TRAINING_STORE_PATH).replace(/\\/g, "/"),
     });
   } catch (error) {
     response.status(500).json({

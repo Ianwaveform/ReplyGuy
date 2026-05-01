@@ -243,8 +243,11 @@ function FrontPluginApp() {
       }
 
       setTrainingState("");
-      setApplySuccess("Training note saved with the current draft.");
-      setTrainingNotes("");
+      setApplySuccess(
+        payload?.storePath
+          ? `Feedback saved to ${payload.storePath}.`
+          : "Feedback saved with the current draft.",
+      );
     } catch (error) {
       setTrainingState("");
       setDraftError(error instanceof Error ? error.message : "Failed to save training notes.");
