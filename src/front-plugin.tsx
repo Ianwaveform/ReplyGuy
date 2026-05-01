@@ -38,6 +38,7 @@ function FrontPluginApp() {
   const [applySuccess, setApplySuccess] = React.useState("");
   const [trainingNotes, setTrainingNotes] = React.useState("");
   const [trainingState, setTrainingState] = React.useState("");
+  const [feedbackSaved, setFeedbackSaved] = React.useState(false);
 
   React.useEffect(() => {
     delegateNewWindowsToFront();
@@ -123,6 +124,7 @@ function FrontPluginApp() {
     setDraftError("");
     setApplySuccess("");
     setTrainingState("");
+    setFeedbackSaved(false);
 
     try {
       const response = await fetch("/api/support-lab/draft", {
@@ -147,6 +149,7 @@ function FrontPluginApp() {
       }
 
       setDraft(payload);
+      setFeedbackSaved(false);
     } catch (error) {
       setDraft(null);
       setDraftError(
@@ -248,6 +251,7 @@ function FrontPluginApp() {
           ? `Feedback saved to ${payload.storePath}.`
           : "Feedback saved with the current draft.",
       );
+      setFeedbackSaved(true);
     } catch (error) {
       setTrainingState("");
       setDraftError(error instanceof Error ? error.message : "Failed to save training notes.");
@@ -325,21 +329,31 @@ function FrontPluginApp() {
             <textarea
               className="plugin-textarea"
               value={trainingNotes}
-              onChange={(event) => setTrainingNotes(event.target.value)}
-              placeholder="Example: Good direct recommendation. Shorten the opening. Be more confident about next steps. Avoid mentioning internal reasoning."
+              onChange={(event) => {
+                setTrainingNotes(event.target.value);
+                setFeedbackSaved(false);
+              }}
+              placeholder={
+                feedbackSaved
+                  ? "Feedback saved, Re-generate reply?"
+                  : "Example: Good direct recommendation. Shorten the opening. Be more confident about next steps. Avoid mentioning internal reasoning."
+              }
             />
           </label>
           <div className="plugin-actions">
-            <button className="plugin-button secondary" type="button" onClick={() => void saveTrainingNotes()} disabled={!draft?.draftReply || trainingState === "saving"}>
-              {trainingState === "saving" ? "Saving..." : "Save feedback"}
-            </button>
             <button
               className="plugin-button secondary"
               type="button"
-              onClick={() => void regenerateFromFeedback()}
-              disabled={!draft?.draftReply || !trainingNotes.trim() || draftLoading}
+              onClick={() => void (feedbackSaved ? regenerateFromFeedback() : saveTrainingNotes())}
+              disabled={!draft?.draftReply || !trainingNotes.trim() || draftLoading || trainingState === "saving"}
             >
-              {draftLoading ? "Regenerating..." : "Re-generate reply"}
+              {trainingState === "saving"
+                ? "Saving..."
+                : draftLoading
+                  ? "Regenerating..."
+                  : feedbackSaved
+                    ? "Re-generate reply"
+                    : "Save feedback"}
             </button>
           </div>
         </div>
