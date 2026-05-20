@@ -118,6 +118,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
   const topic = typeof request.body?.topic === "string" ? request.body.topic.trim() : "";
   const allowFallback = request.body?.allowFallback !== false;
   const threadMemory = normalizeThreadMemory(request.body?.threadMemory);
+  const replyMode = normalizeReplyMode(request.body?.replyMode);
   const revisionFeedback = typeof request.body?.revisionFeedback === "string" ? request.body.revisionFeedback.trim() : "";
   const currentDraft = typeof request.body?.currentDraft === "string" ? request.body.currentDraft.trim() : "";
 
@@ -133,6 +134,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
       topic,
       allowFallback,
       threadMemory,
+      replyMode,
       revisionFeedback,
       currentDraft,
     });
@@ -463,6 +465,7 @@ async function generateDraftFromSubmission({
   topic,
   allowFallback = true,
   threadMemory = null,
+  replyMode = "careful",
   revisionFeedback = "",
   currentDraft = "",
 }) {
@@ -505,6 +508,7 @@ async function generateDraftFromSubmission({
       subject,
       message: cleanedMessage,
       threadMemory,
+      replyMode,
       revisionFeedback,
       currentDraft,
       intent,
@@ -530,6 +534,19 @@ async function generateDraftFromSubmission({
     };
   }
 
+  const sources = buildDraftSources({
+    cleanedMessage,
+    threadMemory,
+    graphContext,
+    revisionFeedback,
+  });
+  const confidence = buildDraftConfidence({
+    cleanedMessage,
+    threadMemory,
+    graphContext,
+    draft,
+  });
+
   try {
     await appendGenerationLog({
       rootDir: GENERATION_LOG_ROOT,
@@ -542,6 +559,8 @@ async function generateDraftFromSubmission({
         model: draft.model,
         provider: draft.provider,
         mode: draft.mode,
+        replyMode,
+        confidence,
         retrieval: {
           topic: graphContext.topic,
           guidanceDocIds: graphContext.guidanceDocs.map((item) => item.id),
@@ -572,6 +591,9 @@ async function generateDraftFromSubmission({
     model: draft.model,
     provider: draft.provider,
     generationMode: draft.mode,
+    replyMode,
+    confidence,
+    sources,
     sopMatches: trainingMatches,
     exampleReplyRedacted: example?.cleanedReplyRedacted || "",
     exampleSubject: example?.subject || "",
@@ -582,6 +604,7 @@ async function generateOpenAiReplyDraft({
   subject,
   message,
   threadMemory,
+  replyMode,
   revisionFeedback,
   currentDraft,
   intent,
@@ -598,11 +621,13 @@ async function generateOpenAiReplyDraft({
   const systemPrompt = buildCustomerReplySystemPrompt({
     intentLabel: intent.label,
     graphContext,
+    replyMode,
   });
   const userPrompt = buildCustomerReplyUserPrompt({
     subject,
     message,
     threadMemory,
+    replyMode,
     revisionFeedback,
     currentDraft,
     intentLabel: intent.label,
@@ -619,7 +644,7 @@ async function generateOpenAiReplyDraft({
     body: JSON.stringify({
       model: config.model,
       reasoning: {
-        effort: "medium",
+        effort: reasoningEffortForReplyMode(replyMode),
       },
       input: [
         {
@@ -662,7 +687,7 @@ async function generateOpenAiReplyDraft({
   return {
     reply: outputText,
     notes: [
-      `Generated with ${payload?.model || config.model} via OpenAI Responses API.`,
+      `Generated with ${payload?.model || config.model} via OpenAI Responses API in ${replyMode} mode.`,
       graphContext.trainingExamples.length
         ? `Grounded in ${graphContext.trainingExamples.length} team-saved training ${graphContext.trainingExamples.length === 1 ? "example" : "examples"} for this topic.`
         : "No direct training example matched, so the draft leaned on compact guidance nodes.",
@@ -715,7 +740,162 @@ function formatGraphMatches(graphContext) {
   }));
 }
 
-function buildCustomerReplySystemPrompt({ intentLabel, graphContext }) {
+function normalizeReplyMode(value) {
+  const mode = String(value || "").trim().toLowerCase();
+  if (mode === "fast" || mode === "careful" || mode === "research") {
+    return mode;
+  }
+
+  return "careful";
+}
+
+function humanizeReplyMode(value) {
+  const mode = normalizeReplyMode(value);
+  return mode.charAt(0).toUpperCase() + mode.slice(1);
+}
+
+function reasoningEffortForReplyMode(value) {
+  const mode = normalizeReplyMode(value);
+  if (mode === "fast") {
+    return "low";
+  }
+  if (mode === "research") {
+    return "high";
+  }
+
+  return "medium";
+}
+
+function buildDraftSources({ cleanedMessage, threadMemory, graphContext, revisionFeedback }) {
+  const sources = [];
+
+  if (cleanedMessage) {
+    sources.push({
+      id: "front:latest-customer-ask",
+      type: "front_thread",
+      title: "Latest customer ask",
+      detail: `${Math.min(cleanedMessage.length, 9999)} characters from the selected Front thread.`,
+      excerpt: cleanedMessage.slice(0, 240),
+    });
+  }
+
+  if (threadMemory && flattenThreadMemory(threadMemory)) {
+    const contextCount = (threadMemory.recentCustomerContext || []).length + (threadMemory.recentTeamReplies || []).length;
+    sources.push({
+      id: "front:thread-memory",
+      type: "thread_memory",
+      title: "Compact thread memory",
+      detail: `${contextCount} recent context ${contextCount === 1 ? "item" : "items"} plus open question and constraints.`,
+      excerpt: (threadMemory.openQuestion || flattenThreadMemory(threadMemory)).slice(0, 240),
+    });
+  }
+
+  for (const item of graphContext.trainingExamples || []) {
+    sources.push({
+      id: item.id,
+      type: "training_example",
+      title: item.title || "Team training example",
+      detail: "Saved team feedback/training example.",
+      excerpt: item.excerpt || "",
+      relativePath: item.relativePath || "",
+    });
+  }
+
+  for (const item of graphContext.guidanceDocs || []) {
+    sources.push({
+      id: item.id,
+      type: "guidance_doc",
+      title: item.title || "Curated guidance",
+      detail: item.relativePath || "Curated ReplyGuy guidance.",
+      excerpt: item.excerpt || "",
+      relativePath: item.relativePath || "",
+    });
+  }
+
+  for (const item of graphContext.historicalExamples || []) {
+    sources.push({
+      id: item.id,
+      type: "historical_example",
+      title: item.title || "Historical Front reply",
+      detail: "Historical Front reply used for structure only.",
+      excerpt: item.excerpt || "",
+      relativePath: item.relativePath || "",
+    });
+  }
+
+  if (revisionFeedback) {
+    sources.push({
+      id: "teammate:revision-feedback",
+      type: "revision_feedback",
+      title: "Saved teammate feedback",
+      detail: "Used to regenerate this draft.",
+      excerpt: revisionFeedback.slice(0, 240),
+    });
+  }
+
+  return sources.slice(0, 8);
+}
+
+function buildDraftConfidence({ cleanedMessage, threadMemory, graphContext, draft }) {
+  let score = 38;
+  const reasons = [];
+
+  if (cleanedMessage.length >= 40) {
+    score += 18;
+    reasons.push("Clear latest customer message detected.");
+  } else if (cleanedMessage) {
+    score += 8;
+    reasons.push("Latest customer message is short, so thread memory matters more.");
+  } else {
+    reasons.push("No clean latest customer message was available.");
+  }
+
+  if (threadMemory && flattenThreadMemory(threadMemory)) {
+    score += 10;
+    reasons.push("Compact thread memory was included.");
+  }
+
+  if (threadMemory?.openQuestion) {
+    score += 8;
+    reasons.push("An open question or current decision point was detected.");
+  }
+
+  if (graphContext.trainingExamples?.length) {
+    score += 12;
+    reasons.push(`${graphContext.trainingExamples.length} team training ${graphContext.trainingExamples.length === 1 ? "example" : "examples"} matched.`);
+  } else {
+    reasons.push("No team-saved training example matched this topic yet.");
+  }
+
+  if (graphContext.guidanceDocs?.length) {
+    score += 8;
+    reasons.push("Customer-facing guidance was available.");
+  }
+
+  if (graphContext.historicalExamples?.length) {
+    score += 6;
+    reasons.push("A historical Front reply was available for structure.");
+  }
+
+  if (draft?.mode === "live") {
+    score += 8;
+    reasons.push("Live OpenAI generation completed.");
+  } else {
+    score -= 18;
+    reasons.push("Draft used a fallback path.");
+  }
+
+  const boundedScore = Math.max(0, Math.min(100, score));
+  const label = boundedScore >= 76 ? "High" : boundedScore >= 56 ? "Medium" : "Low";
+
+  return {
+    label,
+    score: boundedScore,
+    reasons: reasons.slice(0, 5),
+  };
+}
+
+function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode }) {
   const sections = [
     "You write customer-facing email replies for Waveform.",
     "Return only the finished reply body that should be sent to the customer.",
@@ -723,6 +903,7 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext }) {
     "Do not sound scripted, robotic, or support-center generic.",
     "Answer the customer's actual question first, then give the clearest practical next step.",
     `Primary topic: ${intentLabel || "General Support"}.`,
+    `Reply mode: ${humanizeReplyMode(replyMode)}.`,
   ];
 
   if (graphContext.guidanceDocs.length) {
@@ -746,6 +927,14 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext }) {
     "- Prefer confident practical guidance over generic reassurance.",
   );
 
+  if (replyMode === "fast") {
+    sections.push("Fast mode: keep the reply short and avoid deep technical explanation unless the customer explicitly asks for it.");
+  } else if (replyMode === "research") {
+    sections.push("Research mode: be extra careful with technical claims. If the provided context is not enough to answer confidently, say what detail is needed rather than guessing.");
+  } else {
+    sections.push("Careful mode: use the thread memory and matched sources to answer precisely without over-explaining.");
+  }
+
   return sections.join("\n\n");
 }
 
@@ -753,6 +942,7 @@ function buildCustomerReplyUserPrompt({
   subject,
   message,
   threadMemory,
+  replyMode,
   revisionFeedback,
   currentDraft,
   intentLabel,
@@ -760,6 +950,7 @@ function buildCustomerReplyUserPrompt({
   fallbackReply,
 }) {
   const sections = [
+    `Reply mode: ${humanizeReplyMode(replyMode)}`,
     `Topic: ${intentLabel || "General Support"}`,
     `Subject: ${subject || "(none provided)"}`,
     `Customer message:\n${message}`,

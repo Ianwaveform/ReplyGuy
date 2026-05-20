@@ -15,6 +15,9 @@ type DraftResponse = {
   model?: string;
   provider?: string;
   generationMode?: string;
+  replyMode?: ReplyMode;
+  confidence?: DraftConfidence;
+  sources?: DraftSource[];
 };
 
 type ThreadMemory = {
@@ -24,6 +27,29 @@ type ThreadMemory = {
   openQuestion: string;
   constraints: string[];
 };
+
+type ReplyMode = "fast" | "careful" | "research";
+
+type DraftConfidence = {
+  label: "High" | "Medium" | "Low";
+  score: number;
+  reasons: string[];
+};
+
+type DraftSource = {
+  id: string;
+  type: string;
+  title: string;
+  detail?: string;
+  excerpt?: string;
+  relativePath?: string;
+};
+
+const REPLY_MODES: Array<{ value: ReplyMode; label: string }> = [
+  { value: "fast", label: "Fast" },
+  { value: "careful", label: "Careful" },
+  { value: "research", label: "Research" },
+];
 
 function FrontPluginApp() {
   const [context, setContext] = React.useState<SingleConversationContext | null>(null);
@@ -40,6 +66,7 @@ function FrontPluginApp() {
   const [savedFeedbackNotes, setSavedFeedbackNotes] = React.useState("");
   const [trainingState, setTrainingState] = React.useState("");
   const [feedbackSaved, setFeedbackSaved] = React.useState(false);
+  const [replyMode, setReplyMode] = React.useState<ReplyMode>("careful");
 
   React.useEffect(() => {
     delegateNewWindowsToFront();
@@ -104,13 +131,14 @@ function FrontPluginApp() {
   }
 
   async function regenerateFromFeedback() {
-    if (!trainingNotes.trim()) {
+    const feedback = feedbackSaved ? savedFeedbackNotes : trainingNotes;
+    if (!feedback.trim()) {
       setDraftError("Add feedback first, then regenerate the reply.");
       return;
     }
 
     await requestDraft({
-      revisionFeedback: savedFeedbackNotes,
+      revisionFeedback: feedback,
       currentDraft: draft?.draftReply || "",
     });
   }
@@ -138,6 +166,7 @@ function FrontPluginApp() {
           subject: context?.conversation.subject || latestInbound?.subject || "",
           message: latestInboundText,
           threadMemory,
+          replyMode,
           revisionFeedback: options?.revisionFeedback || "",
           currentDraft: options?.currentDraft || "",
           allowFallback: false,
@@ -281,9 +310,28 @@ function FrontPluginApp() {
       <section className="plugin-panel">
         <div className="plugin-summary-row">
           <div className="plugin-topic-pill">{draft?.intentLabel || "Topic pending"}</div>
+          {draft?.confidence ? (
+            <div className={`plugin-confidence ${draft.confidence.label.toLowerCase()}`}>
+              {draft.confidence.label} confidence
+            </div>
+          ) : null}
           <button className="plugin-button secondary" type="button" onClick={() => context && void loadMessages(context)} disabled={!context || messagesLoading}>
             {messagesLoading ? "Refreshing..." : "Refresh"}
           </button>
+        </div>
+
+        <div className="plugin-mode-picker" role="group" aria-label="Reply mode">
+          {REPLY_MODES.map((mode) => (
+            <button
+              key={mode.value}
+              className={replyMode === mode.value ? "active" : ""}
+              type="button"
+              onClick={() => setReplyMode(mode.value)}
+              disabled={draftLoading}
+            >
+              {mode.label}
+            </button>
+          ))}
         </div>
 
         <div className="plugin-section">
@@ -308,6 +356,35 @@ function FrontPluginApp() {
               Copy
             </button>
           </div>
+          {draft?.sources?.length || draft?.confidence ? (
+            <details className="plugin-sources">
+              <summary>Sources and confidence</summary>
+              {draft.confidence ? (
+                <div className="plugin-confidence-detail">
+                  <strong>{draft.confidence.label} confidence</strong>
+                  <span>{draft.confidence.score}/100</span>
+                  {draft.confidence.reasons.length ? (
+                    <ul>
+                      {draft.confidence.reasons.map((reason) => (
+                        <li key={reason}>{reason}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              ) : null}
+              {draft.sources?.length ? (
+                <ul className="plugin-source-list">
+                  {draft.sources.map((source) => (
+                    <li key={source.id}>
+                      <strong>{source.title}</strong>
+                      {source.detail ? <span>{source.detail}</span> : null}
+                      {source.excerpt ? <small>{source.excerpt}</small> : null}
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </details>
+          ) : null}
         </div>
 
         <div className="plugin-section">

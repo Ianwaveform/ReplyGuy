@@ -123,6 +123,61 @@ h2 {
   font-weight: 700;
 }
 
+.plugin-confidence {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.plugin-confidence.high {
+  background: rgba(47, 125, 89, 0.1);
+  color: #2f7d59;
+}
+
+.plugin-confidence.medium {
+  background: rgba(178, 117, 45, 0.12);
+  color: #9a6429;
+}
+
+.plugin-confidence.low {
+  background: rgba(181, 79, 61, 0.1);
+  color: #b54f3d;
+}
+
+.plugin-mode-picker {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  padding: 4px;
+  border: 1px solid var(--plugin-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.plugin-mode-picker button {
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--plugin-muted);
+  padding: 9px 6px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.plugin-mode-picker button.active {
+  background: var(--plugin-ink);
+  color: #fff8ef;
+}
+
+.plugin-mode-picker button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
 .plugin-section {
   display: grid;
   gap: 10px;
@@ -161,6 +216,66 @@ h2 {
 
 .plugin-message-block.assistant {
   background: linear-gradient(180deg, #261d17, #1f1813);
+}
+
+.plugin-sources {
+  border: 1px solid var(--plugin-border);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px 12px;
+}
+
+.plugin-sources summary {
+  cursor: pointer;
+  color: var(--plugin-muted);
+  font-weight: 700;
+}
+
+.plugin-confidence-detail,
+.plugin-source-list {
+  margin-top: 10px;
+}
+
+.plugin-confidence-detail {
+  display: grid;
+  gap: 6px;
+  color: var(--plugin-muted);
+  font-size: 0.9rem;
+}
+
+.plugin-confidence-detail strong {
+  color: var(--plugin-ink);
+}
+
+.plugin-confidence-detail ul,
+.plugin-source-list {
+  padding-left: 18px;
+}
+
+.plugin-source-list {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 0;
+  color: var(--plugin-muted);
+}
+
+.plugin-source-list li {
+  padding-left: 2px;
+}
+
+.plugin-source-list strong,
+.plugin-source-list span,
+.plugin-source-list small {
+  display: block;
+}
+
+.plugin-source-list strong {
+  color: var(--plugin-ink);
+}
+
+.plugin-source-list small {
+  margin-top: 4px;
+  line-height: 1.35;
 }
 
 .plugin-button {
