@@ -20,6 +20,7 @@ const SUPPORT_SOP_ROOT = path.join(process.cwd(), "knowledge", "approved", "sops
 const SUPPORT_CURATED_ROOT = path.join(process.cwd(), "knowledge", "curated", "customer-guidance");
 const SUPPORT_STYLE_ROOT = path.join(process.cwd(), "knowledge", "style");
 const SUPPORT_PRODUCT_MANUAL_ROOT = path.join(process.cwd(), "knowledge", "product-manuals");
+const SUPPORT_ROUTER_GUIDE_ROOT = path.join(process.cwd(), "knowledge", "router-guides");
 const REVIEW_DATA_ROOT = path.join(process.cwd(), "data", "reviews");
 const REVIEW_STORE_PATH = path.join(REVIEW_DATA_ROOT, "reply-approvals.json");
 const TRAINING_DATA_ROOT = path.join(process.cwd(), "data", "training");
@@ -722,11 +723,12 @@ function getOpenAiConfig() {
 }
 
 async function getReplyKnowledgeGraph() {
-  const [coachingDoc, customerReplyGuidelinesDoc, brandVoiceDoc, productManualDocs, latestAnalysis, trainingExamples] = await Promise.all([
+  const [coachingDoc, customerReplyGuidelinesDoc, brandVoiceDoc, productManualDocs, routerGuideDocs, latestAnalysis, trainingExamples] = await Promise.all([
     getQaCoachingDoc(),
     getCustomerReplyGuidelinesDoc(),
     getWaveformBrandVoiceDoc(),
     getProductManualDocs(),
+    getRouterGuideDocs(),
     getLatestAnalysisCandidates(),
     readTrainingStore(),
   ]);
@@ -734,7 +736,7 @@ async function getReplyKnowledgeGraph() {
   const graph = await buildKnowledgeGraph({
     trainingExamples,
     historicalCandidates: latestAnalysis.candidates,
-    guidanceDocs: [customerReplyGuidelinesDoc, brandVoiceDoc, coachingDoc, ...productManualDocs],
+    guidanceDocs: [customerReplyGuidelinesDoc, brandVoiceDoc, coachingDoc, ...productManualDocs, ...routerGuideDocs],
   });
 
   await persistKnowledgeGraph({
@@ -1237,6 +1239,36 @@ async function getProductManualDocs() {
   return docs;
 }
 
+async function getRouterGuideDocs() {
+  const manifestPath = path.join(SUPPORT_ROUTER_GUIDE_ROOT, "manifest.json");
+  if (!fs.existsSync(manifestPath)) {
+    return [];
+  }
+
+  const manifest = JSON.parse(await fsp.readFile(manifestPath, "utf8"));
+  const guides = Array.isArray(manifest.guides) ? manifest.guides : [];
+  const docs = [];
+
+  for (const guide of guides) {
+    const markdownPath = path.join(SUPPORT_ROUTER_GUIDE_ROOT, guide.outputMarkdown || "");
+    if (!guide.outputMarkdown || !fs.existsSync(markdownPath)) {
+      continue;
+    }
+
+    const raw = await fsp.readFile(markdownPath, "utf8");
+    const keywords = normalizeStringList(guide.keywords, 30);
+    docs.push({
+      title: guide.title || extractMarkdownTitle(raw) || "Router External Antenna Guide",
+      relativePath: path.relative(process.cwd(), markdownPath),
+      cleaned: collapseSupportWhitespace(stripSupportMarkdown(raw)),
+      tags: ["router-guide", "external-antenna-guide", ...keywords],
+      keywords: [...tokenizeForDrafting(raw), ...keywords],
+    });
+  }
+
+  return docs;
+}
+
 async function getLatestAnalysisCandidates() {
   const analyses = await listSupportAnalyses();
   const latestExportId = analyses[0]?.exportId || "";
@@ -1635,6 +1667,7 @@ async function getSopDetail(relativePath) {
     path.resolve(SUPPORT_CURATED_ROOT),
     path.resolve(SUPPORT_STYLE_ROOT),
     path.resolve(SUPPORT_PRODUCT_MANUAL_ROOT),
+    path.resolve(SUPPORT_ROUTER_GUIDE_ROOT),
   ];
 
   if (!allowedRoots.some((root) => resolvedPath.startsWith(root)) || !fs.existsSync(resolvedPath)) {

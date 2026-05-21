@@ -1,0 +1,653 @@
+{
+  "indexUrl": "https://www.waveform.com/a/b/guides/hotspots",
+  "generatedAt": "2026-05-21T20:00:53.626Z",
+  "guideCount": 53,
+  "guides": [
+    {
+      "title": "AT&T Internet Air All-Fi Hub (CGW450) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/att-5g-gateway-cgw450",
+      "outputMarkdown": "generated/att-5g-gateway-cgw450.md",
+      "keywords": [
+        "AT",
+        "Internet",
+        "Air",
+        "All",
+        "Fi",
+        "Hub",
+        "CGW450"
+      ]
+    },
+    {
+      "title": "AT&T Internet Air for Business 5G Gateway (H8NNCM1120) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/att-internet-air-for-business-5g-gateway-H8NNCM1120",
+      "outputMarkdown": "generated/att-internet-air-for-business-5g-gateway-h8nncm1120.md",
+      "keywords": [
+        "AT",
+        "Internet",
+        "Air",
+        "for",
+        "Business",
+        "5G",
+        "Gateway",
+        "H8NNCM1120"
+      ]
+    },
+    {
+      "title": "AT&T Wireless Internet IFWA40 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/att-ifwa40",
+      "outputMarkdown": "generated/att-ifwa40.md",
+      "keywords": [
+        "AT",
+        "Wireless",
+        "Internet",
+        "IFWA40"
+      ]
+    },
+    {
+      "title": "AT&T Wireless Internet MF279 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/att-mf279",
+      "outputMarkdown": "generated/att-mf279.md",
+      "keywords": [
+        "AT",
+        "Wireless",
+        "Internet",
+        "MF279"
+      ]
+    },
+    {
+      "title": "Chester Ninja External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/chester-ninja",
+      "outputMarkdown": "generated/chester-ninja.md",
+      "keywords": [
+        "Chester",
+        "Ninja"
+      ]
+    },
+    {
+      "title": "Cradlepoint COR IBR900 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/cradlepoint-cor-ibr900",
+      "outputMarkdown": "generated/cradlepoint-cor-ibr900.md",
+      "keywords": [
+        "Cradlepoint",
+        "COR",
+        "IBR900"
+      ]
+    },
+    {
+      "title": "Cradlepoint E300-5GB / E320-5GB External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/cradlepoint-e300-e320-5gb",
+      "outputMarkdown": "generated/cradlepoint-e300-e320-5gb.md",
+      "keywords": [
+        "Cradlepoint",
+        "E300",
+        "5GB",
+        "E320"
+      ]
+    },
+    {
+      "title": "Cudy 4G LTE Router (LT15, LT18) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/cudy-4g-lt18",
+      "outputMarkdown": "generated/cudy-4g-lt18.md",
+      "keywords": [
+        "Cudy",
+        "4G",
+        "LTE",
+        "Router",
+        "LT15",
+        "LT18"
+      ]
+    },
+    {
+      "title": "Cudy 5G Router (P5) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/cudy-5g-p5",
+      "outputMarkdown": "generated/cudy-5g-p5.md",
+      "keywords": [
+        "Cudy",
+        "5G",
+        "Router",
+        "P5"
+      ]
+    },
+    {
+      "title": "EE Smart 5G Hub (Zyxel NR5103) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/ee-smart-5g-hub-zyxel-nr5103",
+      "outputMarkdown": "generated/ee-smart-5g-hub-zyxel-nr5103.md",
+      "keywords": [
+        "EE",
+        "Smart",
+        "5G",
+        "Hub",
+        "Zyxel",
+        "NR5103"
+      ]
+    },
+    {
+      "title": "GL-iNet 4G Spitz Plus (GL-X2000) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/gl-inet-spitz-plus-gl-x2000",
+      "outputMarkdown": "generated/gl-inet-spitz-plus-gl-x2000.md",
+      "keywords": [
+        "GL",
+        "iNet",
+        "4G",
+        "Spitz",
+        "Plus",
+        "X2000"
+      ]
+    },
+    {
+      "title": "GL-iNet 5G Spitz AX (GL-X3000NR) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/gl-inet-spitz-ax-gl-x3000nr",
+      "outputMarkdown": "generated/gl-inet-spitz-ax-gl-x3000nr.md",
+      "keywords": [
+        "GL",
+        "iNet",
+        "5G",
+        "Spitz",
+        "AX",
+        "X3000NR"
+      ]
+    },
+    {
+      "title": "Inseego Wavemaker 5G FG2000 Optimization Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/inseego-fg2000",
+      "outputMarkdown": "generated/inseego-fg2000.md",
+      "keywords": [
+        "Inseego",
+        "Wavemaker",
+        "5G",
+        "FG2000"
+      ]
+    },
+    {
+      "title": "Inseego Wavemaker 5G FX2000 Optimization Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/inseego-fx2000",
+      "outputMarkdown": "generated/inseego-fx2000.md",
+      "keywords": [
+        "Inseego",
+        "Wavemaker",
+        "5G",
+        "FX2000"
+      ]
+    },
+    {
+      "title": "Inseego Wavemaker 5G FX3100 Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/inseego-fx3100",
+      "outputMarkdown": "generated/inseego-fx3100.md",
+      "keywords": [
+        "Inseego",
+        "Wavemaker",
+        "5G",
+        "FX3100"
+      ]
+    },
+    {
+      "title": "InvisaGig 5G Wireless Modem External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/invisagig-5g",
+      "outputMarkdown": "generated/invisagig-5g.md",
+      "keywords": [
+        "InvisaGig",
+        "5G",
+        "Wireless",
+        "Modem"
+      ]
+    },
+    {
+      "title": "Mint Mobile 5G Home MINTernet Antenna Guide (T-Mobile G4AR)",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/mint-mobile-5g-home-internet-t-mobile-g4ar",
+      "outputMarkdown": "generated/mint-mobile-5g-home-internet-t-mobile-g4ar.md",
+      "keywords": [
+        "Mint",
+        "Mobile",
+        "5G",
+        "Home",
+        "MINTernet",
+        "G4AR"
+      ]
+    },
+    {
+      "title": "MOFI4500-4GXeLTE External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/mofi4500-4gxelte",
+      "outputMarkdown": "generated/mofi4500-4gxelte.md",
+      "keywords": [
+        "MOFI4500",
+        "4GXeLTE"
+      ]
+    },
+    {
+      "title": "MOFI5500-5GXeLTE External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/mofi5500-5gxelte",
+      "outputMarkdown": "generated/mofi5500-5gxelte.md",
+      "keywords": [
+        "MOFI5500",
+        "5GXeLTE"
+      ]
+    },
+    {
+      "title": "Netgear 4G LTE Modem (LB1120, LB2120) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/netgear-lb1120",
+      "outputMarkdown": "generated/netgear-lb1120.md",
+      "keywords": [
+        "Netgear",
+        "4G",
+        "LTE",
+        "Modem",
+        "LB1120",
+        "LB2120"
+      ]
+    },
+    {
+      "title": "Netgear Nighthawk 4G LTE Hotspot M1 (MR1100) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/netgear-nighthawk-m1",
+      "outputMarkdown": "generated/netgear-nighthawk-m1.md",
+      "keywords": [
+        "Netgear",
+        "Nighthawk",
+        "4G",
+        "LTE",
+        "Hotspot",
+        "M1",
+        "MR1100"
+      ]
+    },
+    {
+      "title": "Netgear Nighthawk 5G Hotspot Pro M5 (MR5100, MR5200) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/netgear-nighthawk-m5",
+      "outputMarkdown": "generated/netgear-nighthawk-m5.md",
+      "keywords": [
+        "Netgear",
+        "Nighthawk",
+        "5G",
+        "Hotspot",
+        "Pro",
+        "M5",
+        "MR5100",
+        "MR5200"
+      ]
+    },
+    {
+      "title": "Netgear Nighthawk 5G Hotspot Pro M6 (MR6110, MR6500) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/netgear-nighthawk-m6",
+      "outputMarkdown": "generated/netgear-nighthawk-m6.md",
+      "keywords": [
+        "Netgear",
+        "Nighthawk",
+        "5G",
+        "Hotspot",
+        "Pro",
+        "M6",
+        "MR6110",
+        "MR6500"
+      ]
+    },
+    {
+      "title": "Netgear Orbi 4G Mesh Router (LBR20) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/netgear-orbi-4g-lbr20",
+      "outputMarkdown": "generated/netgear-orbi-4g-lbr20.md",
+      "keywords": [
+        "Netgear",
+        "Orbi",
+        "4G",
+        "Mesh",
+        "Router",
+        "LBR20"
+      ]
+    },
+    {
+      "title": "Netgear Orbi 5G Mesh Router (NBK750, NBK752) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/netgear-orbi-5g-nbk752",
+      "outputMarkdown": "generated/netgear-orbi-5g-nbk752.md",
+      "keywords": [
+        "Netgear",
+        "Orbi",
+        "5G",
+        "Mesh",
+        "Router",
+        "NBK750",
+        "NBK752"
+      ]
+    },
+    {
+      "title": "Peplink Balance 20X External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/peplink-balance-20x",
+      "outputMarkdown": "generated/peplink-balance-20x.md",
+      "keywords": [
+        "Peplink",
+        "Balance",
+        "20X"
+      ]
+    },
+    {
+      "title": "Peplink MAX BR1 Classic/Mini/MK2 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/pepwave-max-br1",
+      "outputMarkdown": "generated/pepwave-max-br1.md",
+      "keywords": [
+        "Peplink",
+        "MAX",
+        "BR1",
+        "Classic",
+        "Mini",
+        "MK2"
+      ]
+    },
+    {
+      "title": "Peplink MAX BR1 Pro 5G External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/peplink-max-br1-pro-5g",
+      "outputMarkdown": "generated/peplink-max-br1-pro-5g.md",
+      "keywords": [
+        "Peplink",
+        "MAX",
+        "BR1",
+        "Pro",
+        "5G"
+      ]
+    },
+    {
+      "title": "Peplink MAX BR2 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/peplink-max-br2-antenna-guide",
+      "outputMarkdown": "generated/peplink-max-br2-antenna-guide.md",
+      "keywords": [
+        "Peplink",
+        "MAX",
+        "BR2"
+      ]
+    },
+    {
+      "title": "Peplink MAX BR2 Pro External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/peplink-max-br2-pro-antenna-guide",
+      "outputMarkdown": "generated/peplink-max-br2-pro-antenna-guide.md",
+      "keywords": [
+        "Peplink",
+        "MAX",
+        "BR2",
+        "Pro"
+      ]
+    },
+    {
+      "title": "Peplink MAX Transit Duo Pro Mobile External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/peplink-max-transit-duo-pro-mobile",
+      "outputMarkdown": "generated/peplink-max-transit-duo-pro-mobile.md",
+      "keywords": [
+        "Peplink",
+        "MAX",
+        "Transit",
+        "Duo",
+        "Pro",
+        "Mobile"
+      ]
+    },
+    {
+      "title": "Rogers Nokia FastMile 5G Gateway 3.2 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/fastmile-5g",
+      "outputMarkdown": "generated/fastmile-5g.md",
+      "keywords": [
+        "Rogers",
+        "Nokia",
+        "FastMile",
+        "5G",
+        "Gateway"
+      ]
+    },
+    {
+      "title": "SunComm 02 External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/suncomm-02",
+      "outputMarkdown": "generated/suncomm-02.md",
+      "keywords": [
+        "SunComm",
+        "02"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (Arcadyan KVD21) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-arcadyan",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-arcadyan.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "Arcadyan",
+        "KVD21"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (Cisco MG51) Optimization Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-mg51",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-mg51.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "Cisco",
+        "MG51"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (Cisco MG51E) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-mg51e",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-mg51e.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "Cisco",
+        "MG51E"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (Nokia 5G21) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-nokia",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-nokia.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "Nokia",
+        "5G21"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (Sagemcom Fast 5688W) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-sagemcom",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-sagemcom.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "Sagemcom",
+        "Fast",
+        "5688W"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (TMO-G4AR & TMO-G4SE) Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-g4",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-g4.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "TMO",
+        "G4AR",
+        "G4SE"
+      ]
+    },
+    {
+      "title": "T-Mobile 5G Internet Gateway (TMO-G5AR) Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/t-mobile-5g-gateway-g5ar",
+      "outputMarkdown": "generated/t-mobile-5g-gateway-g5ar.md",
+      "keywords": [
+        "Mobile",
+        "5G",
+        "Internet",
+        "Gateway",
+        "TMO",
+        "G5AR"
+      ]
+    },
+    {
+      "title": "Three 5G Broadband Hub (Zyxel NR5103E) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/three-5g-zyxel-nr5103e",
+      "outputMarkdown": "generated/three-5g-zyxel-nr5103e.md",
+      "keywords": [
+        "Three",
+        "5G",
+        "Broadband",
+        "Hub",
+        "Zyxel",
+        "NR5103E"
+      ]
+    },
+    {
+      "title": "TravlFi JourneyXTR 4G External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/travlfi-journeyxtr",
+      "outputMarkdown": "generated/travlfi-journeyxtr.md",
+      "keywords": [
+        "TravlFi",
+        "JourneyXTR",
+        "4G"
+      ]
+    },
+    {
+      "title": "TravlFi XTR Pro 5G External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/travlfi-xtr-pro-5g",
+      "outputMarkdown": "generated/travlfi-xtr-pro-5g.md",
+      "keywords": [
+        "TravlFi",
+        "XTR",
+        "Pro",
+        "5G"
+      ]
+    },
+    {
+      "title": "Verizon 5G Home Internet Gateway (ARC-XCI55AX) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/verizon-arc-xci55ax",
+      "outputMarkdown": "generated/verizon-arc-xci55ax.md",
+      "keywords": [
+        "Verizon",
+        "5G",
+        "Home",
+        "Internet",
+        "Gateway",
+        "ARC",
+        "XCI55AX"
+      ]
+    },
+    {
+      "title": "Verizon 5G Internet Gateway (ASK-NCQ1338/FA/E) Optimization Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/verizon-ask-ncq1338",
+      "outputMarkdown": "generated/verizon-ask-ncq1338.md",
+      "keywords": [
+        "Verizon",
+        "5G",
+        "Internet",
+        "Gateway",
+        "ASK",
+        "NCQ1338",
+        "FA"
+      ]
+    },
+    {
+      "title": "Verizon Internet Gateway (WNC-CR200A) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/verizon-wnc-cr200a",
+      "outputMarkdown": "generated/verizon-wnc-cr200a.md",
+      "keywords": [
+        "Verizon",
+        "Internet",
+        "Gateway",
+        "WNC",
+        "CR200A"
+      ]
+    },
+    {
+      "title": "Verizon Jetpack MiFi 7730L External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/jetpack-7730L",
+      "outputMarkdown": "generated/jetpack-7730l.md",
+      "keywords": [
+        "Verizon",
+        "Jetpack",
+        "MiFi",
+        "7730L"
+      ]
+    },
+    {
+      "title": "Verizon Jetpack MiFi 8800L External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/jetpack-8800L",
+      "outputMarkdown": "generated/jetpack-8800l.md",
+      "keywords": [
+        "Verizon",
+        "Jetpack",
+        "MiFi",
+        "8800L"
+      ]
+    },
+    {
+      "title": "Verizon Orbic Speed 4G (RC400L) Optimization Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/verizon-orbic-speed-4g-rc400L",
+      "outputMarkdown": "generated/verizon-orbic-speed-4g-rc400l.md",
+      "keywords": [
+        "Verizon",
+        "Orbic",
+        "Speed",
+        "4G",
+        "RC400L"
+      ]
+    },
+    {
+      "title": "Verizon Orbic Speed 5G (R500L5) Optimization Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/verizon-orbic-speed-5g-r500l5",
+      "outputMarkdown": "generated/verizon-orbic-speed-5g-r500l5.md",
+      "keywords": [
+        "Verizon",
+        "Orbic",
+        "Speed",
+        "5G",
+        "R500L5"
+      ]
+    },
+    {
+      "title": "Vodafone GigaCube 4G (Huawei B818-263) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/vodafone-gigacube-4g-huawei-b818263",
+      "outputMarkdown": "generated/vodafone-gigacube-4g-huawei-b818263.md",
+      "keywords": [
+        "Vodafone",
+        "GigaCube",
+        "4G",
+        "Huawei",
+        "B818",
+        "263"
+      ]
+    },
+    {
+      "title": "Vodafone GigaCube 5G (Huawei 5G CPE Pro H112-370) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/vodafone-gigacube-5g-huawei-h112-370",
+      "outputMarkdown": "generated/vodafone-gigacube-5g-huawei-h112-370.md",
+      "keywords": [
+        "Vodafone",
+        "GigaCube",
+        "5G",
+        "Huawei",
+        "CPE",
+        "Pro",
+        "H112",
+        "370"
+      ]
+    },
+    {
+      "title": "Vodafone GigaCube 5G (TCL 5G CPE) External Antenna Guide",
+      "sourceUrl": "https://www.waveform.com/a/b/guides/hotspots/vodafone-gigacube-5g-tcl-5g-cpe-hh500v",
+      "outputMarkdown": "generated/vodafone-gigacube-5g-tcl-5g-cpe-hh500v.md",
+      "keywords": [
+        "Vodafone",
+        "GigaCube",
+        "5G",
+        "TCL",
+        "CPE"
+      ]
+    }
+  ]
+}
