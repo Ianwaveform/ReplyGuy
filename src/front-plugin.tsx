@@ -18,6 +18,7 @@ type DraftResponse = {
   replyMode?: ReplyMode;
   confidence?: DraftConfidence;
   sources?: DraftSource[];
+  productTags?: string[];
 };
 
 type ThreadMemory = {
@@ -50,6 +51,39 @@ const REPLY_MODES: Array<{ value: ReplyMode; label: string }> = [
   { value: "careful", label: "Careful" },
   { value: "research", label: "Research" },
 ];
+
+const KNOWN_PRODUCT_TAGS = [
+  "Coax Window Cable",
+  "DualMini",
+  "DualPlus",
+  "DualPlus Duo",
+  "Ethernet Window Cable",
+  "FlexMount",
+  "GO X G32",
+  "GO X G41",
+  "GO X G41 MIMO",
+  "Griddy",
+  "LP 2x2",
+  "LP 4x4",
+  "MIMO 2x2",
+  "MIMO 4x4",
+  "MIMO 8x8",
+  "MP70",
+  "OGE",
+  "Omniroam",
+  "Panel 2x2",
+  "Panel 4x4 (Legacy)",
+  "ProLink",
+  "Quad Accessory",
+  "QuadMini",
+  "QuadMini Duo",
+  "QuadPro",
+  "QuadPro Duo",
+  "UltraPole",
+  "XR60",
+];
+
+const PRODUCT_TAG_LOOKUP = new Map(KNOWN_PRODUCT_TAGS.map((tag) => [tag.toLowerCase(), tag]));
 
 function FrontPluginApp() {
   const [context, setContext] = React.useState<SingleConversationContext | null>(null);
@@ -125,6 +159,7 @@ function FrontPluginApp() {
   );
   const latestInboundText = React.useMemo(() => extractMessageText(latestInbound), [latestInbound]);
   const threadMemory = React.useMemo(() => buildThreadMemory(messages, latestInbound), [messages, latestInbound]);
+  const productTags = React.useMemo(() => extractProductTags(context?.conversation), [context?.conversation]);
 
   async function generateDraft() {
     await requestDraft();
@@ -167,6 +202,7 @@ function FrontPluginApp() {
           message: latestInboundText,
           threadMemory,
           replyMode,
+          productTags,
           revisionFeedback: options?.revisionFeedback || "",
           currentDraft: options?.currentDraft || "",
           allowFallback: false,
@@ -461,6 +497,60 @@ function isSingleConversationContext(value: unknown): value is SingleConversatio
     && value !== null
     && "type" in value
     && value.type === "singleConversation";
+}
+
+function extractProductTags(conversation: unknown) {
+  const tagNames = collectPotentialTagNames(conversation);
+  const matched = tagNames
+    .map((tag) => PRODUCT_TAG_LOOKUP.get(tag.toLowerCase()))
+    .filter((tag): tag is string => Boolean(tag));
+
+  return Array.from(new Set(matched));
+}
+
+function collectPotentialTagNames(value: unknown) {
+  const names = new Set<string>();
+  const queue: unknown[] = [value];
+  const seen = new Set<unknown>();
+
+  while (queue.length) {
+    const current = queue.shift();
+    if (!current || seen.has(current)) {
+      continue;
+    }
+    seen.add(current);
+
+    if (typeof current === "string") {
+      names.add(current.trim());
+      continue;
+    }
+
+    if (Array.isArray(current)) {
+      for (const item of current) {
+        queue.push(item);
+      }
+      continue;
+    }
+
+    if (typeof current !== "object") {
+      continue;
+    }
+
+    const record = current as Record<string, unknown>;
+    for (const key of ["name", "tagName", "tag_name", "label"]) {
+      if (typeof record[key] === "string") {
+        names.add(String(record[key]).trim());
+      }
+    }
+
+    for (const key of ["tags", "applied_tags", "taggings"]) {
+      if (Array.isArray(record[key])) {
+        queue.push(record[key]);
+      }
+    }
+  }
+
+  return Array.from(names).filter(Boolean);
 }
 
 function extractMessageText(message: ApplicationMessage | null | undefined) {

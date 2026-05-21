@@ -1,0 +1,32 @@
+{
+  "manuals": [
+    {
+      "title": "Amazon US DualMini Kit Manual",
+      "sourcePdf": "pdf/Amazon US DualMini Kit Manual (AMZ-DMN-MANUAL) v1.0.0.pdf",
+      "outputMarkdown": "generated/amazon-us-dualmini-kit-manual.md",
+      "productTags": ["DualMini"],
+      "keywords": ["DualMini", "DualMini kit", "5G antenna", "MIMO", "installation", "troubleshooting"]
+    },
+    {
+      "title": "Waveform QuadPro Kit Manual",
+      "sourcePdf": "pdf/Waveform QuadPro Kit Manual (WF-QPR-MANUAL) v3.0.0.pdf",
+      "outputMarkdown": "generated/waveform-quadpro-kit-manual.md",
+      "productTags": ["QuadPro", "QuadPro Duo", "Quad Accessory"],
+      "keywords": ["QuadPro", "QuadPro Duo", "4x4 MIMO", "antenna", "installation", "router"]
+    },
+    {
+      "title": "Waveform QuadMini Kit Manual",
+      "sourcePdf": "pdf/Waveform QuadMini Kit Manual (WF-QMN-MANUAL) v3.0.0.pdf",
+      "outputMarkdown": "generated/waveform-quadmini-kit-manual.md",
+      "productTags": ["QuadMini", "QuadMini Duo", "Quad Accessory"],
+      "keywords": ["QuadMini", "QuadMini Duo", "4x4 MIMO", "antenna", "installation", "router"]
+    },
+    {
+      "title": "Waveform ProLink Manual",
+      "sourcePdf": "pdf/Waveform ProLink Manual (WF-PRL-MANUAL) v1.0.3.pdf",
+      "outputMarkdown": "generated/waveform-prolink-manual.md",
+      "productTags": ["ProLink"],
+      "keywords": ["ProLink", "signal scanner", "installation", "troubleshooting", "app"]
+    }
+  ]
+}

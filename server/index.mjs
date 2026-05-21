@@ -19,6 +19,7 @@ const SUPPORT_ANALYSIS_ROOT = path.join(process.cwd(), "data", "front-analysis")
 const SUPPORT_SOP_ROOT = path.join(process.cwd(), "knowledge", "approved", "sops");
 const SUPPORT_CURATED_ROOT = path.join(process.cwd(), "knowledge", "curated", "customer-guidance");
 const SUPPORT_STYLE_ROOT = path.join(process.cwd(), "knowledge", "style");
+const SUPPORT_PRODUCT_MANUAL_ROOT = path.join(process.cwd(), "knowledge", "product-manuals");
 const REVIEW_DATA_ROOT = path.join(process.cwd(), "data", "reviews");
 const REVIEW_STORE_PATH = path.join(REVIEW_DATA_ROOT, "reply-approvals.json");
 const TRAINING_DATA_ROOT = path.join(process.cwd(), "data", "training");
@@ -119,6 +120,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
   const allowFallback = request.body?.allowFallback !== false;
   const threadMemory = normalizeThreadMemory(request.body?.threadMemory);
   const replyMode = normalizeReplyMode(request.body?.replyMode);
+  const productTags = normalizeStringList(request.body?.productTags, 12);
   const revisionFeedback = typeof request.body?.revisionFeedback === "string" ? request.body.revisionFeedback.trim() : "";
   const currentDraft = typeof request.body?.currentDraft === "string" ? request.body.currentDraft.trim() : "";
 
@@ -135,6 +137,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
       allowFallback,
       threadMemory,
       replyMode,
+      productTags,
       revisionFeedback,
       currentDraft,
     });
@@ -466,6 +469,7 @@ async function generateDraftFromSubmission({
   allowFallback = true,
   threadMemory = null,
   replyMode = "careful",
+  productTags = [],
   revisionFeedback = "",
   currentDraft = "",
 }) {
@@ -476,7 +480,7 @@ async function generateDraftFromSubmission({
     : classifyUnrepliedIntent({
     subject,
     body: `${cleanedMessage}\n${memoryText}`,
-    tags: [],
+    tags: productTags,
   });
 
   const { graph } = await getReplyKnowledgeGraph();
@@ -485,6 +489,7 @@ async function generateDraftFromSubmission({
     subject,
     message: `${cleanedMessage}\n${memoryText}`,
     intent,
+    productTags,
   });
   const trainingMatches = formatGraphMatches(graphContext);
   const example = graphContext.historicalExamples[0]
@@ -509,6 +514,7 @@ async function generateDraftFromSubmission({
       message: cleanedMessage,
       threadMemory,
       replyMode,
+      productTags,
       revisionFeedback,
       currentDraft,
       intent,
@@ -538,12 +544,14 @@ async function generateDraftFromSubmission({
     cleanedMessage,
     threadMemory,
     graphContext,
+    productTags,
     revisionFeedback,
   });
   const confidence = buildDraftConfidence({
     cleanedMessage,
     threadMemory,
     graphContext,
+    productTags,
     draft,
   });
 
@@ -560,6 +568,7 @@ async function generateDraftFromSubmission({
         provider: draft.provider,
         mode: draft.mode,
         replyMode,
+        productTags,
         confidence,
         retrieval: {
           topic: graphContext.topic,
@@ -594,6 +603,7 @@ async function generateDraftFromSubmission({
     replyMode,
     confidence,
     sources,
+    productTags,
     sopMatches: trainingMatches,
     exampleReplyRedacted: example?.cleanedReplyRedacted || "",
     exampleSubject: example?.subject || "",
@@ -605,6 +615,7 @@ async function generateOpenAiReplyDraft({
   message,
   threadMemory,
   replyMode,
+  productTags,
   revisionFeedback,
   currentDraft,
   intent,
@@ -628,6 +639,7 @@ async function generateOpenAiReplyDraft({
     message,
     threadMemory,
     replyMode,
+    productTags,
     revisionFeedback,
     currentDraft,
     intentLabel: intent.label,
@@ -710,9 +722,11 @@ function getOpenAiConfig() {
 }
 
 async function getReplyKnowledgeGraph() {
-  const [coachingDoc, customerReplyGuidelinesDoc, latestAnalysis, trainingExamples] = await Promise.all([
+  const [coachingDoc, customerReplyGuidelinesDoc, brandVoiceDoc, productManualDocs, latestAnalysis, trainingExamples] = await Promise.all([
     getQaCoachingDoc(),
     getCustomerReplyGuidelinesDoc(),
+    getWaveformBrandVoiceDoc(),
+    getProductManualDocs(),
     getLatestAnalysisCandidates(),
     readTrainingStore(),
   ]);
@@ -720,7 +734,7 @@ async function getReplyKnowledgeGraph() {
   const graph = await buildKnowledgeGraph({
     trainingExamples,
     historicalCandidates: latestAnalysis.candidates,
-    guidanceDocs: [customerReplyGuidelinesDoc, coachingDoc],
+    guidanceDocs: [customerReplyGuidelinesDoc, brandVoiceDoc, coachingDoc, ...productManualDocs],
   });
 
   await persistKnowledgeGraph({
@@ -766,7 +780,7 @@ function reasoningEffortForReplyMode(value) {
   return "medium";
 }
 
-function buildDraftSources({ cleanedMessage, threadMemory, graphContext, revisionFeedback }) {
+function buildDraftSources({ cleanedMessage, threadMemory, graphContext, productTags, revisionFeedback }) {
   const sources = [];
 
   if (cleanedMessage) {
@@ -787,6 +801,16 @@ function buildDraftSources({ cleanedMessage, threadMemory, graphContext, revisio
       title: "Compact thread memory",
       detail: `${contextCount} recent context ${contextCount === 1 ? "item" : "items"} plus open question and constraints.`,
       excerpt: (threadMemory.openQuestion || flattenThreadMemory(threadMemory)).slice(0, 240),
+    });
+  }
+
+  if (productTags.length) {
+    sources.push({
+      id: "front:product-tags",
+      type: "front_product_tags",
+      title: "Front product tags",
+      detail: productTags.join(", "),
+      excerpt: "Used as product context for manual and example retrieval.",
     });
   }
 
@@ -836,7 +860,7 @@ function buildDraftSources({ cleanedMessage, threadMemory, graphContext, revisio
   return sources.slice(0, 8);
 }
 
-function buildDraftConfidence({ cleanedMessage, threadMemory, graphContext, draft }) {
+function buildDraftConfidence({ cleanedMessage, threadMemory, graphContext, productTags, draft }) {
   let score = 38;
   const reasons = [];
 
@@ -860,11 +884,24 @@ function buildDraftConfidence({ cleanedMessage, threadMemory, graphContext, draf
     reasons.push("An open question or current decision point was detected.");
   }
 
+  if (productTags.length) {
+    score += 12;
+    reasons.push(`Front product ${productTags.length === 1 ? "tag" : "tags"} detected: ${productTags.slice(0, 3).join(", ")}.`);
+  } else {
+    reasons.push("No Front product tag was available.");
+  }
+
   if (graphContext.trainingExamples?.length) {
     score += 12;
     reasons.push(`${graphContext.trainingExamples.length} team training ${graphContext.trainingExamples.length === 1 ? "example" : "examples"} matched.`);
   } else {
     reasons.push("No team-saved training example matched this topic yet.");
+  }
+
+  const matchedManual = (graphContext.guidanceDocs || []).some((item) => /product-manuals/i.test(item.relativePath || ""));
+  if (matchedManual) {
+    score += 10;
+    reasons.push("A product manual matched this draft.");
   }
 
   if (graphContext.guidanceDocs?.length) {
@@ -925,6 +962,7 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode }
     "- Never reference internal tools, internal docs, or internal process names.",
     "- If information is missing, ask only the minimum follow-up question needed.",
     "- Prefer confident practical guidance over generic reassurance.",
+    "- Treat Front product tags as strong product context. Do not answer as if the customer has a booster when the tag/manual context indicates an antenna-only product.",
   );
 
   if (replyMode === "fast") {
@@ -943,6 +981,7 @@ function buildCustomerReplyUserPrompt({
   message,
   threadMemory,
   replyMode,
+  productTags,
   revisionFeedback,
   currentDraft,
   intentLabel,
@@ -953,6 +992,7 @@ function buildCustomerReplyUserPrompt({
     `Reply mode: ${humanizeReplyMode(replyMode)}`,
     `Topic: ${intentLabel || "General Support"}`,
     `Subject: ${subject || "(none provided)"}`,
+    productTags?.length ? `Front product tags: ${productTags.join(", ")}` : "Front product tags: none detected",
     `Customer message:\n${message}`,
   ];
 
@@ -1002,6 +1042,18 @@ function normalizeThreadMemory(value) {
       ? value.constraints.map((item) => cleanDraftingText(item)).filter(Boolean).slice(0, 4)
       : [],
   };
+}
+
+function normalizeStringList(value, limit = 20) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((item) => String(item || "").trim())
+    .filter(Boolean)
+    .filter((item, index, list) => list.findIndex((candidate) => candidate.toLowerCase() === item.toLowerCase()) === index)
+    .slice(0, limit);
 }
 
 function flattenThreadMemory(threadMemory) {
@@ -1136,6 +1188,53 @@ async function getCustomerReplyGuidelinesDoc() {
     cleaned: collapseSupportWhitespace(stripSupportMarkdown(raw)),
     keywords: tokenizeForDrafting(raw),
   };
+}
+
+async function getWaveformBrandVoiceDoc() {
+  const brandVoicePath = path.join(SUPPORT_STYLE_ROOT, "waveform-brand-voice.md");
+  if (!fs.existsSync(brandVoicePath)) {
+    return null;
+  }
+
+  const raw = await fsp.readFile(brandVoicePath, "utf8");
+  return {
+    title: extractMarkdownTitle(raw) || "Waveform Brand Voice",
+    relativePath: path.relative(process.cwd(), brandVoicePath),
+    cleaned: collapseSupportWhitespace(stripSupportMarkdown(raw)),
+    tags: ["brand-voice", "customer-tone"],
+    keywords: tokenizeForDrafting(raw),
+  };
+}
+
+async function getProductManualDocs() {
+  const manifestPath = path.join(SUPPORT_PRODUCT_MANUAL_ROOT, "manifest.json");
+  if (!fs.existsSync(manifestPath)) {
+    return [];
+  }
+
+  const manifest = JSON.parse(await fsp.readFile(manifestPath, "utf8"));
+  const manuals = Array.isArray(manifest.manuals) ? manifest.manuals : [];
+  const docs = [];
+
+  for (const manual of manuals) {
+    const markdownPath = path.join(SUPPORT_PRODUCT_MANUAL_ROOT, manual.outputMarkdown || "");
+    if (!manual.outputMarkdown || !fs.existsSync(markdownPath)) {
+      continue;
+    }
+
+    const raw = await fsp.readFile(markdownPath, "utf8");
+    const tags = normalizeStringList(manual.productTags, 12);
+    const keywords = normalizeStringList(manual.keywords, 30);
+    docs.push({
+      title: manual.title || extractMarkdownTitle(raw) || "Product Manual",
+      relativePath: path.relative(process.cwd(), markdownPath),
+      cleaned: collapseSupportWhitespace(stripSupportMarkdown(raw)),
+      tags,
+      keywords: [...tokenizeForDrafting(raw), ...tags, ...keywords],
+    });
+  }
+
+  return docs;
 }
 
 async function getLatestAnalysisCandidates() {
@@ -1535,6 +1634,7 @@ async function getSopDetail(relativePath) {
   const allowedRoots = [
     path.resolve(SUPPORT_CURATED_ROOT),
     path.resolve(SUPPORT_STYLE_ROOT),
+    path.resolve(SUPPORT_PRODUCT_MANUAL_ROOT),
   ];
 
   if (!allowedRoots.some((root) => resolvedPath.startsWith(root)) || !fs.existsSync(resolvedPath)) {
@@ -1586,6 +1686,7 @@ function extractMarkdownTitle(raw) {
 
 function stripSupportMarkdown(value) {
   return String(value)
+    .replace(/^---[\s\S]*?---/m, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<!--[\s\S]*?-->/g, " ")

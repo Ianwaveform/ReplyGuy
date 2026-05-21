@@ -92,14 +92,16 @@ export function retrieveGraphContext({
   subject = "",
   message = "",
   intent,
+  productTags = [],
 }) {
-  const queryTokens = asTokenSet(`${subject}\n${message}\n${intent?.intent || ""}\n${intent?.label || ""}`);
+  const tagTokens = asTokenSet(productTags);
+  const queryTokens = asTokenSet(`${subject}\n${message}\n${intent?.intent || ""}\n${intent?.label || ""}\n${Array.from(tagTokens).join(" ")}`);
   const guidanceDocs = [];
   const trainingExamples = [];
   const historicalExamples = [];
 
   for (const node of graph?.nodes || []) {
-    const score = scoreNode(node, queryTokens, intent);
+    const score = scoreNode(node, queryTokens, intent, tagTokens);
     if (score <= 0) {
       continue;
     }
@@ -114,6 +116,7 @@ export function retrieveGraphContext({
       score,
       text: node.text || "",
       reviewer: node.reviewer || "",
+      tags: Array.isArray(node.tags) ? node.tags : [],
     };
 
     if (node.type === "guidance_doc") {
@@ -195,7 +198,7 @@ function ensureTopicNode({ topics, nodes, topic, label }) {
   return topicNode;
 }
 
-function scoreNode(node, queryTokens, intent) {
+function scoreNode(node, queryTokens, intent, tagTokens = new Set()) {
   const nodeTokens = asTokenSet(node.keywords || node.text || node.excerpt || "");
   let score = overlapScore(queryTokens, nodeTokens);
 
@@ -205,6 +208,14 @@ function scoreNode(node, queryTokens, intent) {
 
   if (node.type === "guidance_doc") {
     score += 4;
+  }
+
+  if (tagTokens.size && Array.isArray(node.tags)) {
+    const nodeTagTokens = asTokenSet(node.tags);
+    const tagScore = overlapScore(tagTokens, nodeTagTokens);
+    if (tagScore > 0) {
+      score += 18 + tagScore;
+    }
   }
 
   return score;
@@ -226,7 +237,17 @@ function asTokenSet(value) {
   }
 
   if (Array.isArray(value)) {
-    return new Set(value.map((item) => String(item).toLowerCase()).filter(Boolean));
+    const tokens = new Set();
+    for (const item of value) {
+      const normalized = String(item || "").toLowerCase().trim();
+      if (normalized) {
+        tokens.add(normalized);
+      }
+      for (const token of asTokenSet(String(item || ""))) {
+        tokens.add(token);
+      }
+    }
+    return tokens;
   }
 
   return new Set(
