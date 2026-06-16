@@ -74,7 +74,7 @@ We love the problem. We obsess over understanding what's actually going wrong be
 - Write walls of text without structure.
 - Claim something is "the best" without saying why and compared to what.
 - Use more than one exclamation mark per page in marketing copy.
-- Use em dashes (the character `—`). Use commas, parentheses, or spaced hyphens for parenthetical breaks. This is a hard rule.
+- Do not use em dashes (the character `—`). Use commas, parentheses, or spaced hyphens for parenthetical breaks. This is a hard rule.
 - Invent capabilities we don't have. If you don't know whether we do something, ask.
 - Trash competitors. Describe them fairly, then position us.
 

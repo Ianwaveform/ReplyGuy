@@ -1,0 +1,44 @@
+{
+  "generatedAt": "2026-06-16T22:17:42.655Z",
+  "feedbackCount": 1,
+  "ruleSummaries": [],
+  "recurringNotes": [
+    {
+      "note": "add a bit more enthusiasm into your reply, and remove excessive language like \"lets work through this together\"",
+      "count": 1
+    }
+  ],
+  "recentSamples": [
+    {
+      "id": "train_mnz4e0cb",
+      "subject": "Re: Waveform Order #71572",
+      "intent": "Order Status",
+      "note": "add a bit more enthusiasm into your reply, and remove excessive language like \"lets work through this together\"",
+      "createdAt": "2026-04-14T21:14:52.091Z"
+    }
+  ],
+  "markdown": "# Team Feedback Digest\n\nGenerated from teammate feedback saved in ReplyGuy. Treat this as standing coaching guidance for future drafts, not just one-off revision notes.\n\nGenerated at: 2026-06-16T22:17:42.655Z\n\n## Standing guidance\n- No recurring teammate coaching notes have been saved yet.\n\n## Recurring teammate notes\n- 1x: add a bit more enthusiasm into your reply, and remove excessive language like \"lets work through this together\"\n\n## Recent feedback samples\n- [Order Status] add a bit more enthusiasm into your reply, and remove excessive language like \"lets work through this together\"\n",
+  "keywords": [
+    "team",
+    "feedback",
+    "coaching",
+    "style",
+    "reply",
+    "add",
+    "bit",
+    "more",
+    "enthusiasm",
+    "into",
+    "your",
+    "and",
+    "remove",
+    "excessive",
+    "language",
+    "like",
+    "lets",
+    "work",
+    "through",
+    "this",
+    "together"
+  ]
+}

@@ -2,6 +2,7 @@ import express from "express";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
+import { buildFeedbackDigest, writeFeedbackDigest } from "./feedback-digest.mjs";
 import {
   appendGenerationLog,
   buildKnowledgeGraph,
@@ -25,6 +26,8 @@ const REVIEW_DATA_ROOT = path.join(process.cwd(), "data", "reviews");
 const REVIEW_STORE_PATH = path.join(REVIEW_DATA_ROOT, "reply-approvals.json");
 const TRAINING_DATA_ROOT = path.join(process.cwd(), "data", "training");
 const TRAINING_STORE_PATH = path.join(TRAINING_DATA_ROOT, "reply-training.json");
+const FEEDBACK_DIGEST_PATH = path.join(SUPPORT_STYLE_ROOT, "team-feedback-digest.generated.md");
+const FEEDBACK_DIGEST_SUMMARY_PATH = path.join(TRAINING_DATA_ROOT, "feedback-digest.json");
 const KNOWLEDGE_GRAPH_ROOT = path.join(process.cwd(), "data", "knowledge-graph");
 const GENERATION_LOG_ROOT = path.join(process.cwd(), "data", "generation-logs");
 const DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1";
@@ -163,6 +166,34 @@ app.get("/api/support-lab/training", async (_request, response) => {
   } catch (error) {
     response.status(500).json({
       error: "Failed to load reply training examples.",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+app.get("/api/support-lab/feedback-digest", async (_request, response) => {
+  try {
+    const digest = await getTeamFeedbackDigest();
+    response.json(digest);
+  } catch (error) {
+    response.status(500).json({
+      error: "Failed to load the feedback digest.",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+app.post("/api/support-lab/feedback-digest/rebuild", async (_request, response) => {
+  try {
+    const digest = await rebuildFeedbackDigest();
+    response.json({
+      ok: true,
+      digest,
+      outputPath: path.relative(process.cwd(), FEEDBACK_DIGEST_PATH).replace(/\\/g, "/"),
+    });
+  } catch (error) {
+    response.status(500).json({
+      error: "Failed to rebuild the feedback digest.",
       detail: error instanceof Error ? error.message : String(error),
     });
   }
@@ -732,11 +763,12 @@ async function getReplyKnowledgeGraph() {
     getLatestAnalysisCandidates(),
     readTrainingStore(),
   ]);
+  const teamFeedbackDigestDoc = await getTeamFeedbackDigestDoc(trainingExamples);
 
   const graph = await buildKnowledgeGraph({
     trainingExamples,
     historicalCandidates: latestAnalysis.candidates,
-    guidanceDocs: [customerReplyGuidelinesDoc, brandVoiceDoc, coachingDoc, ...productManualDocs, ...routerGuideDocs],
+    guidanceDocs: [customerReplyGuidelinesDoc, teamFeedbackDigestDoc, brandVoiceDoc, coachingDoc, ...productManualDocs, ...routerGuideDocs],
   });
 
   await persistKnowledgeGraph({
@@ -951,6 +983,13 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode }
     );
   }
 
+  const teamFeedbackGuidance = graphContext.guidanceDocs.find((item) => item.relativePath.endsWith("team-feedback-digest.generated.md"));
+  if (teamFeedbackGuidance?.text) {
+    sections.push(
+      `Standing team coaching feedback:\n${teamFeedbackGuidance.text.slice(0, 1200)}`,
+    );
+  }
+
   if (graphContext.trainingExamples.length) {
     sections.push(
       `Team-approved examples to imitate for tone and structure:\n${graphContext.trainingExamples.map(formatTrainingNodeForPrompt).join("\n\n")}`,
@@ -1090,6 +1129,7 @@ function formatTrainingNodeForPrompt(item, index) {
     `Example ${index + 1}: ${item.title || "Customer reply"}`,
     item.text ? `Context:\n${item.text.slice(0, 900)}` : "",
     item.excerpt ? `Ideal reply:\n${item.excerpt.slice(0, 900)}` : "",
+    item.notes ? `Saved coaching notes:\n${item.notes.slice(0, 500)}` : "",
     item.reviewer ? `Reviewer: ${item.reviewer}` : "",
   ].filter(Boolean).join("\n");
 }
@@ -1528,11 +1568,12 @@ async function saveTrainingExample(input) {
     intentLabel: intent.label,
     createdAt: now,
     updatedAt: now,
-    keywords: Array.from(tokenizeForDrafting(`${input.subject}\n${input.customerMessage}\n${input.idealReply}`)),
+    keywords: Array.from(tokenizeForDrafting(`${input.subject}\n${input.customerMessage}\n${input.idealReply}\n${input.notes}`)),
   };
 
   items.unshift(item);
   await fsp.writeFile(TRAINING_STORE_PATH, `${JSON.stringify(items.slice(0, 300), null, 2)}\n`, "utf8");
+  await rebuildFeedbackDigest(items);
   return item;
 }
 
@@ -1548,10 +1589,37 @@ async function readTrainingStore() {
       keywords: new Set(
         Array.isArray(item?.keywords)
           ? item.keywords
-          : Array.from(tokenizeForDrafting(`${item?.subject || ""}\n${item?.customerMessage || ""}\n${item?.idealReply || ""}`)),
+          : Array.from(tokenizeForDrafting(`${item?.subject || ""}\n${item?.customerMessage || ""}\n${item?.idealReply || ""}\n${item?.notes || ""}`)),
       ),
     }))
     : [];
+}
+
+async function rebuildFeedbackDigest(existingItems = null) {
+  const trainingExamples = Array.isArray(existingItems) ? existingItems : await readTrainingStore();
+  return writeFeedbackDigest({
+    trainingExamples,
+    outputPath: FEEDBACK_DIGEST_PATH,
+    summaryPath: FEEDBACK_DIGEST_SUMMARY_PATH,
+  });
+}
+
+async function getTeamFeedbackDigest() {
+  const trainingExamples = await readTrainingStore();
+  return buildFeedbackDigest({ trainingExamples });
+}
+
+async function getTeamFeedbackDigestDoc(existingItems = null) {
+  const trainingExamples = Array.isArray(existingItems) ? existingItems : await readTrainingStore();
+  const digest = await rebuildFeedbackDigest(trainingExamples);
+
+  return {
+    title: "Team Feedback Digest",
+    relativePath: path.relative(process.cwd(), FEEDBACK_DIGEST_PATH),
+    cleaned: collapseSupportWhitespace(stripSupportMarkdown(digest.markdown)),
+    tags: ["team-feedback", "coaching", "style"],
+    keywords: digest.keywords,
+  };
 }
 
 function firstNameFromConversation(conversation) {

@@ -39,7 +39,8 @@ export async function buildKnowledgeGraph({
       excerpt: String(item.idealReply || "").slice(0, 500),
       relativePath: `training:${item.id}`,
       reviewer: item.reviewer || "",
-      keywords: Array.from(asTokenSet(item.keywords || `${item.subject || ""}\n${item.customerMessage || ""}\n${item.idealReply || ""}`)),
+      notes: item.notes || "",
+      keywords: Array.from(asTokenSet(item.keywords || `${item.subject || ""}\n${item.customerMessage || ""}\n${item.idealReply || ""}\n${item.notes || ""}`)),
     });
     edges.push({
       from: nodeId,
@@ -116,6 +117,7 @@ export function retrieveGraphContext({
       score,
       text: node.text || "",
       reviewer: node.reviewer || "",
+      notes: node.notes || "",
       tags: Array.isArray(node.tags) ? node.tags : [],
     };
 
@@ -132,12 +134,18 @@ export function retrieveGraphContext({
   trainingExamples.sort(sortByScore);
   historicalExamples.sort(sortByScore);
 
+  const teamFeedbackDoc = guidanceDocs.find((item) => item.relativePath.endsWith("team-feedback-digest.generated.md"));
+  const selectedGuidanceDocs = guidanceDocs.slice(0, 2);
+  if (teamFeedbackDoc && !selectedGuidanceDocs.some((item) => item.id === teamFeedbackDoc.id)) {
+    selectedGuidanceDocs[selectedGuidanceDocs.length - 1] = teamFeedbackDoc;
+  }
+
   return {
     topic: {
       id: intent?.intent || "general-support",
       label: intent?.label || "General Support",
     },
-    guidanceDocs: guidanceDocs.slice(0, 2),
+    guidanceDocs: selectedGuidanceDocs.filter(Boolean),
     trainingExamples: trainingExamples.slice(0, 2),
     historicalExamples: historicalExamples.slice(0, 1),
   };
@@ -208,6 +216,9 @@ function scoreNode(node, queryTokens, intent, tagTokens = new Set()) {
 
   if (node.type === "guidance_doc") {
     score += 4;
+    if (String(node.relativePath || "").endsWith("team-feedback-digest.generated.md")) {
+      score += 20;
+    }
   }
 
   if (tagTokens.size && Array.isArray(node.tags)) {
