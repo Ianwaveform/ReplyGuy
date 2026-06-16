@@ -21,6 +21,13 @@ type DraftResponse = {
   productTags?: string[];
 };
 
+type PluginMeta = {
+  app: string;
+  version: string;
+  startedAt: string;
+  commit?: string;
+};
+
 type ThreadMemory = {
   latestCustomerAsk: string;
   recentCustomerContext: string[];
@@ -101,6 +108,7 @@ function FrontPluginApp() {
   const [trainingState, setTrainingState] = React.useState("");
   const [feedbackSaved, setFeedbackSaved] = React.useState(false);
   const [replyMode, setReplyMode] = React.useState<ReplyMode>("careful");
+  const [pluginMeta, setPluginMeta] = React.useState<PluginMeta | null>(null);
 
   React.useEffect(() => {
     delegateNewWindowsToFront();
@@ -127,6 +135,10 @@ function FrontPluginApp() {
   }, []);
 
   React.useEffect(() => {
+    void loadPluginMeta();
+  }, []);
+
+  React.useEffect(() => {
     if (!context) {
       return;
     }
@@ -150,6 +162,22 @@ function FrontPluginApp() {
       setMessagesError(error instanceof Error ? error.message : "Failed to load conversation messages.");
     } finally {
       setMessagesLoading(false);
+    }
+  }
+
+  async function loadPluginMeta() {
+    try {
+      const response = await fetch("/api/plugin-meta");
+      if (!response.ok) {
+        return;
+      }
+
+      const payload = await response.json();
+      if (payload?.version && payload?.startedAt) {
+        setPluginMeta(payload);
+      }
+    } catch {
+      // Keep the plugin usable even if metadata loading fails.
     }
   }
 
@@ -343,6 +371,17 @@ function FrontPluginApp() {
       {draftError ? <div className="plugin-notice error">{draftError}</div> : null}
       {applySuccess ? <div className="plugin-notice success">{applySuccess}</div> : null}
 
+      {pluginMeta ? (
+        <section className="plugin-status-card" aria-label="ReplyGuy deployment status">
+          <div className="plugin-status-mark" />
+          <div className="plugin-status-copy">
+            <p className="plugin-status-label">Live build</p>
+            <strong>v{pluginMeta.version}{pluginMeta.commit ? ` · ${pluginMeta.commit}` : ""}</strong>
+            <span>Updated {formatPluginTimestamp(pluginMeta.startedAt)}</span>
+          </div>
+        </section>
+      ) : null}
+
       <section className="plugin-panel">
         <div className="plugin-summary-row">
           <div className="plugin-topic-pill">{draft?.intentLabel || "Topic pending"}</div>
@@ -506,6 +545,20 @@ function extractProductTags(conversation: unknown) {
     .filter((tag): tag is string => Boolean(tag));
 
   return Array.from(new Set(matched));
+}
+
+function formatPluginTimestamp(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "recently";
+  }
+
+  return new Intl.DateTimeFormat(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  }).format(date);
 }
 
 function collectPotentialTagNames(value: unknown) {

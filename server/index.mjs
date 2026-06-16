@@ -15,6 +15,8 @@ const app = express();
 const port = Number(process.env.PORT || 3001);
 const localEnv = readLocalEnv();
 const DIST_ROOT = path.join(process.cwd(), "dist");
+const SERVER_STARTED_AT = new Date().toISOString();
+const PACKAGE_MANIFEST = readPackageManifest();
 
 const SUPPORT_ANALYSIS_ROOT = path.join(process.cwd(), "data", "front-analysis");
 const SUPPORT_SOP_ROOT = path.join(process.cwd(), "knowledge", "approved", "sops");
@@ -37,6 +39,15 @@ app.use(express.json());
 
 app.get("/api/health", (_request, response) => {
   response.json({ ok: true, app: "replyguy-support-dashboard" });
+});
+
+app.get("/api/plugin-meta", (_request, response) => {
+  response.json({
+    app: "ReplyGuy",
+    version: PACKAGE_MANIFEST.version || "0.0.0",
+    startedAt: SERVER_STARTED_AT,
+    commit: readRuntimeCommit(),
+  });
 });
 
 app.get("/api/support-lab/overview", async (_request, response) => {
@@ -1854,6 +1865,24 @@ function readLocalEnv() {
   }
 
   return values;
+}
+
+function readPackageManifest() {
+  try {
+    const manifestPath = path.join(process.cwd(), "package.json");
+    return JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  } catch {
+    return {};
+  }
+}
+
+function readRuntimeCommit() {
+  const value = process.env.RAILWAY_GIT_COMMIT_SHA
+    || process.env.SOURCE_COMMIT
+    || process.env.VERCEL_GIT_COMMIT_SHA
+    || "";
+
+  return value ? value.slice(0, 7) : "";
 }
 
 function readEnvValue(key, envValues) {
