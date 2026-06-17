@@ -135,11 +135,12 @@ app.post("/api/support-lab/draft", async (request, response) => {
   const allowFallback = request.body?.allowFallback !== false;
   const threadMemory = normalizeThreadMemory(request.body?.threadMemory);
   const replyMode = normalizeReplyMode(request.body?.replyMode);
+  const composeMode = normalizeComposeMode(request.body?.composeMode);
   const productTags = normalizeStringList(request.body?.productTags, 12);
   const revisionFeedback = typeof request.body?.revisionFeedback === "string" ? request.body.revisionFeedback.trim() : "";
   const currentDraft = typeof request.body?.currentDraft === "string" ? request.body.currentDraft.trim() : "";
 
-  if (!message) {
+  if (!message && !currentDraft) {
     response.status(400).json({ error: "message is required." });
     return;
   }
@@ -152,6 +153,7 @@ app.post("/api/support-lab/draft", async (request, response) => {
       allowFallback,
       threadMemory,
       replyMode,
+      composeMode,
       productTags,
       revisionFeedback,
       currentDraft,
@@ -512,25 +514,27 @@ async function generateDraftFromSubmission({
   allowFallback = true,
   threadMemory = null,
   replyMode = "careful",
+  composeMode = "reply",
   productTags = [],
   revisionFeedback = "",
   currentDraft = "",
 }) {
   const cleanedMessage = cleanDraftingText(message);
+  const cleanedCurrentDraft = cleanDraftingText(currentDraft);
   const memoryText = flattenThreadMemory(threadMemory);
   const intent = topic
     ? normalizeTopicOverride(topic)
     : classifyUnrepliedIntent({
-    subject,
-    body: `${cleanedMessage}\n${memoryText}`,
-    tags: productTags,
-  });
+      subject,
+      body: `${cleanedMessage}\n${memoryText}\n${cleanedCurrentDraft}`,
+      tags: productTags,
+    });
 
   const { graph } = await getReplyKnowledgeGraph();
   const graphContext = retrieveGraphContext({
     graph,
     subject,
-    message: `${cleanedMessage}\n${memoryText}`,
+    message: `${cleanedMessage}\n${memoryText}\n${cleanedCurrentDraft}`,
     intent,
     productTags,
   });
@@ -549,6 +553,8 @@ async function generateDraftFromSubmission({
     intent,
     trainingMatches,
     example,
+    composeMode,
+    currentDraft: cleanedCurrentDraft,
   });
   let draft;
   try {
@@ -557,9 +563,10 @@ async function generateDraftFromSubmission({
       message: cleanedMessage,
       threadMemory,
       replyMode,
+      composeMode,
       productTags,
       revisionFeedback,
-      currentDraft,
+      currentDraft: cleanedCurrentDraft,
       intent,
       graphContext,
       trainingMatches,
@@ -611,6 +618,7 @@ async function generateDraftFromSubmission({
         provider: draft.provider,
         mode: draft.mode,
         replyMode,
+        composeMode,
         productTags,
         confidence,
         retrieval: {
@@ -644,6 +652,7 @@ async function generateDraftFromSubmission({
     provider: draft.provider,
     generationMode: draft.mode,
     replyMode,
+    composeMode,
     confidence,
     sources,
     productTags,
@@ -658,6 +667,7 @@ async function generateOpenAiReplyDraft({
   message,
   threadMemory,
   replyMode,
+  composeMode,
   productTags,
   revisionFeedback,
   currentDraft,
@@ -676,12 +686,14 @@ async function generateOpenAiReplyDraft({
     intentLabel: intent.label,
     graphContext,
     replyMode,
+    composeMode,
   });
   const userPrompt = buildCustomerReplyUserPrompt({
     subject,
     message,
     threadMemory,
     replyMode,
+    composeMode,
     productTags,
     revisionFeedback,
     currentDraft,
@@ -808,9 +820,30 @@ function normalizeReplyMode(value) {
   return "careful";
 }
 
+function normalizeComposeMode(value) {
+  const mode = String(value || "").trim().toLowerCase();
+  if (mode === "reply" || mode === "follow-up" || mode === "polish") {
+    return mode;
+  }
+
+  return "reply";
+}
+
 function humanizeReplyMode(value) {
   const mode = normalizeReplyMode(value);
   return mode.charAt(0).toUpperCase() + mode.slice(1);
+}
+
+function humanizeComposeMode(value) {
+  const mode = normalizeComposeMode(value);
+  if (mode === "follow-up") {
+    return "Follow-up";
+  }
+  if (mode === "polish") {
+    return "Polish Draft";
+  }
+
+  return "Reply";
 }
 
 function reasoningEffortForReplyMode(value) {
@@ -977,7 +1010,7 @@ function buildDraftConfidence({ cleanedMessage, threadMemory, graphContext, prod
   };
 }
 
-function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode }) {
+function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode, composeMode }) {
   const sections = [
     "You write customer-facing email replies for Waveform.",
     "Return only the finished reply body that should be sent to the customer.",
@@ -986,6 +1019,7 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode }
     "Answer the customer's actual question first, then give the clearest practical next step.",
     `Primary topic: ${intentLabel || "General Support"}.`,
     `Reply mode: ${humanizeReplyMode(replyMode)}.`,
+    `Compose mode: ${humanizeComposeMode(composeMode)}.`,
   ];
 
   if (graphContext.guidanceDocs.length) {
@@ -1017,6 +1051,12 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode }
     "- Treat Front product tags as strong product context. Do not answer as if the customer has a booster when the tag/manual context indicates an antenna-only product.",
   );
 
+  if (composeMode === "follow-up") {
+    sections.push("Follow-up mode: write a proactive outbound follow-up based on the existing thread. Do not treat this as a fresh inbound question unless the thread context clearly contains one.");
+  } else if (composeMode === "polish") {
+    sections.push("Polish draft mode: preserve the writer's meaning and key points, but improve structure, clarity, usefulness, and tone.");
+  }
+
   if (replyMode === "fast") {
     sections.push("Fast mode: keep the reply short and avoid deep technical explanation unless the customer explicitly asks for it.");
   } else if (replyMode === "research") {
@@ -1033,6 +1073,7 @@ function buildCustomerReplyUserPrompt({
   message,
   threadMemory,
   replyMode,
+  composeMode,
   productTags,
   revisionFeedback,
   currentDraft,
@@ -1041,6 +1082,7 @@ function buildCustomerReplyUserPrompt({
   fallbackReply,
 }) {
   const sections = [
+    `Compose mode: ${humanizeComposeMode(composeMode)}`,
     `Reply mode: ${humanizeReplyMode(replyMode)}`,
     `Topic: ${intentLabel || "General Support"}`,
     `Subject: ${subject || "(none provided)"}`,
@@ -1069,9 +1111,13 @@ function buildCustomerReplyUserPrompt({
   }
 
   sections.push(
-    revisionFeedback
-      ? "Rewrite the draft to address the teammate feedback while keeping the reply customer-facing and concise."
-      : "Write the best customer-facing reply now.",
+    composeMode === "follow-up"
+      ? "Write the best proactive customer-facing follow-up email for this thread now."
+      : composeMode === "polish"
+        ? "Rewrite the current draft so it is clearer, tighter, and more customer-ready while preserving the intended meaning."
+        : revisionFeedback
+          ? "Rewrite the draft to address the teammate feedback while keeping the reply customer-facing and concise."
+          : "Write the best customer-facing reply now.",
   );
   return sections.join("\n\n");
 }
@@ -1463,7 +1509,7 @@ function pickHistoricalExample(intent, candidates, trainingExamples = []) {
     || null;
 }
 
-function buildUnrepliedDraft({ conversation, customerMessage, intent, trainingMatches, example }) {
+function buildUnrepliedDraft({ conversation, customerMessage, intent, trainingMatches, example, composeMode = "reply", currentDraft = "" }) {
   const recipientName = firstNameFromConversation(conversation);
   const opening = recipientName
     ? `Hi ${recipientName},`
@@ -1471,6 +1517,36 @@ function buildUnrepliedDraft({ conversation, customerMessage, intent, trainingMa
   const collaborativePrompt = "Thanks for reaching out. Let's work through this together.";
   const followUp = "If there is anything else you want me to double-check, feel free to reply here.";
   const body = customerMessage.toLowerCase();
+
+  if (composeMode === "follow-up") {
+    return {
+      reply: [
+        opening,
+        "",
+        "I wanted to follow up on this thread and make sure you have what you need from us.",
+        "If you are still waiting on anything from our side, feel free to reply here and I can keep things moving.",
+        "",
+        "Happy to help if you want me to double-check anything else.",
+      ].join("\n"),
+      notes: [
+        "Uses a proactive follow-up structure instead of replying as if the customer just wrote in again.",
+        "Keeps the tone light and customer-facing.",
+      ],
+    };
+  }
+
+  if (composeMode === "polish") {
+    return {
+      reply: currentDraft || [
+        opening,
+        "",
+        "I wanted to follow up and make sure this note is clear and easy to act on.",
+      ].join("\n"),
+      notes: [
+        "Polish mode falls back to the provided draft so the writer can still edit from their own starting point.",
+      ],
+    };
+  }
 
   if (intent.intent === "order-status") {
     return {

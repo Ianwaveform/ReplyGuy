@@ -37,11 +37,19 @@ type ThreadMemory = {
 };
 
 type ReplyMode = "fast" | "careful" | "research";
+type ComposeMode = "reply" | "follow-up" | "polish";
+type ThreadStatus = "needs-reply" | "follow-up-ready" | "awaiting-customer" | "no-context";
 
 type DraftConfidence = {
   label: "High" | "Medium" | "Low";
   score: number;
   reasons: string[];
+};
+
+type ThreadAssessment = {
+  status: ThreadStatus;
+  label: string;
+  guidance: string;
 };
 
 type DraftSource = {
@@ -57,6 +65,12 @@ const REPLY_MODES: Array<{ value: ReplyMode; label: string }> = [
   { value: "fast", label: "Fast" },
   { value: "careful", label: "Careful" },
   { value: "research", label: "Research" },
+];
+
+const COMPOSE_MODES: Array<{ value: ComposeMode; label: string }> = [
+  { value: "reply", label: "Reply" },
+  { value: "follow-up", label: "Follow-up" },
+  { value: "polish", label: "Polish draft" },
 ];
 
 const KNOWN_PRODUCT_TAGS = [
@@ -109,6 +123,8 @@ function FrontPluginApp() {
   const [feedbackSaved, setFeedbackSaved] = React.useState(false);
   const [replyMode, setReplyMode] = React.useState<ReplyMode>("careful");
   const [pluginMeta, setPluginMeta] = React.useState<PluginMeta | null>(null);
+  const [composeMode, setComposeMode] = React.useState<ComposeMode>("reply");
+  const [userDraftInput, setUserDraftInput] = React.useState("");
 
   React.useEffect(() => {
     delegateNewWindowsToFront();
@@ -188,6 +204,15 @@ function FrontPluginApp() {
   const latestInboundText = React.useMemo(() => extractMessageText(latestInbound), [latestInbound]);
   const threadMemory = React.useMemo(() => buildThreadMemory(messages, latestInbound), [messages, latestInbound]);
   const productTags = React.useMemo(() => extractProductTags(context?.conversation), [context?.conversation]);
+  const latestTeamReply = React.useMemo(() => pickLatestTeamReply(messages), [messages]);
+  const latestTeamReplyText = React.useMemo(() => extractMessageText(latestTeamReply), [latestTeamReply]);
+  const threadAssessment = React.useMemo(() => assessThread(messages, latestInbound, latestTeamReply), [messages, latestInbound, latestTeamReply]);
+
+  React.useEffect(() => {
+    if (threadAssessment.status === "follow-up-ready" && composeMode === "reply") {
+      setComposeMode("follow-up");
+    }
+  }, [composeMode, threadAssessment.status]);
 
   async function generateDraft() {
     await requestDraft();
@@ -207,8 +232,20 @@ function FrontPluginApp() {
   }
 
   async function requestDraft(options?: { revisionFeedback?: string; currentDraft?: string }) {
-    if (!latestInboundText) {
-      setDraftError("ReplyGuy couldn't find an inbound customer message to draft from.");
+    const baseMessage = composeMode === "follow-up"
+      ? buildFollowUpSourceText({ latestInboundText, latestTeamReplyText, threadMemory })
+      : latestInboundText;
+    const draftToPolish = options?.currentDraft || (composeMode === "polish" ? userDraftInput : "");
+
+    if (composeMode !== "polish" && !baseMessage) {
+      setDraftError(composeMode === "follow-up"
+        ? "ReplyGuy couldn't find enough thread context to generate a follow-up."
+        : "ReplyGuy couldn't find an inbound customer message to draft from.");
+      return;
+    }
+
+    if (composeMode === "polish" && !draftToPolish.trim()) {
+      setDraftError("Paste a draft first so ReplyGuy has something to improve.");
       return;
     }
 
@@ -227,12 +264,13 @@ function FrontPluginApp() {
         },
         body: JSON.stringify({
           subject: context?.conversation.subject || latestInbound?.subject || "",
-          message: latestInboundText,
+          message: baseMessage,
           threadMemory,
           replyMode,
           productTags,
+          composeMode,
           revisionFeedback: options?.revisionFeedback || "",
-          currentDraft: options?.currentDraft || "",
+          currentDraft: draftToPolish,
           allowFallback: false,
         }),
       });
@@ -246,6 +284,9 @@ function FrontPluginApp() {
       setDraft(payload);
       setFeedbackSaved(false);
       setSavedFeedbackNotes("");
+      if (composeMode === "polish") {
+        setUserDraftInput(payload.draftReply || draftToPolish);
+      }
     } catch (error) {
       setDraft(null);
       setDraftError(
@@ -278,7 +319,7 @@ function FrontPluginApp() {
           content,
           subject: context.conversation.subject,
         });
-      } else if (latestInbound?.id) {
+      } else if (composeMode === "reply" && latestInbound?.id) {
         await context.createDraft({
           replyOptions: {
             type: "reply",
@@ -311,7 +352,8 @@ function FrontPluginApp() {
   }
 
   async function saveTrainingNotes() {
-    if (!draft?.draftReply || !latestInboundText) {
+    const trainingSourceText = latestInboundText || userDraftInput || latestTeamReplyText;
+    if (!draft?.draftReply || !trainingSourceText) {
       setDraftError("Generate a draft first so ReplyGuy has something to save as training.");
       return;
     }
@@ -329,7 +371,7 @@ function FrontPluginApp() {
         body: JSON.stringify({
           subject: context?.conversation.subject || latestInbound?.subject || "Front plugin training example",
           topic: draft.intentLabel || draft.intent || "",
-          customerMessage: latestInboundText,
+          customerMessage: trainingSourceText,
           idealReply: draft.draftReply,
           notes: trainingNotes,
           reviewer: "Front Plugin",
@@ -376,7 +418,7 @@ function FrontPluginApp() {
           <div className="plugin-status-mark" />
           <div className="plugin-status-copy">
             <p className="plugin-status-label">Live build</p>
-            <strong>v{pluginMeta.version}{pluginMeta.commit ? ` · ${pluginMeta.commit}` : ""}</strong>
+            <strong>v{pluginMeta.version}{pluginMeta.commit ? ` | ${pluginMeta.commit}` : ""}</strong>
             <span>Updated {formatPluginTimestamp(pluginMeta.startedAt)}</span>
           </div>
         </section>
@@ -393,6 +435,25 @@ function FrontPluginApp() {
           <button className="plugin-button secondary" type="button" onClick={() => context && void loadMessages(context)} disabled={!context || messagesLoading}>
             {messagesLoading ? "Refreshing..." : "Refresh"}
           </button>
+        </div>
+
+        <div className={`plugin-thread-status ${threadAssessment.status}`}>
+          <strong>{threadAssessment.label}</strong>
+          <span>{threadAssessment.guidance}</span>
+        </div>
+
+        <div className="plugin-mode-picker compose" role="group" aria-label="Compose mode">
+          {COMPOSE_MODES.map((mode) => (
+            <button
+              key={mode.value}
+              className={composeMode === mode.value ? "active" : ""}
+              type="button"
+              onClick={() => setComposeMode(mode.value)}
+              disabled={draftLoading}
+            >
+              {mode.label}
+            </button>
+          ))}
         </div>
 
         <div className="plugin-mode-picker" role="group" aria-label="Reply mode">
@@ -413,16 +474,27 @@ function FrontPluginApp() {
           <div className="plugin-section-header">
             <div>
               <p className="plugin-eyebrow">Reply</p>
-              <h2>Generated reply</h2>
+              <h2>{composeMode === "follow-up" ? "Generated follow-up" : composeMode === "polish" ? "Polished draft" : "Generated reply"}</h2>
             </div>
             <small>{draft ? `${draft.provider || "OpenAI"} ${draft.model || ""}`.trim() : "No draft yet"}</small>
           </div>
+          {composeMode === "polish" ? (
+            <label className="plugin-field">
+              <span>Paste your draft and ask ReplyGuy to clean it up</span>
+              <textarea
+                className="plugin-textarea light"
+                value={userDraftInput}
+                onChange={(event) => setUserDraftInput(event.target.value)}
+                placeholder="Paste your email draft here. ReplyGuy will improve tone, structure, and clarity while keeping your key points."
+              />
+            </label>
+          ) : null}
           <pre className="plugin-message-block assistant">
             {draft?.draftReply || "Generate a draft to preview the reply here."}
           </pre>
           <div className="plugin-actions">
-            <button className="plugin-button primary" type="button" onClick={() => void generateDraft()} disabled={draftLoading || !latestInbound}>
-              {draftLoading ? "Generating..." : "Generate reply"}
+            <button className="plugin-button primary" type="button" onClick={() => void generateDraft()} disabled={draftLoading || (composeMode === "polish" && !userDraftInput.trim()) || (composeMode === "reply" && !latestInbound) || (composeMode === "follow-up" && !buildFollowUpSourceText({ latestInboundText, latestTeamReplyText, threadMemory }))}>
+              {draftLoading ? "Generating..." : composeMode === "follow-up" ? "Generate follow-up" : composeMode === "polish" ? "Polish draft" : "Generate reply"}
             </button>
             <button className="plugin-button secondary" type="button" onClick={() => void applyDraftToFront()} disabled={!draft?.draftReply || applyState === "applying"}>
               {applyState === "applying" ? "Adding..." : "Add to Front composer"}
@@ -466,11 +538,13 @@ function FrontPluginApp() {
           <div className="plugin-section-header">
             <div>
               <p className="plugin-eyebrow">Customer</p>
-              <h2>Latest ask</h2>
+              <h2>{composeMode === "follow-up" ? "Follow-up context" : "Latest ask"}</h2>
             </div>
           </div>
           <div className="plugin-customer-brief">
-            {latestInboundText || "No clean inbound customer message found yet."}
+            {composeMode === "follow-up"
+              ? buildFollowUpSourceText({ latestInboundText, latestTeamReplyText, threadMemory }) || "No recent thread context found yet."
+              : latestInboundText || "No clean inbound customer message found yet."}
           </div>
         </div>
 
@@ -665,6 +739,55 @@ function safeParseJson(raw: string) {
   }
 }
 
+function buildFollowUpSourceText({
+  latestInboundText,
+  latestTeamReplyText,
+  threadMemory,
+}: {
+  latestInboundText: string;
+  latestTeamReplyText: string;
+  threadMemory: ThreadMemory | null;
+}) {
+  const sections = [
+    latestInboundText ? `Latest customer ask:\n${latestInboundText}` : "",
+    latestTeamReplyText ? `Most recent team reply:\n${latestTeamReplyText}` : "",
+    threadMemory && flattenThreadMemory(threadMemory) ? `Thread memory:\n${formatThreadMemoryForFollowUp(threadMemory)}` : "",
+  ].filter(Boolean);
+
+  return sections.join("\n\n");
+}
+
+function flattenThreadMemory(threadMemory: ThreadMemory | null) {
+  if (!threadMemory) {
+    return "";
+  }
+
+  return [
+    threadMemory.latestCustomerAsk || "",
+    ...(threadMemory.recentCustomerContext || []),
+    ...(threadMemory.recentTeamReplies || []),
+    threadMemory.openQuestion || "",
+    ...(threadMemory.constraints || []),
+  ].filter(Boolean).join("\n");
+}
+
+function formatThreadMemoryForFollowUp(threadMemory: ThreadMemory | null) {
+  if (!threadMemory) {
+    return "";
+  }
+
+  return [
+    threadMemory.openQuestion ? `Open question: ${threadMemory.openQuestion}` : "",
+    threadMemory.constraints?.length ? `Constraints: ${threadMemory.constraints.join(" | ")}` : "",
+    threadMemory.recentCustomerContext?.length
+      ? `Recent customer context:\n${threadMemory.recentCustomerContext.map((item, index) => `- ${index + 1}. ${item}`).join("\n")}`
+      : "",
+    threadMemory.recentTeamReplies?.length
+      ? `Recent team replies:\n${threadMemory.recentTeamReplies.map((item, index) => `- ${index + 1}. ${item}`).join("\n")}`
+      : "",
+  ].filter(Boolean).join("\n\n");
+}
+
 function pickLatestUsefulInboundMessage(messages: ApplicationMessage[]) {
   const inboundMessages = messages
     .filter((message) => message.status === "inbound")
@@ -683,6 +806,53 @@ function pickLatestUsefulInboundMessage(messages: ApplicationMessage[]) {
   }
 
   return inboundMessages[0]?.message ?? null;
+}
+
+function pickLatestTeamReply(messages: ApplicationMessage[]) {
+  const teamMessages = messages
+    .filter((message) => message.status !== "inbound")
+    .sort((left, right) => new Date(right.date).getTime() - new Date(left.date).getTime());
+
+  return teamMessages.find((message) => extractMessageText(message).trim()) || null;
+}
+
+function assessThread(
+  messages: ApplicationMessage[],
+  latestInbound: ApplicationMessage | null,
+  latestTeamReply: ApplicationMessage | null,
+): ThreadAssessment {
+  if (!messages.length || (!latestInbound && !latestTeamReply)) {
+    return {
+      status: "no-context",
+      label: "Waiting for thread context",
+      guidance: "Open a conversation with readable message history to draft from.",
+    };
+  }
+
+  const latestInboundTime = latestInbound ? new Date(latestInbound.date).getTime() : 0;
+  const latestTeamTime = latestTeamReply ? new Date(latestTeamReply.date).getTime() : 0;
+
+  if (latestInboundTime > latestTeamTime) {
+    return {
+      status: "needs-reply",
+      label: "Needs reply",
+      guidance: "There is a newer customer message than the latest team reply. Reply mode is the best default.",
+    };
+  }
+
+  if (latestTeamTime > latestInboundTime) {
+    return {
+      status: "follow-up-ready",
+      label: "Follow-up ready",
+      guidance: "The team has already replied most recently. Use Follow-up for a proactive check-in or update.",
+    };
+  }
+
+  return {
+    status: "awaiting-customer",
+    label: "Awaiting customer",
+    guidance: "This thread does not clearly need a new reply. Follow-up or Polish draft may be more useful.",
+  };
 }
 
 function scoreInboundText(text: string) {

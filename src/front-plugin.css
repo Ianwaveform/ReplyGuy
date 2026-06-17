@@ -1,13 +1,13 @@
 :root {
   color-scheme: light;
-  --plugin-bg: #f5f1ea;
-  --plugin-panel: #fffdf9;
-  --plugin-border: rgba(89, 67, 54, 0.12);
-  --plugin-ink: #231a15;
-  --plugin-muted: #7a695d;
-  --plugin-accent: #df672e;
-  --plugin-accent-soft: rgba(223, 103, 46, 0.08);
-  --plugin-shadow: 0 16px 34px rgba(80, 58, 44, 0.08);
+  --plugin-bg: #f4f4f1;
+  --plugin-panel: #ffffff;
+  --plugin-border: rgba(17, 17, 17, 0.08);
+  --plugin-ink: #161616;
+  --plugin-muted: #666159;
+  --plugin-accent: #f26a2e;
+  --plugin-accent-soft: rgba(242, 106, 46, 0.1);
+  --plugin-shadow: 0 14px 30px rgba(17, 17, 17, 0.06);
 }
 
 * {
@@ -23,7 +23,9 @@ body,
 body {
   margin: 0;
   font-family: "Avenir Next", "Segoe UI", sans-serif;
-  background: var(--plugin-bg);
+  background:
+    radial-gradient(circle at top right, rgba(242, 106, 46, 0.08), transparent 26%),
+    linear-gradient(180deg, #f7f7f3 0%, var(--plugin-bg) 100%);
   color: var(--plugin-ink);
 }
 
@@ -102,9 +104,9 @@ h2 {
   align-items: center;
   padding: 12px 14px;
   background:
-    linear-gradient(135deg, rgba(223, 103, 46, 0.12), rgba(255, 255, 255, 0.9)),
+    linear-gradient(135deg, rgba(242, 106, 46, 0.14), rgba(255, 255, 255, 0.96)),
     var(--plugin-panel);
-  border: 1px solid rgba(223, 103, 46, 0.18);
+  border: 1px solid rgba(242, 106, 46, 0.2);
   border-radius: 18px;
   box-shadow: var(--plugin-shadow);
 }
@@ -114,7 +116,7 @@ h2 {
   height: 100%;
   min-height: 46px;
   border-radius: 999px;
-  background: linear-gradient(180deg, #df672e, #ff9b63);
+  background: linear-gradient(180deg, #f26a2e, #ff9d59);
 }
 
 .plugin-status-copy {
@@ -203,7 +205,7 @@ h2 {
   padding: 4px;
   border: 1px solid var(--plugin-border);
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.88);
 }
 
 .plugin-mode-picker button {
@@ -218,7 +220,11 @@ h2 {
 
 .plugin-mode-picker button.active {
   background: var(--plugin-ink);
-  color: #fff8ef;
+  color: #fffdf8;
+}
+
+.plugin-mode-picker.compose {
+  background: rgba(242, 106, 46, 0.08);
 }
 
 .plugin-mode-picker button:disabled {
@@ -231,6 +237,38 @@ h2 {
   gap: 10px;
 }
 
+.plugin-thread-status {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid var(--plugin-border);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.plugin-thread-status strong {
+  font-size: 0.94rem;
+}
+
+.plugin-thread-status span {
+  color: var(--plugin-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.plugin-thread-status.needs-reply {
+  background: rgba(47, 125, 89, 0.08);
+}
+
+.plugin-thread-status.follow-up-ready {
+  background: rgba(242, 106, 46, 0.1);
+}
+
+.plugin-thread-status.awaiting-customer,
+.plugin-thread-status.no-context {
+  background: rgba(69, 89, 112, 0.08);
+}
+
 .plugin-message-block,
 .plugin-textarea {
   width: 100%;
@@ -241,6 +279,12 @@ h2 {
   padding: 14px;
   white-space: pre-wrap;
   word-break: break-word;
+}
+
+.plugin-textarea.light {
+  min-height: 140px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--plugin-ink);
 }
 
 .plugin-customer-brief {
@@ -263,7 +307,7 @@ h2 {
 }
 
 .plugin-message-block.assistant {
-  background: linear-gradient(180deg, #261d17, #1f1813);
+  background: linear-gradient(180deg, #1e1e1c, #161615);
 }
 
 .plugin-sources {
