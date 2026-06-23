@@ -1033,6 +1033,7 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode, 
     sections.push(
       `Standing team coaching feedback:\n${teamFeedbackGuidance.text.slice(0, 1200)}`,
     );
+    sections.push("Standing team coaching feedback has higher priority than historical examples or default phrasing. If there is a conflict, follow the standing team coaching feedback.");
   }
 
   if (graphContext.trainingExamples.length) {

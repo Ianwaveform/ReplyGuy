@@ -3,10 +3,10 @@ import path from "node:path";
 
 const RULE_DEFINITIONS = [
   {
-    id: "no-em-dashes",
-    label: "Avoid em dashes",
-    guidance: "Do not use em dashes. Use commas, parentheses, or spaced hyphens instead.",
-    test: (note) => /\bem[\s-]?dash(?:es)?\b|—|long dash/i.test(note),
+    id: "no-hyphen-breaks",
+    label: "Avoid hyphen-style breaks",
+    guidance: "Do not use hyphens or em dashes for parenthetical breaks. Use commas or parentheses instead.",
+    test: (note) => /\b(?:no|avoid|remove|without|stop using)\s+(?:the\s+)?(?:em[\s-]?dashes?|dashes?|hyphens?)\b|\bem[\s-]?dash(?:es)?\b|—|long dash/i.test(note),
   },
   {
     id: "be-concise",
@@ -48,11 +48,12 @@ export function buildFeedbackDigest({ trainingExamples = [], generatedAt = new D
       subject: String(item.subject || "Team feedback"),
       intent: String(item.intentLabel || item.intent || "General Support"),
       note: normalizeNote(item.notes),
+      idealReply: String(item.idealReply || ""),
       createdAt: String(item.updatedAt || item.createdAt || generatedAt),
     }));
 
   const recurringNotes = summarizeRecurringNotes(feedbackItems);
-  const ruleSummaries = summarizeRules(feedbackItems);
+  const ruleSummaries = summarizeRules(feedbackItems, trainingExamples);
   const recentSamples = feedbackItems
     .slice()
     .sort((left, right) => right.createdAt.localeCompare(left.createdAt))
@@ -116,15 +117,19 @@ export async function writeFeedbackDigest({ trainingExamples = [], outputPath, s
   return digest;
 }
 
-function summarizeRules(items) {
-  return RULE_DEFINITIONS
+function summarizeRules(items, trainingExamples) {
+  const explicitRules = RULE_DEFINITIONS
     .map((definition) => ({
       id: definition.id,
       label: definition.label,
       guidance: definition.guidance,
       count: items.reduce((total, item) => total + (definition.test(item.note) ? 1 : 0), 0),
     }))
-    .filter((item) => item.count > 0)
+    .filter((item) => item.count > 0);
+
+  const preferredOpeningRules = summarizePreferredOpenings(items, trainingExamples);
+
+  return [...explicitRules, ...preferredOpeningRules]
     .sort((left, right) => right.count - left.count);
 }
 
@@ -146,6 +151,102 @@ function summarizeRecurringNotes(items) {
     .filter((item) => item.count >= 1)
     .sort((left, right) => right.count - left.count)
     .slice(0, 12);
+}
+
+function summarizePreferredOpenings(items, trainingExamples) {
+  const extracted = new Map();
+
+  for (const item of items) {
+    if (!/\b(opening|openings|start|starts|greeting|emails?\s+to\s+start|prefer emails?\s+to\s+start)\b/i.test(item.note)) {
+      continue;
+    }
+
+    for (const phrase of extractOpeningPhrases(item.note)) {
+      addPreferredOpening(extracted, phrase);
+    }
+  }
+
+  for (const example of trainingExamples) {
+    const notes = normalizeNote(example?.notes || "");
+    if (!/\b(opening|openings|start|starts|greeting|emails?\s+to\s+start|prefer emails?\s+to\s+start)\b/i.test(notes)) {
+      continue;
+    }
+
+    const opening = extractOpeningLine(example?.idealReply || "");
+    if (opening) {
+      addPreferredOpening(extracted, opening);
+    }
+  }
+
+  return [...extracted.values()].map((item) => ({
+    id: `preferred-opening:${canonicalizeNote(item.phrase)}`,
+    label: "Preferred email opening",
+    guidance: `For email replies, prefer opening with "${item.phrase}" when it fits the conversation.`,
+    count: item.count,
+  }));
+}
+
+function extractOpeningPhrases(note) {
+  const phrases = new Set();
+
+  const quotedMatches = [...String(note || "").matchAll(/"([^"]{4,120})"/g)];
+  for (const match of quotedMatches) {
+    const cleaned = normalizeOpeningPhrase(match[1]);
+    if (cleaned) {
+      phrases.add(cleaned);
+    }
+  }
+
+  const startWithMatch = String(note || "").match(/(?:start(?:ing)?\s+with|start\s+emails?\s+with|prefer emails?\s+to\s+start with)\s+(.+)/i);
+  if (startWithMatch?.[1]) {
+    for (const rawPart of startWithMatch[1].split(/\bor\b|,|\/|;/i)) {
+      const cleaned = normalizeOpeningPhrase(rawPart);
+      if (isLikelyOpeningPhrase(cleaned)) {
+        phrases.add(cleaned);
+      }
+    }
+  }
+
+  return [...phrases];
+}
+
+function extractOpeningLine(reply) {
+  const lines = String(reply || "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  for (const line of lines) {
+    if (/^(hi|hello|thanks|thank you)\b/i.test(line)) {
+      return normalizeOpeningPhrase(line);
+    }
+  }
+
+  return "";
+}
+
+function normalizeOpeningPhrase(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/[.!?]+$/, "")
+    .trim();
+}
+
+function isLikelyOpeningPhrase(value) {
+  return /^(thank you|thanks|hi|hello)\b/i.test(String(value || "").trim());
+}
+
+function addPreferredOpening(store, phrase) {
+  const cleaned = normalizeOpeningPhrase(phrase);
+  if (!cleaned) {
+    return;
+  }
+
+  const key = canonicalizeNote(cleaned);
+  const current = store.get(key) || { phrase: cleaned, count: 0 };
+  current.count += 1;
+  store.set(key, current);
 }
 
 function normalizeNote(value) {
