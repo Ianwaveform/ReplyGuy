@@ -679,7 +679,11 @@ async function generateOpenAiReplyDraft({
 }) {
   const config = getOpenAiConfig();
   if (!config.apiKey) {
-    throw new Error("Missing OPENAI_API_KEY. Add it to .env.local to enable live reply generation.");
+    throw new Error(
+      process.env.REPLYGUY_REQUIRE_PROCESS_OPENAI_KEY === "1"
+        ? "Missing OPENAI_API_KEY in the shell environment. The regression runner ignores .env.local on purpose."
+        : "Missing OPENAI_API_KEY. Add it to .env.local to enable live reply generation.",
+    );
   }
 
   const systemPrompt = buildCustomerReplySystemPrompt({
@@ -770,7 +774,7 @@ async function generateOpenAiReplyDraft({
 
 function getOpenAiConfig() {
   return {
-    apiKey: readEnvValue("OPENAI_API_KEY", localEnv),
+    apiKey: readOpenAiApiKey(localEnv),
     baseUrl: (readEnvValue("OPENAI_BASE_URL", localEnv) || DEFAULT_OPENAI_BASE_URL).replace(/\/+$/, ""),
     model: readEnvValue("OPENAI_REPLY_MODEL", localEnv) || DEFAULT_OPENAI_REPLY_MODEL,
   };
@@ -1985,6 +1989,14 @@ function readRuntimeCommit() {
 
 function readEnvValue(key, envValues) {
   return process.env[key] || envValues[key] || "";
+}
+
+function readOpenAiApiKey(envValues) {
+  if (process.env.REPLYGUY_REQUIRE_PROCESS_OPENAI_KEY === "1") {
+    return process.env.OPENAI_API_KEY || "";
+  }
+
+  return readEnvValue("OPENAI_API_KEY", envValues);
 }
 
 if (fs.existsSync(DIST_ROOT)) {

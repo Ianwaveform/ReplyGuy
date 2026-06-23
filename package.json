@@ -12,6 +12,7 @@
         "front:pipeline": "node scripts/run-front-pipeline.mjs",
         "front:analyze": "node scripts/analyze-front-history.mjs",
         "feedback:digest": "node scripts/build-feedback-digest.mjs",
+        "test:reply-regressions": "node scripts/run-reply-regressions.mjs",
         "manuals:ingest": "node scripts/ingest-product-manuals.mjs",
         "router-guides:ingest": "node scripts/ingest-router-guides.mjs",
         "build": "tsc -b && vite build",
