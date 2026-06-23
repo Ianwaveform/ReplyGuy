@@ -698,8 +698,8 @@ async function generateOpenAiReplyDraft({
     revisionFeedback,
     currentDraft,
     intentLabel: intent.label,
-    exampleReply: graphContext.historicalExamples[0]?.text || example?.cleanedReplyRedacted || "",
-    fallbackReply: fallbackDraft.reply,
+    exampleReply: composeMode === "polish" ? "" : graphContext.historicalExamples[0]?.text || example?.cleanedReplyRedacted || "",
+    fallbackReply: composeMode === "polish" ? "" : fallbackDraft.reply,
   });
 
   const apiResponse = await fetch(`${config.baseUrl}/responses`, {
@@ -1054,7 +1054,9 @@ function buildCustomerReplySystemPrompt({ intentLabel, graphContext, replyMode, 
   if (composeMode === "follow-up") {
     sections.push("Follow-up mode: write a proactive outbound follow-up based on the existing thread. Do not treat this as a fresh inbound question unless the thread context clearly contains one.");
   } else if (composeMode === "polish") {
-    sections.push("Polish draft mode: preserve the writer's meaning and key points, but improve structure, clarity, usefulness, and tone.");
+    sections.push("Polish draft mode: the current draft is the source of truth. Preserve the writer's meaning, opening, key points, and factual claims while improving structure, clarity, usefulness, and tone.");
+    sections.push("In polish draft mode, do not add new facts, troubleshooting steps, promises, timelines, policies, or follow-up questions unless they already appear in the draft or the user explicitly asks for them.");
+    sections.push("In polish draft mode, do not remove a greeting, thank-you opening, or sign-off unless the user explicitly asks to change it or it is clearly inappropriate for the medium.");
   }
 
   if (replyMode === "fast") {
@@ -1087,8 +1089,29 @@ function buildCustomerReplyUserPrompt({
     `Topic: ${intentLabel || "General Support"}`,
     `Subject: ${subject || "(none provided)"}`,
     productTags?.length ? `Front product tags: ${productTags.join(", ")}` : "Front product tags: none detected",
-    `Customer message:\n${message}`,
   ];
+
+  if (composeMode === "polish") {
+    if (currentDraft) {
+      sections.push(`Draft to polish:\n${currentDraft.slice(0, 2200)}`);
+    }
+
+    if (revisionFeedback) {
+      sections.push(`Explicit edit instructions from teammate:\n${revisionFeedback.slice(0, 1200)}`);
+    }
+
+    sections.push(
+      "Polish instructions:",
+      "- Keep the original meaning and all existing factual claims unless explicitly told to change them.",
+      "- Do not introduce new information from the thread, examples, or your own assumptions.",
+      "- Preserve the opening and closing unless the teammate explicitly asks to change them.",
+      "- Make the smallest set of edits needed to improve clarity, flow, grammar, and tone.",
+      "Return only the polished draft.",
+    );
+    return sections.join("\n\n");
+  }
+
+  sections.push(`Customer message:\n${message}`);
 
   if (threadMemory && flattenThreadMemory(threadMemory)) {
     sections.push(`Thread memory:\n${formatThreadMemoryForPrompt(threadMemory)}`);
@@ -1113,11 +1136,9 @@ function buildCustomerReplyUserPrompt({
   sections.push(
     composeMode === "follow-up"
       ? "Write the best proactive customer-facing follow-up email for this thread now."
-      : composeMode === "polish"
-        ? "Rewrite the current draft so it is clearer, tighter, and more customer-ready while preserving the intended meaning."
-        : revisionFeedback
-          ? "Rewrite the draft to address the teammate feedback while keeping the reply customer-facing and concise."
-          : "Write the best customer-facing reply now.",
+      : revisionFeedback
+        ? "Rewrite the draft to address the teammate feedback while keeping the reply customer-facing and concise."
+        : "Write the best customer-facing reply now.",
   );
   return sections.join("\n\n");
 }

@@ -9,6 +9,7 @@ type DraftResponse = {
   subject: string;
   intent: string;
   intentLabel: string;
+  medium?: ReplyMedium;
   customerMessageRedacted: string;
   draftReply: string;
   draftNotes: string[];
@@ -39,6 +40,7 @@ type ThreadMemory = {
 type ReplyMode = "fast" | "careful" | "research";
 type ComposeMode = "reply" | "follow-up" | "polish";
 type ThreadStatus = "needs-reply" | "follow-up-ready" | "awaiting-customer" | "no-context";
+type ReplyMedium = "email" | "sms" | "whatsapp" | "chat" | "phone" | "social" | "internal" | "custom";
 
 type DraftConfidence = {
   label: "High" | "Medium" | "Low";
@@ -207,6 +209,7 @@ function FrontPluginApp() {
   const latestTeamReply = React.useMemo(() => pickLatestTeamReply(messages), [messages]);
   const latestTeamReplyText = React.useMemo(() => extractMessageText(latestTeamReply), [latestTeamReply]);
   const threadAssessment = React.useMemo(() => assessThread(messages, latestInbound, latestTeamReply), [messages, latestInbound, latestTeamReply]);
+  const replyMedium = React.useMemo(() => detectReplyMedium(context?.conversation), [context?.conversation]);
 
   React.useEffect(() => {
     if (threadAssessment.status === "follow-up-ready" && composeMode === "reply") {
@@ -268,6 +271,7 @@ function FrontPluginApp() {
           threadMemory,
           replyMode,
           productTags,
+          medium: replyMedium,
           composeMode,
           revisionFeedback: options?.revisionFeedback || "",
           currentDraft: draftToPolish,
@@ -375,6 +379,9 @@ function FrontPluginApp() {
           idealReply: draft.draftReply,
           notes: trainingNotes,
           reviewer: "Front Plugin",
+          source: "front-plugin",
+          conversationId: String(context?.conversation.id || ""),
+          messageId: String(latestInbound?.id || latestTeamReply?.id || ""),
         }),
       });
       const raw = await response.text();
@@ -386,7 +393,7 @@ function FrontPluginApp() {
       setTrainingState("");
       setApplySuccess(
         payload?.storePath
-          ? `Feedback saved to ${payload.storePath}.`
+          ? `Feedback saved to ${payload.storePath} and logged to review activity.`
           : "Feedback saved with the current draft.",
       );
       setSavedFeedbackNotes(trainingNotes);
@@ -425,11 +432,12 @@ function FrontPluginApp() {
       ) : null}
 
       <section className="plugin-panel">
-        <div className="plugin-summary-row">
-          <div className="plugin-topic-pill">{draft?.intentLabel || "Topic pending"}</div>
-          {draft?.confidence ? (
-            <div className={`plugin-confidence ${draft.confidence.label.toLowerCase()}`}>
-              {draft.confidence.label} confidence
+          <div className="plugin-summary-row">
+            <div className="plugin-topic-pill">{draft?.intentLabel || "Topic pending"}</div>
+            <div className="plugin-topic-pill subtle">{humanizeReplyMedium(replyMedium)}</div>
+            {draft?.confidence ? (
+              <div className={`plugin-confidence ${draft.confidence.label.toLowerCase()}`}>
+                {draft.confidence.label} confidence
             </div>
           ) : null}
           <button className="plugin-button secondary" type="button" onClick={() => context && void loadMessages(context)} disabled={!context || messagesLoading}>
@@ -633,6 +641,67 @@ function formatPluginTimestamp(value: string) {
     hour: "numeric",
     minute: "2-digit",
   }).format(date);
+}
+
+function detectReplyMedium(conversation: unknown): ReplyMedium {
+  const type = String((conversation as { type?: unknown } | null)?.type || "").trim().toLowerCase();
+  if (type === "email") {
+    return "email";
+  }
+  if (type === "sms") {
+    return "sms";
+  }
+  if (type === "whatsapp") {
+    return "whatsapp";
+  }
+  if (type === "frontchat" || type === "intercom" || type === "smooch" || type === "custom") {
+    return type === "custom" ? "custom" : "chat";
+  }
+  if (type === "phonecall") {
+    return "phone";
+  }
+  if (type === "tweet" || type === "twitterdm" || type === "facebook") {
+    return "social";
+  }
+  if (type === "internal") {
+    return "internal";
+  }
+
+  const recipientHandle = String((conversation as { recipient?: { handle?: unknown } } | null)?.recipient?.handle || "").toLowerCase();
+  if (recipientHandle.startsWith("+")) {
+    return "sms";
+  }
+  if (recipientHandle.includes("@")) {
+    return "email";
+  }
+
+  return "custom";
+}
+
+function humanizeReplyMedium(value: ReplyMedium) {
+  if (value === "sms") {
+    return "SMS";
+  }
+  if (value === "whatsapp") {
+    return "WhatsApp";
+  }
+  if (value === "phone") {
+    return "Phone";
+  }
+  if (value === "social") {
+    return "Social";
+  }
+  if (value === "internal") {
+    return "Internal";
+  }
+  if (value === "chat") {
+    return "Chat";
+  }
+  if (value === "custom") {
+    return "Custom";
+  }
+
+  return "Email";
 }
 
 function collectPotentialTagNames(value: unknown) {

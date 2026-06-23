@@ -173,6 +173,11 @@ h2 {
   font-weight: 700;
 }
 
+.plugin-topic-pill.subtle {
+  background: rgba(17, 17, 17, 0.05);
+  color: var(--plugin-muted);
+}
+
 .plugin-confidence {
   display: inline-flex;
   align-items: center;
