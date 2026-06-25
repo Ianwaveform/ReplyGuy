@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { contextUpdates, delegateNewWindowsToFront } from "@frontapp/plugin-sdk";
-import type { ApplicationMessage, SingleConversationContext } from "@frontapp/plugin-sdk";
+import type { ApplicationDraft, ApplicationMessage, SingleConversationContext } from "@frontapp/plugin-sdk";
 import "./front-plugin.css";
 
 type DraftResponse = {
@@ -52,6 +52,7 @@ type ThreadAssessment = {
   status: ThreadStatus;
   label: string;
   guidance: string;
+  recommendedComposeMode: ComposeMode;
 };
 
 type DraftSource = {
@@ -127,6 +128,7 @@ function FrontPluginApp() {
   const [pluginMeta, setPluginMeta] = React.useState<PluginMeta | null>(null);
   const [composeMode, setComposeMode] = React.useState<ComposeMode>("reply");
   const [userDraftInput, setUserDraftInput] = React.useState("");
+  const [frontDraftInput, setFrontDraftInput] = React.useState("");
 
   React.useEffect(() => {
     delegateNewWindowsToFront();
@@ -141,6 +143,8 @@ function FrontPluginApp() {
         setContext(null);
         setMessages([]);
         setDraft(null);
+        setFrontDraftInput("");
+        setUserDraftInput("");
         setContextError("Open a single conversation in Front to use ReplyGuy.");
       },
       error(error) {
@@ -161,7 +165,17 @@ function FrontPluginApp() {
       return;
     }
 
+    setDraft(null);
+    setDraftError("");
+    setApplySuccess("");
+    setTrainingNotes("");
+    setSavedFeedbackNotes("");
+    setFeedbackSaved(false);
+    setFrontDraftInput("");
+    setUserDraftInput("");
+    setComposeMode("reply");
     void loadMessages(context);
+    void loadFrontDraft(context);
   }, [context?.conversation.id]);
 
   async function loadMessages(activeContext: SingleConversationContext) {
@@ -180,6 +194,26 @@ function FrontPluginApp() {
       setMessagesError(error instanceof Error ? error.message : "Failed to load conversation messages.");
     } finally {
       setMessagesLoading(false);
+    }
+  }
+
+  async function loadFrontDraft(activeContext: SingleConversationContext) {
+    const draftId = activeContext.conversation.draftId;
+    if (!draftId) {
+      setFrontDraftInput("");
+      return;
+    }
+
+    try {
+      const frontDraft = await activeContext.fetchDraft(draftId);
+      const nextDraftText = extractDraftText(frontDraft);
+      setFrontDraftInput(nextDraftText);
+      if (nextDraftText.trim()) {
+        setUserDraftInput(nextDraftText);
+        setComposeMode("polish");
+      }
+    } catch {
+      setFrontDraftInput("");
     }
   }
 
@@ -208,14 +242,17 @@ function FrontPluginApp() {
   const productTags = React.useMemo(() => extractProductTags(context?.conversation), [context?.conversation]);
   const latestTeamReply = React.useMemo(() => pickLatestTeamReply(messages), [messages]);
   const latestTeamReplyText = React.useMemo(() => extractMessageText(latestTeamReply), [latestTeamReply]);
-  const threadAssessment = React.useMemo(() => assessThread(messages, latestInbound, latestTeamReply), [messages, latestInbound, latestTeamReply]);
+  const threadAssessment = React.useMemo(
+    () => assessThread(messages, latestInbound, latestTeamReply, frontDraftInput),
+    [frontDraftInput, messages, latestInbound, latestTeamReply],
+  );
   const replyMedium = React.useMemo(() => detectReplyMedium(context?.conversation), [context?.conversation]);
 
   React.useEffect(() => {
-    if (threadAssessment.status === "follow-up-ready" && composeMode === "reply") {
+    if (threadAssessment.recommendedComposeMode === "follow-up" && composeMode === "reply") {
       setComposeMode("follow-up");
     }
-  }, [composeMode, threadAssessment.status]);
+  }, [composeMode, threadAssessment.recommendedComposeMode]);
 
   async function generateDraft() {
     await requestDraft();
@@ -348,11 +385,28 @@ function FrontPluginApp() {
 
   async function copyDraft() {
     if (!draft?.draftReply) {
+      setDraftError("Generate a draft first, then Copy will place it on your clipboard.");
       return;
     }
 
-    await navigator.clipboard.writeText(draft.draftReply);
-    setApplySuccess("Draft copied to clipboard.");
+    setDraftError("");
+    setApplySuccess("");
+
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(draft.draftReply);
+      } else {
+        fallbackCopyText(draft.draftReply);
+      }
+      setApplySuccess("Draft copied to clipboard.");
+    } catch {
+      try {
+        fallbackCopyText(draft.draftReply);
+        setApplySuccess("Draft copied to clipboard.");
+      } catch {
+        setDraftError("ReplyGuy couldn't access the clipboard here. Use Add to Front composer or copy the text manually.");
+      }
+    }
   }
 
   async function saveTrainingNotes() {
@@ -463,6 +517,9 @@ function FrontPluginApp() {
             </button>
           ))}
         </div>
+        <div className="plugin-mode-recommendation">
+          <strong>Recommended:</strong> {humanizeComposeModeLabel(threadAssessment.recommendedComposeMode)}
+        </div>
 
         <div className="plugin-mode-picker" role="group" aria-label="Reply mode">
           {REPLY_MODES.map((mode) => (
@@ -486,6 +543,11 @@ function FrontPluginApp() {
             </div>
             <small>{draft ? `${draft.provider || "OpenAI"} ${draft.model || ""}`.trim() : "No draft yet"}</small>
           </div>
+          {composeMode === "polish" && frontDraftInput.trim() ? (
+            <div className="plugin-inline-note">
+              Using the current Front draft as the starting point.
+            </div>
+          ) : null}
           {composeMode === "polish" ? (
             <label className="plugin-field">
               <span>Paste your draft and ask ReplyGuy to clean it up</span>
@@ -508,7 +570,7 @@ function FrontPluginApp() {
               {applyState === "applying" ? "Adding..." : "Add to Front composer"}
             </button>
             <button className="plugin-button secondary" type="button" onClick={() => void copyDraft()} disabled={!draft?.draftReply}>
-              Copy
+              Copy to clipboard
             </button>
           </div>
           {draft?.sources?.length || draft?.confidence ? (
@@ -765,6 +827,44 @@ function extractMessageText(message: ApplicationMessage | null | undefined) {
   return trimQuotedHistory(text);
 }
 
+function extractDraftText(draft: ApplicationDraft | null | undefined) {
+  const raw = String(draft?.content?.body || "");
+  if (!raw.trim()) {
+    return "";
+  }
+
+  if (draft?.content?.type === "text") {
+    return normalizeCustomerText(raw);
+  }
+
+  const htmlWithoutStyles = raw
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<!--[\s\S]*?-->/g, " ");
+
+  const document = new DOMParser().parseFromString(htmlWithoutStyles, "text/html");
+  return normalizeCustomerText(document.body?.textContent || raw);
+}
+
+function fallbackCopyText(value: string) {
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "true");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  textarea.style.pointerEvents = "none";
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+
+  const copied = document.execCommand("copy");
+  document.body.removeChild(textarea);
+
+  if (!copied) {
+    throw new Error("Copy command failed.");
+  }
+}
+
 function normalizeCustomerText(value: string) {
   return stripContactFormScaffolding(
     String(value || "")
@@ -889,31 +989,63 @@ function assessThread(
   messages: ApplicationMessage[],
   latestInbound: ApplicationMessage | null,
   latestTeamReply: ApplicationMessage | null,
+  frontDraftInput: string,
 ): ThreadAssessment {
   if (!messages.length || (!latestInbound && !latestTeamReply)) {
     return {
       status: "no-context",
       label: "Waiting for thread context",
       guidance: "Open a conversation with readable message history to draft from.",
+      recommendedComposeMode: "reply",
     };
   }
 
   const latestInboundTime = latestInbound ? new Date(latestInbound.date).getTime() : 0;
   const latestTeamTime = latestTeamReply ? new Date(latestTeamReply.date).getTime() : 0;
+  const latestInboundText = extractMessageText(latestInbound);
+  const latestTeamReplyText = extractMessageText(latestTeamReply);
+  const hasUsableFrontDraft = frontDraftInput.trim().length >= 40;
+
+  if (hasUsableFrontDraft) {
+    return {
+      status: latestInboundTime > latestTeamTime ? "needs-reply" : "awaiting-customer",
+      label: "Draft ready to polish",
+      guidance: "A Front draft already exists on this conversation. Polish draft is the best default unless you want a brand new reply from scratch.",
+      recommendedComposeMode: "polish",
+    };
+  }
 
   if (latestInboundTime > latestTeamTime) {
     return {
       status: "needs-reply",
       label: "Needs reply",
       guidance: "There is a newer customer message than the latest team reply. Reply mode is the best default.",
+      recommendedComposeMode: "reply",
     };
   }
 
   if (latestTeamTime > latestInboundTime) {
+    const hoursSinceLatestTeamReply = getHoursSince(latestTeamReply?.date || "");
+    const promisedUpdate = teamReplySuggestsFutureUpdate(latestTeamReplyText);
+    const customerStillWaiting = customerMessageSuggestsOpenLoop(latestInboundText);
+    const followUpWindowReached = hoursSinceLatestTeamReply >= 12;
+
+    if ((promisedUpdate || customerStillWaiting) && followUpWindowReached) {
+      return {
+        status: "follow-up-ready",
+        label: "Follow-up recommended",
+        guidance: promisedUpdate
+          ? "The latest team note sounds like a promised update. Follow-up is the best default once you have something to send."
+          : "The customer's last ask still looks open, and the team replied last. Follow-up is a good next move if the issue is still in progress.",
+        recommendedComposeMode: "follow-up",
+      };
+    }
+
     return {
-      status: "follow-up-ready",
-      label: "Follow-up ready",
-      guidance: "The team has already replied most recently. Use Follow-up for a proactive check-in or update.",
+      status: "awaiting-customer",
+      label: "Waiting on customer",
+      guidance: "The team replied most recently, and this thread does not clearly need a proactive follow-up yet. Polish draft is still useful if you want to rewrite your own note.",
+      recommendedComposeMode: "reply",
     };
   }
 
@@ -921,7 +1053,82 @@ function assessThread(
     status: "awaiting-customer",
     label: "Awaiting customer",
     guidance: "This thread does not clearly need a new reply. Follow-up or Polish draft may be more useful.",
+    recommendedComposeMode: "reply",
   };
+}
+
+function getHoursSince(value: string | Date | null | undefined) {
+  if (!value) {
+    return 0;
+  }
+
+  const timestamp = new Date(value).getTime();
+  if (!Number.isFinite(timestamp) || timestamp <= 0) {
+    return 0;
+  }
+
+  return (Date.now() - timestamp) / (1000 * 60 * 60);
+}
+
+function teamReplySuggestsFutureUpdate(text: string) {
+  const normalized = normalizeAssessmentText(text);
+  if (!normalized) {
+    return false;
+  }
+
+  return [
+    /\bi will follow up\b/,
+    /\bi[' ]?ll follow up\b/,
+    /\bi will update you\b/,
+    /\bi[' ]?ll update you\b/,
+    /\bi will get back to you\b/,
+    /\bi[' ]?ll get back to you\b/,
+    /\bi will check\b/,
+    /\bi[' ]?ll check\b/,
+    /\bi am checking\b/,
+    /\bi'm checking\b/,
+    /\bkeep you posted\b/,
+    /\blet you know\b/,
+    /\bcircle back\b/,
+    /\bonce i\b/,
+    /\bwhen i hear back\b/,
+  ].some((pattern) => pattern.test(normalized));
+}
+
+function customerMessageSuggestsOpenLoop(text: string) {
+  const normalized = normalizeAssessmentText(text);
+  if (!normalized) {
+    return false;
+  }
+
+  return [
+    /\bany update\b/,
+    /\bjust checking\b/,
+    /\bfollow up\b/,
+    /\bcan you confirm\b/,
+    /\blet me know\b/,
+    /\bwhen can i expect\b/,
+    /\bdo you know\b/,
+    /\bare you able to\b/,
+    /\bi[' ]?m still waiting\b/,
+    /\bhave you heard\b/,
+  ].some((pattern) => pattern.test(normalized));
+}
+
+function normalizeAssessmentText(text: string) {
+  return String(text || "").replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function humanizeComposeModeLabel(mode: ComposeMode) {
+  if (mode === "follow-up") {
+    return "Follow-up";
+  }
+
+  if (mode === "polish") {
+    return "Polish draft";
+  }
+
+  return "Reply";
 }
 
 function scoreInboundText(text: string) {

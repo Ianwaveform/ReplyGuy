@@ -274,6 +274,22 @@ h2 {
   background: rgba(69, 89, 112, 0.08);
 }
 
+.plugin-mode-recommendation {
+  color: var(--plugin-muted);
+  font-size: 0.84rem;
+  margin-top: -4px;
+}
+
+.plugin-mode-recommendation strong {
+  color: var(--plugin-ink);
+}
+
+.plugin-inline-note {
+  color: var(--plugin-muted);
+  font-size: 0.86rem;
+  margin-bottom: 10px;
+}
+
 .plugin-message-block,
 .plugin-textarea {
   width: 100%;
